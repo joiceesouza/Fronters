@@ -1,0 +1,207 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+:root {
+    --bg-color: #6ab1d1;
+    --rodape-footer: #002855;
+    --logo: #fb8500;
+  }
+
+body {
+    background-color: var(--bg-color);
+    color: white;
+    
+}
+
+.logo {
+    color: var(--logo);
+}
+
+.container-header {
+    display: flex;
+    background-color: var(--rodape-footer);
+}
+
+#menu {
+    display: flex;
+    list-style: none;
+}
+
+
+a {
+    color: #fff;
+    transition: 0.3s;
+
+}
+
+a:hover {
+    opacity: 0.7;
+}
+
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+    height: 8vh; 
+}
+
+#nav-list {
+    display: none;
+    position: absolute;
+    width: 100%;
+    top: 70px;
+    right: 0;
+    background: var(--rodape-footer);
+    transition: .6s;
+    z-index: 1000;
+    height: 0px;
+    visibility: hidden;
+    overflow-y: hidden;
+
+    
+}
+
+#nav.active #nav-list {
+height: calc(100vh - 70px);
+visibility: visible;
+overflow-y: auto;
+}
+
+#nav-list a {
+    padding: 1rem 0;
+    margin: 0 1rem;
+    border-bottom: 2px solid rgba(0, 0, 0, .05);
+}
+
+#menu-hamburguer {
+    cursor: pointer;
+}
+
+#menu-hamburguer div {
+width: 32px;
+height: 2px;
+background: #fff;
+margin: 8px;
+}
+
+
+
+
+
+
+
+
+/* .one,
+.two,
+.three {
+      background-color: #fff;
+      width: 4em;
+      height: 5px;
+      margin: 6px auto;
+      transition-duration: 0.3s;
+} */
+
+
+
+
+
+
+
+/* .container-header {
+    display: flex;
+    justify-content: space-evenly;
+    background-color: #002855;
+    /* width: 100vh; 
+    /* height: 8vh; 
+} */
+
+
+
+#texto-sobre {
+    text-align: center;
+    margin: 1em;
+}
+
+form {
+    margin-bottom: 5em;
+}
+
+label {
+    display: block;
+}
+#emailUsuario, #senhaUsuario {
+    width: 80vw;
+    background-color: white;
+    border: solid 2px black;
+
+}
+
+#botaoCadastrar a{
+    color: rgb(7, 7, 7);
+}
+
+
+
+
+
+
+
+#banner {
+    width: 100%;
+    height: 30vh;
+}
+
+
+.campo-form {
+    margin: 20px;
+    width: 100%;
+}
+
+
+
+
+#footer {
+    width: 100vw;
+    height: 20vh;
+    background-color: var(--rodape-footer);
+    text-align: center;
+}
+
+
+#footer h1 {
+    font-size: 20px;
+}
+
+#github a {
+    color: white;
+}
+
+#github i {
+    color: #fb8500;
+    margin-left: 10px;
+}
+
+@media screen and (min-width: 601px){
+     #menu-hamburguer {
+         display: none;
+     }
+
+     #nav-list {
+        list-style: none;
+        display: flex;
+    }
+    
+    #nav-list li {
+        letter-spacing: 3px;
+        margin-left: 32px;
+    }
+
+
+}
+

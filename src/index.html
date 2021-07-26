@@ -5,12 +5,106 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <title>Document</title>
 </head>
 
 <body>
   <div id="root">
-    teste
+
+    <header class="container-header">
+
+      <h1 class="logo">FRONTERS</h1>
+      <nav id="nav">
+        <ul id="menu">
+          <li><a href="/#">Home</a></li>
+          <li><a href="/#perfil">Perfil</a></li>
+          <li><a href="/#cadastro">Cadastro</a></li>
+        </ul>
+        <div id="menu-hamburguer">
+          <div class="one"></div>
+          <div class="two"></div>
+          <div class="three"></div>
+        </div>
+
+      </nav>
+    </header>
+
+
+
+
+    <main id="conteudo-principal"></main>
+    <!-- 
+    <nav>
+      <ul>
+        <li>
+          <a href="#">Home</a>
+        </li>
+        <li>
+          <a href="#">Login</a>
+        </li>
+        <li>
+          <a href="#">Contato</a>
+        </li>
+      </ul>
+    </nav>
+
+  </div>
+
+<div id="banner-section">
+  <img id="banner" src="img/banner.jpg" alt="Foto demonstrativo do site">
+  <div id="texto-sobre">
+    <h2>Fronters</h2>
+    <h3>De frente com o Front</h3>
+    <h4>Está preparado para invadir 
+      o mundo dos Devs? Venha trocar experiências, aprender, ensinar e conhecer novas pessoas</h4>
+
+  </div>
+</div>
+
+
+
+  <form class="campo-form">
+    <div>
+      <label for="emailUsuario">Email:</label>
+      <input type="email" id="emailUsuario" placeholder="Digite o seu email">
+    </div>
+    <div>
+      <label for="senhaUsuario">Senha:</label>
+      <input type="password" id="senhaUsuario" placeholder="Digite a sua senha">
+    </div>
+    <div>
+      <button type="button" id="botaoCadastro">Cadastro</button>
+    </div>
+    <div>
+      <button type="button" id="botaoLogin">Login</button>
+    </div>
+    <div>
+      <button id="botaoGoogle">Entrar com a conta Google</button>
+    </div>
+  </form>
+ -->
+
+    <footer id="footer">
+      <h1 class="logo">FRONTERS</h1>
+      <div id="github">
+        <p>Desenvolvido por:</p>
+        <a href="https://github.com/tamaracosta" target="_blank">Tamara<i class="fab fa-github"></i></a>
+        <p>&amp;</p>
+        <a href="https://github.com/joiceesouza" target="_blank">Joice<i class="fab fa-github"></i></a>
+      </div>
+
+
+    </footer>
+
+
+
+
+
+
+
+
   </div>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="/__/firebase/8.7.1/firebase-app.js"></script>
@@ -18,10 +112,11 @@
   <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-     <script src="/__/firebase/8.7.1/firebase-auth.js"></script>
+  <script src="/__/firebase/8.7.1/firebase-auth.js"></script>
 
   <!-- Initialize Firebase -->
-  <script src="/__/firebase/init.js"></script>
+  <!-- <script src="/__/firebase/init.js"></script> -->
+  <script src='/__/firebase/init.js?useEmulator=true'></script>
 
   <script type="module" src="main.js"></script>
 </body>
