@@ -1,0 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+
+:root {
+    --bg-color: #6ab1d1;
+    --rodape-footer: #002855;
+    --logo: #fb8500;
+  }
+
+ 
+
