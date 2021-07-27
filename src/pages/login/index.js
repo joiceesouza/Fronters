@@ -1,7 +1,7 @@
 
-export default () => {
-const divLogin = document.createElement('div');
-divLogin.innerHTML = `
+export const TemplateLogin = () => {
+    const divLogin = document.createElement('div');
+    divLogin.innerHTML = `
 <div id="banner-section">
   <img id="banner" src="img/banner.jpg" alt="Foto demonstrativo do site">
   <div id="texto-sobre">
@@ -32,10 +32,74 @@ divLogin.innerHTML = `
         </div>
     </form>
     `
-
-
-return divLogin;
+    return divLogin;
 
 }
 
+// //CONECTAR USUARIO com endereço de e-mail e senha
+export const AddEventoLogin = () => {
 
+    const botaoDoLogin = document.getElementById('botaoLogin');
+    botaoDoLogin.addEventListener("click", () => {
+        const email = document.getElementById('emailUsuario').value;
+        const password = document.getElementById('senhaUsuario').value;
+
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                // Signed in
+                //window.location = "pagina que ira depois q fazer login"
+                const user = userCredential.user;
+                console.log(user, 'Deu certo o login! ihull');
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log('Infelizmente aconteceu algum com login! Conta não cadastrada', errorCode, errorMessage);
+            });
+
+    });
+
+}
+
+//LOGIN GOOGLE
+export const AddEventoLoginComGoogle = () => {
+
+    const botaoDoGoogle = document.getElementById('botaoGoogle')
+    botaoDoGoogle.addEventListener('click', (event) => {
+        event.preventDefault()
+        let provider = new firebase.auth.GoogleAuthProvider();
+
+        //Para fazer login com uma janela pop-up, chame signInWithPopup
+        firebase
+            .auth()
+            .signInWithPopup(provider)
+            .then((result) => {
+                console.log(result)
+                alert(1)
+                /** @type {firebase.auth.OAuthCredential} */
+                let credential = result.credential;
+
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                let token = credential.accessToken;
+                // The signed-in user info.
+                let user = result.user;
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                // The email of the user's account used.
+                let email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                let credential = error.credential;
+                // ...
+            });
+
+    })
+
+
+
+}

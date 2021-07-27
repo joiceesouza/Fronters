@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+
+:root {
+    --bg-color: #6ab1d1;
+    --rodape-footer: #002855;
+    --logo: #fb8500;
+  }
+
+
+
+
+/* POP UP */
+.popup-wrapper {
+    background: rgba(0,0,0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.popup {
+    text-align: center;
+    width: 100%;
+    margin: 10% auto;
+    padding: 20px;
+    background: white;
+    position: relative;
+
+}
+
+.conteudo-popup {
+    color: var(--logo);
+}
+
+.fechar-popup {
+    color: black;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+#loginPopup {
+    padding: 5px;
+     
+}
+
+#loginPopup a {
+    color: black;
+}
+
