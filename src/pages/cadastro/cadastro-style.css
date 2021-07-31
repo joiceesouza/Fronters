@@ -10,7 +10,125 @@
     --bg-color: #6ab1d1;
     --rodape-footer: #002855;
     --logo: #fb8500;
+    --label: #FFE8CD;
+    --placeholder: #F1EDED;
   }
+
+
+
+body {
+    background-image: url(/src/img/foto-capa.jpg);
+
+}
+
+#texto-sobre {
+    color:#fff;
+}
+
+.container-header {
+    text-align: center;
+    margin-top: 2em;
+}
+
+#banner {
+    width: 100vw;
+    height: 100vh;
+    filter: contrast(0.3);
+    top:0;
+    z-index: -10;
+    position: absolute;
+}
+
+
+#texto-sobre {
+    text-align: center;
+    margin: 1em;
+}
+
+#login-cadastro {
+    display: flex;
+    margin-left: 1em;
+}
+
+#login-cadastro li {
+    margin-right: 2em;
+    font-size: 1.5em;
+}
+
+
+
+.campo-form {
+    margin: 20px;
+    width: 100%;
+}
+
+form {
+    /* margin-bottom: 5em; */
+    margin-left: 1em;
+    margin-top: 2em;
+}
+
+label {
+    display: block;
+    font-size: 1.2em;
+    color: var(--label);
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #F1EDED;
+    height: 2rem;
+    width: 70vw;
+    outline: none;
+    margin-bottom: 2em;
+    
+}
+
+input::placeholder {
+    color: var(--placeholder);
+}
+
+#botao-cadastro {
+    text-align: center;
+}
+
+
+#botao-finalizar-cadastro{
+    background-color: var(--logo);
+    width: 55vw;
+    height: 2.5em;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 0.6em;
+    cursor: pointer;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

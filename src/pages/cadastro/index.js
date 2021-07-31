@@ -3,22 +3,41 @@ export const TemplateCadastro = () => {
   const container = document.createElement('div');
 
   const template = ` 
-    <h1>Cadastro</h1>
+
+  <div id="banner-section">
+    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
+    <div id="texto-sobre">
+        <h2>Fronters</h2>
+        <h3>De frente com o Front</h3>
+        <h4>Está preparado para invadir 
+        o mundo dos Devs?</h4>
+
+    </div>
+    </div>
+
+    <nav id="nav">
+        <ul id="login-cadastro">
+            <li><a href="/#">Login</a></li>
+            <li><a href="/#cadastro">Cadastro</a></li>
+        </ul>
+    </nav>
+
+    
   <form class="campo-form">
   <div>
     <label for="emailUsuario">Email:</label>
-    <input type="email" id="emailUsuarioCadastro" placeholder="Digite o seu email">
+    <input type="email" id="email-cadastro" placeholder="Digite o seu email">
   </div>
   <div>
     <label for="senhaUsuario">Senha:</label>
-    <input type="password" id="senhaUsuarioCadastro" placeholder="Digite a sua senha">
+    <input type="password" id="senha-cadastro" placeholder="Digite a sua senha">
   </div>
   <div>
     <label for="confirmaSenhaUsuario">Senha:</label>
-    <input type="password" id="confirmaSenhaUsuario" placeholder="Confirme a sua senha">
+    <input type="password" id="confirma-senha-cadastro" placeholder="Confirme a sua senha">
   </div>
-  <div>
-    <button type="button" id="botaoFinalizarCadastro">Finalizar o Cadastro</button>
+  <div id="botao-cadastro">
+    <button type="button" id="botao-finalizar-cadastro">Cadastrar</button>
   </div>
  
 </form>

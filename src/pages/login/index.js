@@ -2,35 +2,55 @@
 export const TemplateLogin = () => {
     const divLogin = document.createElement('div');
     divLogin.innerHTML = `
-<div id="banner-section">
-  <img id="banner" src="img/banner.jpg" alt="Foto demonstrativo do site">
-  <div id="texto-sobre">
-    <h2>Fronters</h2>
-    <h3>De frente com o Front</h3>
-    <h4>Está preparado para invadir 
-      o mundo dos Devs? Venha trocar experiências, aprender, ensinar e conhecer novas pessoas</h4>
 
-  </div>
-</div>
+    <div id="banner-section">
+    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
+    <div id="texto-sobre">
+        <h2>Fronters</h2>
+        <h3>De frente com o Front</h3>
+        <h4>Está preparado para invadir 
+        o mundo dos Devs?</h4>
+
+    </div>
+    </div>
+
+    <nav id="nav">
+        <ul id="login-cadastro">
+           <!-- <li><a href="/#">Login</a></li> -->
+            <!-- <li><a href="/#cadastro">Cadastro</a></li> -->
+            <li><button class="nav-btn" id="nav-login"><a href="/#">Login</a></button></li>
+            <li><button class="nav-btn" id="nav-cadastro"><a href="/#cadastro">Cadastro</a></button></li>
+           
+        </ul>
+    </nav>
+
 
     <form>
         <div>
             <label for="emailUsuario">Email:</label>
-            <input type="email" id="emailUsuario">
+            <input type="email" id="email-usuario" placeholder="Digite o seu email">
         </div>
         <div>
             <label for="senhaUsuario">Senha:</label>
-            <input type="password" id="senhaUsuario">
+            <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
         </div>
-        <div>
-            <button id="botaoLogin">Login</button>
-            <button id="botaoCadastrar"><a href="/#cadastro">Cadastrar</a></button>
-
-        </div>
-        <div>
-            <button id="botaoGoogle">Entrar com a conta Google</button>
+        <div class="btn-login">
+            <button id="botaoLogin">Entrar</button>
         </div>
     </form>
+        
+            
+        <div class="btn-contas">
+            <p>-------------Ou-------------</p>
+            <div>
+                <button id="botaoGoogle"><i class="fab fa-google"></i>Entrar com a conta Google</button>
+            </div>
+            <div>
+                <button id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
+            </div>
+        </div>
+    
+
     `
     return divLogin;
 
@@ -41,6 +61,7 @@ export const AddEventoLogin = () => {
 
     const botaoDoLogin = document.getElementById('botaoLogin');
     botaoDoLogin.addEventListener("click", () => {
+        
         const email = document.getElementById('emailUsuario').value;
         const password = document.getElementById('senhaUsuario').value;
 

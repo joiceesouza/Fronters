@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     text-decoration: none;
+    list-style: none;
 }
 
 
@@ -10,8 +11,28 @@
     --bg-color: #6ab1d1;
     --rodape-footer: #002855;
     --logo: #fb8500;
+    --label: #FFE8CD;
+    --placeholder: #F1EDED;
   }
 
+body {
+    background-image: url(/src/img/foto-capa.jpg);
+
+}
+
+.container-header {
+    text-align: center;
+    margin-top: 2em;
+}
+
+#banner {
+    width: 100vw;
+    height: 100vh;
+    filter: contrast(0.3);
+    top:0;
+    z-index: -10;
+    position: absolute;
+}
 
 
 #texto-sobre {
@@ -19,64 +40,136 @@
     margin: 1em;
 }
 
-form {
-    margin-bottom: 5em;
+/* #login-cadastro {
+    display: flex;
+    margin-left: 1em;
 }
 
-label {
-    display: block;
-}
-#emailUsuario, #senhaUsuario {
-    width: 80vw;
-    background-color: white;
-    border: solid 2px black;
+#login-cadastro li {
+    margin-right: 2em;
+    font-size: 1.5em;
+} */
 
+.nav-btn {
+    color: red;
+    border: none;
+    background: transparent;
+    font-size: 1em;
+    padding: 16px;
+    outline: none;
+    position: relative;
 }
 
-#botaoCadastrar a{
-    color: rgb(7, 7, 7);
-}
-
-#banner {
+.nav-btn::after {
+    position: absolute;
+    bottom: 0;
+    left:0;
+    content: "";
+    height: 2px;
     width: 100%;
-    height: 30vh;
+    background-color: var(--logo);
+    transition: .4s;
+
 }
 
+button:hover::after,
+button.active::after {
+    width: 100%;
+}
 
 .campo-form {
     margin: 20px;
     width: 100%;
 }
 
+form {
+    /* margin-bottom: 5em; */
+    margin-left: 1em;
+    margin-top: 2em;
+}
+
+label {
+    display: block;
+    font-size: 1.2em;
+    color: var(--label);
+}
+
+input {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #F1EDED;
+    height: 2rem;
+    width: 70vw;
+    outline: none;
+}
+
+input::placeholder {
+    color: var(--placeholder);
+}
 
 
+#email-usuario, #senha-usuario {
+    margin-bottom: 2em;
+}
 
-
-
-
-
-
-
-
-
-
-#footer {
-    width: 100vw;
-    height: 20vh;
-    background-color: var(--rodape-footer);
+.btn-login {
     text-align: center;
 }
 
+#botaoLogin {
+    background-color: var(--logo);
+    width: 55vw;
+    height: 2.5em;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 0.6em;
+    cursor: pointer;
 
-#footer h1 {
-    font-size: 20px;
 }
 
-#github a {
-    color: white;
+.btn-contas {
+    margin: 1em;
+    text-align: center;
 }
 
-#github i {
-    color: #fb8500;
-    margin-left: 10px;
+.btn-contas p {
+    text-align: center;
+    margin: 2em;
+    font-size: 1.2em;
 }
+
+
+
+.btn-contas i {
+    color: var(--logo);
+    margin-right: 10px;
+    
+}
+
+
+#botaoGoogle, #botaoGitHub {
+    background-color: #fff;
+    width: 80vw;
+    height: 2.5em;
+    color: rgb(3, 3, 3);
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 0.6em;
+    cursor: pointer;
+}
+
+#botaoGoogle {
+    margin-bottom: 1.5em;
+}
+
+
+
+
+
+
+
+
+
