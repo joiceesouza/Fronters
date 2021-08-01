@@ -1,8 +1,10 @@
 // Este é o ponto de entrada da sua aplicação
 
-// import { testeCadastro } from './lib/index.js';
-import {TemplateLogin, AddEventoLogin, AddEventoLoginComGoogle} from './pages/login/index.js';
-import { TemplateCadastro, AddEventoCadastro} from './pages/cadastro/index.js';
+
+import {TemplateLogin} from './pages/login/index.js';
+import {TemplateCadastro} from './pages/cadastro/index.js';
+import {AddEventoLogin, AddEventoLoginComGoogle} from './services/index.js';
+import {AddEventoCadastro} from './services/index.js';
 import perfil from './pages/perfil/index.js';
 
 const main = document.querySelector('#conteudo-principal');
