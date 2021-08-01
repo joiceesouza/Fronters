@@ -2,7 +2,7 @@
 
 // import { testeCadastro } from './lib/index.js';
 import {TemplateLogin, AddEventoLogin, AddEventoLoginComGoogle} from './pages/login/index.js';
-import { TemplateCadastro, AddEventoCadastro, PopUpCadastro } from './pages/cadastro/index.js';
+import { TemplateCadastro, AddEventoCadastro} from './pages/cadastro/index.js';
 import perfil from './pages/perfil/index.js';
 
 const main = document.querySelector('#conteudo-principal');
@@ -25,7 +25,7 @@ function carregarPaginaURL() {
         case "#cadastro":
             main.appendChild(TemplateCadastro())
             AddEventoCadastro();
-            PopUpCadastro();
+            // main.appendChild(PopUpCadastro());
             break;
         default:
             main.appendChild(TemplateLogin())

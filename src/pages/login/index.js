@@ -18,8 +18,8 @@ export const TemplateLogin = () => {
         <ul id="login-cadastro">
            <!-- <li><a href="/#">Login</a></li> -->
             <!-- <li><a href="/#cadastro">Cadastro</a></li> -->
-            <li><button class="nav-btn" id="nav-login"><a href="/#">Login</a></button></li>
-            <li><button class="nav-btn" id="nav-cadastro"><a href="/#cadastro">Cadastro</a></button></li>
+            <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
+            <li><a href="/#cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
            
         </ul>
     </nav>
@@ -37,9 +37,8 @@ export const TemplateLogin = () => {
         <div class="btn-login">
             <button id="botaoLogin">Entrar</button>
         </div>
-    </form>
-        
-            
+    
+                    
         <div class="btn-contas">
             <p>-------------Ou-------------</p>
             <div>
@@ -49,7 +48,7 @@ export const TemplateLogin = () => {
                 <button id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
             </div>
         </div>
-    
+    </form>
 
     `
     return divLogin;

@@ -17,7 +17,7 @@
 
 
 body {
-    background-image: url(/src/img/foto-capa.jpg);
+    background-image: url("/src/img/foto-capa.jpg");
 
 }
 
@@ -109,30 +109,6 @@ input::placeholder {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* POP UP */
 .popup-wrapper {
     background: rgba(0,0,0, .5);
@@ -162,7 +138,7 @@ input::placeholder {
     color: black;
     position: absolute;
     top: 5px;
-    right: 10px;
+    right: 30px;
     cursor: pointer;
 }
 
