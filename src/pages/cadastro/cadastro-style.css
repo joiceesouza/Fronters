@@ -138,7 +138,7 @@ input::placeholder {
 
 }
 
-.conteudo-popup {
+.conteudo-popup h2{
     color: var(--logo);
 }
 
