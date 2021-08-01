@@ -6,7 +6,7 @@ export const TemplateLogin = () => {
     <div id="banner-section">
     <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
     <div id="texto-sobre">
-        <h2>Fronters</h2>
+        <h2 id="logo">Fronters</h2>
         <h3>De frente com o Front</h3>
         <h4>Está preparado para invadir 
         o mundo dos Devs?</h4>

@@ -21,6 +21,10 @@ body {
 
 }
 
+#logo {
+    color: var(--laranja);
+}
+
 #texto-sobre {
     color:#fff;
 }
@@ -28,6 +32,10 @@ body {
 .container-header {
     text-align: center;
     margin-top: 2em;
+}
+
+.campo-pesquisar {
+    display: none;
 }
 
 #banner {
