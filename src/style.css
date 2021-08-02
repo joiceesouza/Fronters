@@ -35,14 +35,6 @@ a:hover {
 }
 
 
-/* nav {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    
-    height: 8vh; 
-} */
-
 #nav-list {
     display: none;
     position: absolute;
@@ -82,16 +74,6 @@ background: #fff;
 margin: 8px;
 }
 
-
-/* .container-header {
-    display: flex;
-    justify-content: space-evenly;
-    background-color: #002855;
-    /* width: 100vh; 
-    /* height: 8vh; 
-} */
-
-
 #footer {
     width: 100vw;
     height: 20vh;
@@ -115,9 +97,9 @@ margin: 8px;
 
 
 @media screen and (min-width: 601px){
-     #menu-hamburguer {
+     /* #menu-hamburguer {
          display: none;
-     }
+     } */
 
      #nav-list {
         list-style: none;

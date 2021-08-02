@@ -1,7 +1,7 @@
+import { redefinirSenha } from "../../services/index.js";
+
 export const TemplateRecuperar = () => {
-
     const container = document.createElement('div');
-
     const template = ` 
     <div class = 'recuperar-class'>
     <h5>Para recuperar o seu acesso, precisamos do seu e-mail</h5>
@@ -21,6 +21,8 @@ buttonReset.addEventListener("click", () => {
     //const auth = firebase.auth()
     const email = recuperarSenha.value
     console.log(email)
+
+    redefinirSenha(email)
     firebase
         .auth().sendPasswordResetEmail(email)
         .then(result => console.log(result))
@@ -34,9 +36,7 @@ return container;
 
 export const PopUpRecuperar = () => {
 
-    const botaoRecuperar = document.querySelector('#reset-id');
-   
-  
+    const botaoRecuperar = container.querySelector('#reset-id');
     botaoRecuperar.addEventListener("click", () => {
    
       const container = document.createElement('div');
@@ -46,7 +46,7 @@ export const PopUpRecuperar = () => {
     <div class="pop-up">
         <div class="fechar-popup">X</div>
       <div class="conteudo-popup">
-        <h2>Você recebera um link para redefinir sua senha em seu e-mail!</h2>
+        <h2>Você receberá um link para redefinir sua senha em seu e-mail!</h2>
         <button id="recuperarPopup"><a href="/#">Fazer Login</a></button>
       </div>
     </div>
