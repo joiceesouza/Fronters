@@ -1,56 +1,72 @@
+import { login, loginComGoogle } from '../../services/index.js';
+
 export const TemplateLogin = () => {
-    const divLogin = document.createElement('div');
-    divLogin.innerHTML = `
-<div id="banner-section">
-  <img id="banner" src="img/banner.jpg" alt="Foto demonstrativo do site">
-  <div id="texto-sobre">
-    <h2>Fronters</h2>
-    <h3>De frente com o Front</h3>
-    <h4>Está preparado para invadir 
-      o mundo dos Devs? Venha trocar experiências, aprender, ensinar e conhecer novas pessoas</h4>
-  </div>
-</div>
+    const main = document.createElement('div');
+    main.innerHTML = `
+
+    <div id="banner-section">
+    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
+    <div id="texto-sobre">
+        <h2 id="logo">Fronters</h2>
+        <h3>De frente com o Front</h3>
+        <h4>Está preparado para invadir 
+        o mundo dos Devs?</h4>
+
+    </div>
+    </div>
+
+    <nav id="nav">
+        <ul id="login-cadastro">
+                
+            <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
+            <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
+           
+        </ul>
+    </nav>
+
+
     <form>
         <div>
             <label for="emailUsuario">Email:</label>
-            <input type="email" id="emailUsuario">
+            <input type="email" id="email-usuario" placeholder="Digite o seu email">
         </div>
         <div>
             <label for="senhaUsuario">Senha:</label>
-            <input type="password" id="senhaUsuario">
+            <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
         </div>
-        <div>
-            <button id="botaoLogin">Login</button>
-            <button id="botaoCadastrar"><a href="/#cadastro">Cadastrar</a></button>
-            <a href="#recuperar" >Esqueceu sua senha?</a>
+        <div class="btn-login">
+            <button id="botaoLogin" type="button">Entrar</button>
         </div>
-        <div>
-            <button id="botaoGoogle">Entrar com a conta Google</button>
-            <button id="botaoGit">Entrar com a conta GitHub</button>
+    
+                    
+        <div class="btn-contas">
+            <p>-------------Ou-------------</p>
+            <div>
+                <button id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
+            </div>
+            <div>
+                <button id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
+            </div>
         </div>
     </form>
+
     `
-    return divLogin;
-
-}
-
-// //CONECTAR USUARIO com endereço de e-mail e senha
-export const AddEventoLogin = () => {
-
-    const botaoDoLogin = document.getElementById('botaoLogin');
+    const botaoDoLogin = main.querySelector('#botaoLogin');
     botaoDoLogin.addEventListener("click", () => {
-        const email = document.getElementById('emailUsuario').value;
-        const password = document.getElementById('senhaUsuario').value;
 
-        firebase
-            .auth()
-            .signInWithEmailAndPassword(email, password)
+        const email = main.querySelector('#email-usuario').value;
+        const password = main.querySelector('#senha-usuario').value;
+
+        login(email, password)
             .then((userCredential) => {
-                // Signed in
-                //window.location = "pagina que ira depois q fazer login"
                 const user = userCredential.user;
                 console.log(user, 'Deu certo o login! ihull');
-                // ...
+                window.history.pushState({}, null, '/perfil')
+                const popStateEvent = new PopStateEvent("popstate", {})
+                dispatchEvent(popStateEvent)
+               // OU window.location.pathname='/perfil';
+
+
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -60,23 +76,15 @@ export const AddEventoLogin = () => {
 
     });
 
-}
-
-//LOGIN GOOGLE
-export const AddEventoLoginComGoogle = () => {
-
-    const botaoDoGoogle = document.getElementById('botaoGoogle')
+    const botaoDoGoogle = main.querySelector('#botaoGoogle')
     botaoDoGoogle.addEventListener('click', (event) => {
-        event.preventDefault()
-        let provider = new firebase.auth.GoogleAuthProvider();
 
-        //Para fazer login com uma janela pop-up, chame signInWithPopup
-        firebase
-            .auth()
-            .signInWithPopup(provider)
+        event.preventDefault()
+
+        loginComGoogle()
             .then((result) => {
                 console.log(result)
-                alert(1)
+
                 /** @type {firebase.auth.OAuthCredential} */
                 let credential = result.credential;
 
@@ -95,12 +103,12 @@ export const AddEventoLoginComGoogle = () => {
                 let credential = error.credential;
                 // ...
             });
+      
+        });
 
-    })
-
-
-
+    return main;
 }
+
 
 //Login GitHub
 
@@ -131,6 +139,5 @@ export const AddEventoLoginComGitHub = () =>{
 
     })
 }
-
 
 
