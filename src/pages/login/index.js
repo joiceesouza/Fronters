@@ -1,4 +1,4 @@
-import { login, loginComGoogle } from '../../services/index.js';
+import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
 
 export const TemplateLogin = () => {
     const main = document.createElement('div');
@@ -34,6 +34,12 @@ export const TemplateLogin = () => {
             <label for="senhaUsuario">Senha:</label>
             <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
         </div>
+        <div>
+         <ul>
+         <li><a href="/recuperar">Esqueci minha senha </a></li>
+         </ul>
+
+        </div>
         <div class="btn-login">
             <button id="botaoLogin" type="button">Entrar</button>
         </div>
@@ -51,6 +57,8 @@ export const TemplateLogin = () => {
     </form>
 
     `
+
+    //LOGIN
     const botaoDoLogin = main.querySelector('#botaoLogin');
     botaoDoLogin.addEventListener("click", () => {
 
@@ -75,6 +83,8 @@ export const TemplateLogin = () => {
             });
 
     });
+
+    //GOOGLE
 
     const botaoDoGoogle = main.querySelector('#botaoGoogle')
     botaoDoGoogle.addEventListener('click', (event) => {
@@ -106,20 +116,16 @@ export const TemplateLogin = () => {
       
         });
 
-    return main;
-}
 
 
-//Login GitHub
+//LOGIN GITHUB
 
-export const AddEventoLoginComGitHub = () =>{
-    const botaoDoGit = document.querySelector('#botaoGit')
-    botaoDoGit.addEventListener('click', ()=> {
+    const botaoDoGit = main.querySelector('#botaoGitHub')
+    botaoDoGit.addEventListener('click', (event)=> {
         
-        let provider = new firebase.auth.GithubAuthProvider();
-        firebase
-        .auth()
-        .signInWithPopup(provider)
+        event.preventDefault()
+        
+        loginComGithub()
         .then((result) => {
             console.log(result)
             let credential = result.credential;
@@ -127,8 +133,8 @@ export const AddEventoLoginComGitHub = () =>{
         
         })    
         .catch(err => {
-            alert('Erro ao logar')
-
+            
+            // alert('Erro ao logar')
             let errorCode = error.code;
             let errorMessage = error.message;
             let email = error.email;
@@ -138,6 +144,8 @@ export const AddEventoLoginComGitHub = () =>{
         
 
     })
-}
 
+
+    return main;
+}
 

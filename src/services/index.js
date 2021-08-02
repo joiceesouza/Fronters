@@ -24,6 +24,25 @@ export const cadastro = (email, password) => {
 }
 
 
+// GITHUB
+export const loginComGithub = () => {
+    let provider = new firebase.auth.GithubAuthProvider();
+    return firebase
+        .auth()
+        .signInWithPopup(provider)
+
+}
+
+
+
+// REDEFINIÇÃO DE SENHA
+export const redefinirSenha = (email) => {
+    return firebase
+        .auth()
+        .sendPasswordResetEmail(email);
+}
+
+
 
 // export const cadastro = () => {
 
