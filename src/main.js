@@ -1,5 +1,3 @@
-// Este é o ponto de entrada da sua aplicação
-
 
 
 // //Para redirecionar os usuários à página de login, chame signInWithRedirect:

@@ -64,7 +64,8 @@ export const TemplateLogin = () => {
                 window.history.pushState({}, null, '/perfil')
                 const popStateEvent = new PopStateEvent("popstate", {})
                 dispatchEvent(popStateEvent)
-                // OU window.location.pathname='/perfil';
+               // OU window.location.pathname='/perfil';
+
 
             })
             .catch((error) => {
@@ -86,6 +87,7 @@ export const TemplateLogin = () => {
 
                 /** @type {firebase.auth.OAuthCredential} */
                 let credential = result.credential;
+
                 // This gives you a Google Access Token. You can use it to access the Google API.
                 let token = credential.accessToken;
                 // The signed-in user info.
@@ -101,10 +103,41 @@ export const TemplateLogin = () => {
                 let credential = error.credential;
                 // ...
             });
-
-    });
+      
+        });
 
     return main;
+}
+
+
+//Login GitHub
+
+export const AddEventoLoginComGitHub = () =>{
+    const botaoDoGit = document.querySelector('#botaoGit')
+    botaoDoGit.addEventListener('click', ()=> {
+        
+        let provider = new firebase.auth.GithubAuthProvider();
+        firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+            console.log(result)
+            let credential = result.credential;
+            let token = credential.accessToken;
+        
+        })    
+        .catch(err => {
+            alert('Erro ao logar')
+
+            let errorCode = error.code;
+            let errorMessage = error.message;
+            let email = error.email;
+            let credential = error.credential;
+            console.log(err)
+        })
+        
+
+    })
 }
 
 
