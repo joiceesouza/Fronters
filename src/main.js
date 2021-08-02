@@ -5,7 +5,7 @@ import {TemplateLogin} from './pages/login/index.js';
 import {TemplateCadastro} from './pages/cadastro/index.js';
 import {AddEventoLogin, AddEventoLoginComGoogle} from './services/index.js';
 import {AddEventoCadastro} from './services/index.js';
-import perfil from './pages/perfil/index.js';
+import {TemplatePerfil} from './pages/perfil/index.js';
 
 const main = document.querySelector('#conteudo-principal');
 const init = () => {
@@ -22,7 +22,7 @@ function carregarPaginaURL() {
             AddEventoLoginComGoogle();
             break;
         case "#perfil":
-            main.appendChild(perfil())
+            main.appendChild(TemplatePerfil())
             break;
         case "#cadastro":
             main.appendChild(TemplateCadastro())

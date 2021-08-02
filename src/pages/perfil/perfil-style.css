@@ -5,12 +5,104 @@
     text-decoration: none;
 }
 
-
 :root {
-    --bg-color: #6ab1d1;
-    --rodape-footer: #002855;
-    --logo: #fb8500;
+    --azul-claro: #6ab1d1;
+    --azul-escuro: #002855;
+    --laranja: #fb8500;
   }
 
- 
+body {
+    background-color: var(--azul-claro);
+}
 
+.container-header {
+    background-color: var(--azul-escuro);
+    margin-top: 0;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.logo {
+    font-size: 1.5em;
+}
+
+.campo-pesquisar {
+    display: block;
+   
+}
+
+#pesquisar {
+    border-radius: 5px;
+    width: 100%;
+    height: 4vh;
+    background: white;
+    background-image: url(/img/vector-lupa.png);
+    background-repeat: no-repeat;
+    background-position-x: right;
+}
+
+#pesquisar::placeholder {
+    color: black;
+}
+
+
+.perfil {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.editar-perfil {
+    width: 30vw;
+    height: 4vh;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.foto p {
+    text-align: center;
+}
+
+#post {
+    width: 100vw;
+}
+
+.campo-addFoto {
+    margin: 15px;
+}
+
+.link-do-github {
+    text-align: center;
+}
+
+#link-github {
+    background-color: white;
+    width: 80vw;
+    height: 4vh;
+    border-radius: 5px;
+    margin: 10px;
+}
+
+#link-github::placeholder {
+    font-size: 1em;
+    color:black;
+    padding: 5px;
+}
+
+#publicar {
+    background-color: var(--laranja);
+    width: 55vw;
+    height: 2.5em;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 0.6em;
+    cursor: pointer;
+}
+
+.btn-publicar {
+    text-align: center;
+}
