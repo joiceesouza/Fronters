@@ -11,20 +11,12 @@
     --logo: #fb8500;
   }
 
-body {
-    background-color: var(--bg-color);
-    color: white;
-    
-}
+
 
 .logo {
     color: var(--logo);
 }
 
-.container-header {
-    display: flex;
-    background-color: var(--rodape-footer);
-}
 
 #menu {
     display: flex;
@@ -43,13 +35,13 @@ a:hover {
 }
 
 
-nav {
+/* nav {
     display: flex;
     justify-content: space-around;
     align-items: center;
     
     height: 8vh; 
-}
+} */
 
 #nav-list {
     display: none;
