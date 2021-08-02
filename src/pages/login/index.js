@@ -17,8 +17,7 @@ export const TemplateLogin = () => {
 
     <nav id="nav">
         <ul id="login-cadastro">
-           <!-- <li><a href="/#">Login</a></li> -->
-            <!-- <li><a href="/#cadastro">Cadastro</a></li> -->
+                
             <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
             <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
            
