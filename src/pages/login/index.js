@@ -1,7 +1,8 @@
+import { login, loginComGoogle } from '../../services/index.js';
 
 export const TemplateLogin = () => {
-    const divLogin = document.createElement('div');
-    divLogin.innerHTML = `
+    const main = document.createElement('div');
+    main.innerHTML = `
 
     <div id="banner-section">
     <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
@@ -19,7 +20,7 @@ export const TemplateLogin = () => {
            <!-- <li><a href="/#">Login</a></li> -->
             <!-- <li><a href="/#cadastro">Cadastro</a></li> -->
             <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
-            <li><a href="/#cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
+            <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
            
         </ul>
     </nav>
@@ -35,14 +36,14 @@ export const TemplateLogin = () => {
             <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
         </div>
         <div class="btn-login">
-            <button id="botaoLogin">Entrar</button>
+            <button id="botaoLogin" type="button">Entrar</button>
         </div>
     
                     
         <div class="btn-contas">
             <p>-------------Ou-------------</p>
             <div>
-                <button id="botaoGoogle"><i class="fab fa-google"></i>Entrar com a conta Google</button>
+                <button id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
             </div>
             <div>
                 <button id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
@@ -51,7 +52,60 @@ export const TemplateLogin = () => {
     </form>
 
     `
-    return divLogin;
+    const botaoDoLogin = main.querySelector('#botaoLogin');
+    botaoDoLogin.addEventListener("click", () => {
 
+        const email = main.querySelector('#email-usuario').value;
+        const password = main.querySelector('#senha-usuario').value;
+
+        login(email, password)
+            .then((userCredential) => {
+                const user = userCredential.user;
+                console.log(user, 'Deu certo o login! ihull');
+                window.history.pushState({}, null, '/perfil')
+                const popStateEvent = new PopStateEvent("popstate", {})
+                dispatchEvent(popStateEvent)
+                // OU window.location.pathname='/perfil';
+
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log('Infelizmente aconteceu algum com login! Conta não cadastrada', errorCode, errorMessage);
+            });
+
+    });
+
+    const botaoDoGoogle = main.querySelector('#botaoGoogle')
+    botaoDoGoogle.addEventListener('click', (event) => {
+
+        event.preventDefault()
+
+        loginComGoogle()
+            .then((result) => {
+                console.log(result)
+
+                /** @type {firebase.auth.OAuthCredential} */
+                let credential = result.credential;
+                // This gives you a Google Access Token. You can use it to access the Google API.
+                let token = credential.accessToken;
+                // The signed-in user info.
+                let user = result.user;
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                // The email of the user's account used.
+                let email = error.email;
+                // The firebase.auth.AuthCredential type that was used.
+                let credential = error.credential;
+                // ...
+            });
+
+    });
+
+    return main;
 }
+
 

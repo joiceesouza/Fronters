@@ -36,3 +36,4 @@ export const TemplatePerfil = () => {
 container.innerHTML = template;
 return container;
 }
+
