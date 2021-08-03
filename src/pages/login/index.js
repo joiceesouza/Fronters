@@ -5,7 +5,7 @@ export const TemplateLogin = () => {
     main.innerHTML = `
 
     <div id="banner-section">
-    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
+    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site"> 
     <div id="texto-sobre">
         <h2 id="logo">Fronters</h2>
         <h3>De frente com o Front</h3>
@@ -40,18 +40,18 @@ export const TemplateLogin = () => {
          </ul>
 
         </div>
-        <div class="btn-login">
+        <div class="btn">
             <button id="botaoLogin" type="button">Entrar</button>
         </div>
     
                     
         <div class="btn-contas">
             <p>-------------Ou-------------</p>
-            <div>
-                <button id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
+            <div class="btn">
+                <button  id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
             </div>
-            <div>
-                <button id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
+            <div class="btn">
+                <button  id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
             </div>
         </div>
     </form>
@@ -94,6 +94,9 @@ export const TemplateLogin = () => {
         loginComGoogle()
             .then((result) => {
                 console.log(result)
+                window.history.pushState({}, null, '/perfil')
+            const popStateEvent = new PopStateEvent("popstate", {})
+            dispatchEvent(popStateEvent)
 
                 /** @type {firebase.auth.OAuthCredential} */
                 let credential = result.credential;
@@ -130,20 +133,22 @@ export const TemplateLogin = () => {
             console.log(result)
             let credential = result.credential;
             let token = credential.accessToken;
+            window.history.pushState({}, null, '/perfil')
+            const popStateEvent = new PopStateEvent("popstate", {})
+            dispatchEvent(popStateEvent)
         
-        })    
-        .catch(err => {
+        }).catch((error) => {
             
             // alert('Erro ao logar')
             let errorCode = error.code;
             let errorMessage = error.message;
             let email = error.email;
             let credential = error.credential;
-            console.log(err)
-        })
+            console.log(error)
+        });
         
 
-    })
+    });
 
 
     return main;
