@@ -3,11 +3,41 @@ import { redefinirSenha } from "../../services/index.js";
 export const TemplateRecuperar = () => {
     const container = document.createElement('div');
     const template = ` 
-    <div class = 'recuperar-class'>
-    <h5>Para recuperar o seu acesso, precisamos do seu e-mail</h5>
-    <input type="email" placeholder="Digite seu e-mail" id="recuperar-email">
-    <button type="button" id="reset-id">Recuperar</button>
+  
+    <div id="banner-section">
+    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
+    <div id="texto-sobre">
+        <h2 id="logo">Fronters</h2>
+        <h3>De frente com o Front</h3>
+        <h4>Está preparado para invadir 
+        o mundo dos Devs?</h4>
+
     </div>
+    </div>
+
+  <form class="campo-form">
+  <div>
+    <label for="emailUsuario">Email:</label>
+    <input type="email" id="recuperar-email" placeholder="Digite o seu email">
+  </div>
+  <div id="botao-recuperar">
+    <button type="button" id="reset-id">Recuperar</button>
+  </div>
+ 
+</form>
+
+<div class="popup-wrapper">
+<div class="popup">
+    <div class="fechar-popup">X</div>
+    <div class="conteudo-popup">
+    <h2>Cadastro finalizado com sucesso!</h2>
+    <button id="loginPopup"><a href="/#">Fazer Login</a></button>
+  </div>
+</div>
+</div>
+
+
+
     `;
 
 container.innerHTML = template;
@@ -33,28 +63,4 @@ buttonReset.addEventListener("click", () => {
 
 return container;
 }
-
-export const PopUpRecuperar = () => {
-
-    const botaoRecuperar = container.querySelector('#reset-id');
-    botaoRecuperar.addEventListener("click", () => {
-   
-      const container = document.createElement('div');
-      const template = `
-    
-  <div class="popup-wrapper">
-    <div class="pop-up">
-        <div class="fechar-popup">X</div>
-      <div class="conteudo-popup">
-        <h2>Você receberá um link para redefinir sua senha em seu e-mail!</h2>
-        <button id="recuperarPopup"><a href="/#">Fazer Login</a></button>
-      </div>
-    </div>
-  </div>
-  `
-      container.innerHTML = template;
-      return container;
-  
-    })
-  }
 
