@@ -7,33 +7,29 @@
     font-family: Arial, Helvetica, sans-serif;
 }
 
-
 :root {
     --azul-claro: #6ab1d1;
     --azul-escuro: #002855;
     --laranja: #fb8500;
     --laranja-claro: #FFE8CD;
     --cinza-claro: #F1EDED;
+    --branco: #fff;
   }
 
-body {
-    background-image: url("/src/img/foto-capa.jpg");
-    /* height: 100vh; */
-   
-}
 
 #logo {
     color: var(--laranja);
 }
 
-#texto-sobre h3, #texto-sobre h4 {
-    color: #fff;
-    font-weight: bold;
-    margin: 5px auto;
+#texto-sobre {
+    text-align: center;
+    margin: 1em;
 }
 
-.campo-pesquisar {
-    display: none;
+#texto-sobre h3, #texto-sobre h4 {
+    color: var(--branco);
+    font-weight: bold;
+    margin: 5px auto;
 }
 
 #banner {
@@ -45,9 +41,15 @@ body {
     position: absolute;
 }
 
-#texto-sobre {
-    text-align: center;
-    margin: 1em;
+
+#login-cadastro {
+    display: flex;
+    margin-left: 1em;
+}
+
+#login-cadastro li {
+    margin-right: 2em;
+    font-size: 1.5em;
 }
 
 ul li a button:before {
@@ -71,17 +73,13 @@ ul li a button:hover:before {
 }
 
 .nav-btn {
-    color: #fff;
+    color: var(--branco);
     border: none;
     background: transparent;
     font-size: 1em;
     padding: 16px;
     outline: none;
     position: relative;
-}
-
-form {
-    animation: up 1s;
 }
 
 @keyframes up {
@@ -104,12 +102,13 @@ form {
 form {
     margin-left: 1em;
     margin-top: 2em;
+    animation: up 1s;
 }
 
 label {
     display: block;
     font-size: 1.2em;
-    color: var(--label);
+    color: var(--laranja-claro);
 }
 
 input {
@@ -119,21 +118,20 @@ input {
     height: 2rem;
     width: 70vw;
     outline: none;
+    margin-bottom: 2em;
 }
 
 input::placeholder {
-    color: var(--placeholder);
+    color: var(--cinza-claro);
     font-size: 1.2em;
 }
-
 
 #email-usuario, #senha-usuario {
     margin-bottom: 2em;
 }
 
-.btn {
-    width: 100%;
-    text-align: center;
+#esqueci-senha {
+    color: #fdc27e;
 }
 
 #botaoLogin {
@@ -150,6 +148,11 @@ input::placeholder {
 
 }
 
+.btn {
+    width: 100%;
+    text-align: center;
+}
+
 .btn-contas {
     margin: 1em;
     text-align: center;
@@ -162,14 +165,11 @@ input::placeholder {
     color: #fff;
 }
 
-
-
 .btn-contas i {
     color: var(--logo);
     margin-right: 10px;
     
 }
-
 
 #botaoGoogle, #botaoGitHub {
     background-color: #fff;
@@ -188,19 +188,91 @@ input::placeholder {
     margin-bottom: 1.5em;
 }
 
+/* -----------------------CADASTRO -----------------------------------------*/
+#botao-cadastro {
+    text-align: center;
+}
+
+
+#botao-finalizar-cadastro{
+    background-color: var(--logo);
+    width: 55vw;
+    height: 2.5em;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 0.6em;
+    cursor: pointer;
+
+}
+
+/* ----------------------------POPUP CADASTRO ------------------------------------ */
+.popup-wrapper {
+    background: rgba(0,0,0, .5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.popup {
+    text-align: center;
+    width: 100%;
+    margin: 10% auto;
+    padding: 20px;
+    background: white;
+    position: relative;
+
+}
+
+.conteudo-popup h2{
+    color: var(--logo);
+}
+
+.fechar-popup {
+    color: black;
+    position: absolute;
+    top: 5px;
+    right: 30px;
+    cursor: pointer;
+}
+
+#loginPopup {
+    padding: 5px;
+     
+}
+
+#loginPopup a {
+    color: black;
+}
+
+/* -----------------------ADAPTAÇÃO PARA TELAS ---------------------- */
+
 @media screen and (max-width: 600px) {
     
 }
 
-@media screen and (min-width: 1000px) {
-    /* h2 {
-        font-size: 500px;
-    } TESTEEE */
-           
+@media screen and (min-width: 500px) {
+        
     #banner {
         width: 50vw;
         height: 100vh;
+        margin-left: 50%;
     }
+
+    #texto-sobre {
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    }
+
+    input {
+        max-width: 35vw;
+    }
+        
 }
 
 

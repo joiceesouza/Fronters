@@ -106,3 +106,8 @@ body {
 .btn-publicar {
     text-align: center;
 }
+
+#tete {
+    width: 200px;
+    height: 20px;
+}
