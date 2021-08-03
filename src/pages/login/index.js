@@ -14,7 +14,7 @@ export const TemplateLogin = () => {
 
     </div>
     </div>
-
+<main>
     <nav id="nav">
         <ul id="login-cadastro">
                 
@@ -36,7 +36,7 @@ export const TemplateLogin = () => {
         </div>
         <div>
          <ul>
-         <li><a href="/recuperar">Esqueci minha senha </a></li>
+         <li><a href="/recuperar" id="esqueci-senha">Esqueci minha senha </a></li>
          </ul>
 
         </div>
@@ -55,7 +55,7 @@ export const TemplateLogin = () => {
             </div>
         </div>
     </form>
-
+</main>
     `
 
     //LOGIN
