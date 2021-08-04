@@ -41,6 +41,11 @@
     position: absolute;
 }
 
+#banner-grande {
+    display: none;
+
+}
+
 
 #login-cadastro {
     display: flex;
@@ -135,7 +140,7 @@ input::placeholder {
 }
 
 #botaoLogin {
-    background-color: var(--logo);
+    background-color: var(--laranja);
     width: 240px;
     height: 2.5em;
     color: #fff;
@@ -151,22 +156,18 @@ input::placeholder {
 .btn {
     width: 100%;
     text-align: center;
-}
-
-.btn-contas {
     margin: 1em;
-    text-align: center;
 }
 
-.btn-contas p {
-    text-align: center;
+.btn p {
+    
     margin: 2em;
     font-size: 1.2em;
     color: #fff;
 }
 
-.btn-contas i {
-    color: var(--logo);
+.btn i {
+    color: var(--laranja);
     margin-right: 10px;
     
 }
@@ -193,9 +194,8 @@ input::placeholder {
     text-align: center;
 }
 
-
 #botao-finalizar-cadastro{
-    background-color: var(--logo);
+    background-color: var(--laranja);
     width: 55vw;
     height: 2.5em;
     color: #fff;
@@ -229,7 +229,7 @@ input::placeholder {
 }
 
 .conteudo-popup h2{
-    color: var(--logo);
+    color: var(--laranja);
 }
 
 .fechar-popup {
@@ -251,17 +251,32 @@ input::placeholder {
 
 /* -----------------------ADAPTAÇÃO PARA TELAS ---------------------- */
 
-@media screen and (max-width: 600px) {
-    
+@media screen and (min-width: 1000px) {
+
+   
+  
 }
 
-@media screen and (min-width: 500px) {
-        
-    #banner {
-        width: 50vw;
-        height: 100vh;
-        margin-left: 50%;
+@media screen and (min-width: 768px) {
+    
+    .container {
+        display: flex;
+        align-items: center;
     }
+    
+    #banner {
+        display: none;
+    } 
+
+    /* #banner-grande {
+        display: inline-block;
+        margin-left: 50%;
+        height: 100vh;
+        max-width: 50vw;
+        filter: contrast(0.8);
+        
+
+    } */
 
     #texto-sobre {
     display: flex;
@@ -271,6 +286,11 @@ input::placeholder {
 
     input {
         max-width: 35vw;
+    }
+
+    .btn {
+        text-align: left;
+
     }
         
 }
