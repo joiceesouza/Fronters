@@ -22,13 +22,13 @@ export const TemplatePerfil = () => {
     </div>
 
     <form action="" id="postForm">
-        <div class>
+        <div>
             <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"></textarea>
         </div>        
     
         <div class="campo-addFoto"><img id="add-foto" src="img/vector-addfoto.png">Adicionar Foto</div>
 
-        <div class="link-do-github">
+        <div class="div-link-do-github">
             <i class="fab fa-github"></i><input id="link-github" placeholder="Colocar link do GitHub"></input>
         </div>
         <div class="btn-publicar">
