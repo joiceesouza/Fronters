@@ -249,6 +249,47 @@ input::placeholder {
     color: black;
 }
 
+
+/* ----------------------- TELA RECUPERAR ---------------------------*/
+
+
+.texto-reset {
+    text-align: center;
+}
+
+.texto-reset h3 {
+    color: var(--laranja);
+}
+
+.text-h4{
+    color: var(--cinza-claro);
+    margin: 10px;
+}
+
+
+#botao-recuperar {
+    text-align: center;
+    
+} 
+
+#recuperar-email {
+    margin-top: 1.5em;
+}
+
+#reset-id {
+    background-color: var(--logo);
+    width: 50vw;
+    height: 2.5em;
+    color: #fff;
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 0.6em;
+    cursor: pointer;
+   
+} 
+
+
 /* -----------------------ADAPTAÇÃO PARA TELAS ---------------------- */
 
 @media screen and (min-width: 1000px) {
