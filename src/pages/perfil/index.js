@@ -19,6 +19,7 @@ export const TemplatePerfil = () => {
         </div>
     
         <button class="editar-perfil"> Editar Perfil </button>
+        <button class="logout" id="logout-id"> Sair </button>
     </div>
 
     <form action="" id="postForm">
@@ -106,9 +107,29 @@ export const TemplatePerfil = () => {
     }
     
     deletarPost("q6ORknzzuaoiCL04XXdC")
-    
+     
+    const logout = main.querySelector('#logout-id')
+    logout.addEventListener("click", () => {
+       
+        firebase
+        .auth()
+        .signOut()
+        .then(() => {
+           // Sign-out successful.
+           // alert('Você se deslogou')
+            window.history.pushState({}, null, '/login')
+            const popStateEvent = new PopStateEvent("popstate", {})
+            dispatchEvent(popStateEvent)
+          }).catch((error) => {
+            // An error happened.
+          });
+      
+        })
+
 
 
 return main;
+
 }
+
 

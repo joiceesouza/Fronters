@@ -136,13 +136,12 @@ export const TemplateLogin = () => {
             console.log(result)
             let credential = result.credential;
             let token = credential.accessToken;
+            let user = result.user;
             window.history.pushState({}, null, '/perfil')
             const popStateEvent = new PopStateEvent("popstate", {})
             dispatchEvent(popStateEvent)
-        
-        }).catch((error) => {
-            
-            // alert('Erro ao logar')
+        })    
+        .catch(error=> {
             let errorCode = error.code;
             let errorMessage = error.message;
             let email = error.email;
