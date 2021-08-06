@@ -1,0 +1,64 @@
+
+
+.perfil {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.foto p{
+    margin: 1em;
+    
+}
+
+#foto-perfil {
+    margin: 1em;
+}
+
+.nome-usuario {
+    font-weight: bold;
+}
+
+#editar-post {
+    border: none;
+    padding: 10px;
+    margin-right: 2em;
+
+}
+
+#publicacao {
+    width: 100vw;
+    font-size: 1.2em;
+    height: 20vh;
+    border: none;
+    padding: 1em;
+}
+
+
+
+#div-link-github-publicado {
+text-align: center;
+}
+
+#link-github {
+    border: 1px solid black;
+}
+
+.icones {
+    margin: 1em;
+}
+.likes {
+    margin: 0.5em;
+}
+
+.comentarios {
+    display: none;
+}
+
+#input-comentario {
+    
+    border-bottom: 1px solid black;
+    outline: none;
+    margin: auto 10px;
+    
+}

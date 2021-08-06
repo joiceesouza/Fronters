@@ -5,56 +5,59 @@ export const TemplateLogin = () => {
     main.innerHTML = `
 
     <div id="banner-section">
-    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
-    <div id="texto-sobre">
-        <h2 id="logo">Fronters</h2>
-        <h3>De frente com o Front</h3>
-        <h4>Está preparado para invadir 
-        o mundo dos Devs?</h4>
+    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site"> 
 
-    </div>
-    </div>
-
-    <nav id="nav">
-        <ul id="login-cadastro">
-                
-            <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
-            <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
-           
-        </ul>
-    </nav>
-
-
-    <form>
-        <div>
-            <label for="emailUsuario">Email:</label>
-            <input type="email" id="email-usuario" placeholder="Digite o seu email">
-        </div>
-        <div>
-            <label for="senhaUsuario">Senha:</label>
-            <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
-        </div>
-        <div>
-         <ul>
-         <li><a href="/recuperar">Esqueci minha senha </a></li>
-         </ul>
+    <section class="container">
+        <img id="banner-grande" src="img/foto-capa-grande.jpg" alt="Foto demonstrativo do site"> 
+            <div id="texto-sobre">
+            <h2 id="logo">Fronters</h2>
+            <h3>De frente com o Front</h3>
+            <h4>Está preparado para invadir 
+            o mundo dos Devs?</h4>
 
         </div>
-        <div class="btn-login">
-            <button id="botaoLogin" type="button">Entrar</button>
         </div>
-    
+
+        <nav id="nav">
+            <ul id="login-cadastro">
                     
-        <div class="btn-contas">
-            <p>-------------Ou-------------</p>
+                <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
+                <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
+            
+            </ul>
+        </nav>
+
+
+        <form>
             <div>
-                <button id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
+                <label for="emailUsuario">Email:</label>
+                <input type="email" id="email-usuario" placeholder="Digite o seu email">
             </div>
             <div>
-                <button id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
+                <label for="senhaUsuario">Senha:</label>
+                <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
             </div>
-        </div>
-    </form>
+            <div>
+            <ul>
+            <li><a href="/recuperar" id="esqueci-senha">Esqueci minha senha </a></li>
+            </ul>
+
+            </div>
+            <div class="btn">
+                <div>
+                    <button id="botaoLogin" type="button">Entrar</button>
+                </div>
+        
+                    <p>-------------Ou-------------</p>
+                <div>
+                    <button  id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
+                </div>
+                <div>
+                    <button  id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
+                </div>
+            </div>
+        </form>
+    </section>
 
     `
 
@@ -94,6 +97,9 @@ export const TemplateLogin = () => {
         loginComGoogle()
             .then((result) => {
                 console.log(result)
+                window.history.pushState({}, null, '/perfil')
+            const popStateEvent = new PopStateEvent("popstate", {})
+            dispatchEvent(popStateEvent)
 
                 /** @type {firebase.auth.OAuthCredential} */
                 let credential = result.credential;
@@ -135,16 +141,16 @@ export const TemplateLogin = () => {
             const popStateEvent = new PopStateEvent("popstate", {})
             dispatchEvent(popStateEvent)
         })    
-        .catch(err => {
+        .catch(error=> {
             let errorCode = error.code;
             let errorMessage = error.message;
             let email = error.email;
             let credential = error.credential;
-            console.log(err)
-        })
+            console.log(error)
+        });
         
 
-    })
+    });
 
 
     return main;

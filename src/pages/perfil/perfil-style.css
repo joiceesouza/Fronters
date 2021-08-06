@@ -11,9 +11,9 @@
     --laranja: #fb8500;
   }
 
-body {
+/* body {
     background-color: var(--azul-claro);
-}
+} */
 
 .container-header {
     background-color: var(--azul-escuro);
@@ -66,7 +66,13 @@ body {
 }
 
 #post {
+    margin-top: 1em;
     width: 100vw;
+    background-color: var(--azul-claro);
+}
+
+#post::placeholder {
+    color:#000;
 }
 
 .campo-addFoto {
@@ -106,3 +112,10 @@ body {
 .btn-publicar {
     text-align: center;
 }
+
+#tete {
+    width: 200px;
+    height: 20px;
+}
+
+
