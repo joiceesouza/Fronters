@@ -35,9 +35,12 @@ export const TemplatePost = () => {
     </div>
 
     <div class="comentarios">
-        <input id="input-comentario" type="textarea"></input>
-        <button type="button">Publicar</button>
+        <input id="escrever-comentario" type="textarea"></input>
+        <button id="publicar-comentario"type="button">Publicar</button>
     </div>
+
+    <div id="div-comentario-postado"></div>
+    
     
    
     `
@@ -54,7 +57,21 @@ export const TemplatePost = () => {
        iconeCurtido.classList = "ativado";
     })
       
-    const botaoPublicar = main.querySelector('#icone-curtir');
+    
+    
+    const botaoPublicar = main.querySelector('#publicar-comentario');
+    botaoPublicar.addEventListener("click", () => {
+
+        const comentario = main.querySelector('#escrever-comentario').value;
+        const inputComentario = `
+        <input id="input-comentario" type="textarea"></input>
+        `
+        main.querySelector('#div-comentario-postado').innerHTML = inputComentario;
+        main.querySelector('#input-comentario').value = comentario;
+        
+       
+
+    })
     
 
 return main;
