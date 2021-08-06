@@ -15,8 +15,8 @@ export const TemplateRecuperar = () => {
     </div>
     <div class="texto-reset">
       <h3 class="text-id">Esqueci minha senha</h3>
-      <h3 class="text-h4">Uma nova senha será enviada 
-      ao seu email de cadastro</h3><br>
+      <h4 class="text-h4">Uma nova senha será enviada 
+      ao seu email de cadastro</h4><br>
     </div>
     <form class="campo-form">
       <div>
