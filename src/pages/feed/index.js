@@ -1,4 +1,4 @@
-export const TemplatePost = () => {
+export const TemplateFeed = () => {
 
     const main = document.createElement('div');
     main.innerHTML = `
