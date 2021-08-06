@@ -31,9 +31,39 @@ export const TemplatePerfil = () => {
     <div class="btn-publicar">
         <button id="publicar">Publicar</button>
     </div>
+
+    <button class="logout" id="logout-id"> Sair </button>
     `;
 
-container.innerHTML = template;
+    container.innerHTML = template;
+
+    const logout = container.querySelector('#logout-id')
+    logout.addEventListener("click", () => {
+       
+        firebase
+        .auth()
+        .signOut()
+        .then(() => {
+           // Sign-out successful.
+           // alert('Você se deslogou')
+            window.history.pushState({}, null, '/login')
+            const popStateEvent = new PopStateEvent("popstate", {})
+            dispatchEvent(popStateEvent)
+          }).catch((error) => {
+            // An error happened.
+          });
+        })
+
+  /*  .auth()
+    .signOut()
+    .then(() => {
+        alert('Você se deslogou')
+    }), (error) => {
+        console.log(error)
+    }
+})*/
+
 return container;
 }
+
 
