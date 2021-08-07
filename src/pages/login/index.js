@@ -3,12 +3,13 @@ import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
 export const TemplateLogin = () => {
     const main = document.createElement('div');
     main.innerHTML = `
+<main class="principal">
+    <div id="banner-section" class="container conteudo-login">
+        <div id="banner"></div>
+        <div id="banner-grande"></div>
+    </div>
 
-    <div id="banner-section">
-    <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site"> 
-
-    <section class="container">
-        <img id="banner-grande" src="img/foto-capa-grande.jpg" alt="Foto demonstrativo do site"> 
+    <section class="conteudo-login" >
             <div id="texto-sobre">
             <h2 id="logo">Fronters</h2>
             <h3>De frente com o Front</h3>
@@ -58,7 +59,7 @@ export const TemplateLogin = () => {
             </div>
         </form>
     </section>
-
+</main>
     `
 
     //LOGIN
