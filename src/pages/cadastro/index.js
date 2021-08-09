@@ -24,6 +24,10 @@ export const TemplateCadastro = () => {
 
     
   <form class="campo-form">
+    <div>
+      <label for="nomeUsuario">Nome:</label>
+      <input type="text" id="nome-cadastro" placeholder="Digite o seu nome">
+    </div>
   <div>
     <label for="emailUsuario">Email:</label>
     <input type="email" id="email-cadastro" placeholder="Digite o seu email">
