@@ -3,21 +3,17 @@ import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
 export const TemplateLogin = () => {
     const main = document.createElement('div');
     main.innerHTML = `
-<main class="principal">
-    <div id="banner-section" class="container conteudo-login">
-        <div id="banner"></div>
-        <div id="banner-grande"></div>
-    </div>
-
+<main class="principal pagina-login">
+        <div class="foto-principal"></div>
+        
     <section class="conteudo-login" >
             <div id="texto-sobre">
-            <h2 id="logo">Fronters</h2>
-            <h3>De frente com o Front</h3>
-            <h4>Está preparado para invadir 
-            o mundo dos Devs?</h4>
-
-        </div>
-        </div>
+                <h2 id="logo">Fronters</h2>
+                <h3>De frente com o Front</h3>
+                <h4>Está preparado para invadir 
+                o mundo dos Devs?</h4>
+            </div>
+        
 
         <nav id="nav">
             <ul id="login-cadastro">
@@ -30,31 +26,28 @@ export const TemplateLogin = () => {
 
 
         <form>
-            <div>
+            <div class="campo-form">
                 <label for="emailUsuario">Email:</label>
                 <input type="email" id="email-usuario" placeholder="Digite o seu email">
             </div>
-            <div>
+            <div class="campo-form">
                 <label for="senhaUsuario">Senha:</label>
                 <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
             </div>
             <div>
-            <ul>
-            <li><a href="/recuperar" id="esqueci-senha">Esqueci minha senha </a></li>
-            </ul>
-
+                <a href="/recuperar" id="esqueci-senha">Esqueci minha senha </a>
             </div>
             <div class="btn">
                 <div>
-                    <button id="botaoLogin" type="button">Entrar</button>
+                    <button class="botoes" id="botaoLogin" type="button">Entrar</button>
                 </div>
         
-                    <p>-------------Ou-------------</p>
+                    <p> Ou </p>
                 <div>
-                    <button  id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
+                    <button  class="botoes" id="botaoGoogle" type="button"><i class="fab fa-google"></i>Entrar com a conta Google</button>
                 </div>
                 <div>
-                    <button  id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
+                    <button  class="botoes" id="botaoGitHub"><i class="fab fa-github"></i>Entrar com a conta GitHub</button>
                 </div>
             </div>
         </form>

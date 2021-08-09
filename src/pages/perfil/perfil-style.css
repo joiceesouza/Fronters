@@ -40,7 +40,9 @@
     background: white;
     background-image: url(/img/vector-lupa.png);
     background-repeat: no-repeat;
-    background-position-x: right;
+    background-position-x: 95%;
+    background-position-y: center;
+
 }
 
 #pesquisar::placeholder {

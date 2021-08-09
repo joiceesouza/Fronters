@@ -16,9 +16,15 @@
     --branco: #fff;
   }
 
-  body {
-      background-color: #002855;
+ /* body {
+     background: linear-gradient(90deg, rgba(2,0,36,1) 0%, #002855 35%, rgba(0,212,255,1) 100%);
+     background-color: #6ab1d1; 
       
+  }*/
+
+  
+  .pagina-login {
+    min-height: 100vh;
   }
 
 #logo {
@@ -27,7 +33,8 @@
 
 #texto-sobre {
     text-align: center;
-    margin: 1em;
+    margin: 1em 0.8em 0.3em;
+
 }
 
 #texto-sobre h3, #texto-sobre h4 {
@@ -36,11 +43,12 @@
     margin: 5px auto;
 }
 
-#banner {
-    background-image: url("/img/foto-capa.jpg");
+.foto-principal {
+    /* background-image: url("/img/foto-capa.jpg"); */
+    background-image: url("/img/capa-desenho-mobile.png");
     width: 100%;
     height: 100vh;
-    filter: contrast(0.3);
+    /* filter: contrast(0.1); */
     top:0;
     z-index: -10;
     position: fixed;
@@ -48,15 +56,15 @@
     background-position: center;
 }
 
-#banner-grande {
+/* #banner-grande {
     display: none;
 
-}
+} */
 
 
 #login-cadastro {
     display: flex;
-    margin-left: 1em;
+    justify-content: center;
 }
 
 #login-cadastro li {
@@ -107,39 +115,45 @@ ul li a button:hover:before {
 
 
 .campo-form {
-    margin: 20px;
+    /* margin: 20px; */
     width: 100%;
+    margin-bottom: 1em;
 }
 
-form {
-    margin-left: 1em;
-    margin-top: 2em;
+.pagina-login form {
+    /* margin-left: 1em;*/
+    margin-top: 0.3em;
     animation: up 1s;
+    text-align: center;
+    margin: 2em;
 }
 
-label {
+.pagina-login label {
     display: block;
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: var(--laranja-claro);
+    text-align: left;
+    
 }
 
-input {
+.pagina-login input {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #F1EDED;
     height: 2rem;
-    width: 70vw;
+    width: 100%;
     outline: none;
-    margin-bottom: 2em;
+    color: #fff;
+   
 }
 
-input::placeholder {
+.pagina-login input::placeholder {
     color: var(--cinza-claro);
-    font-size: 1.2em;
+    font-size: 1.3em;
 }
 
 #email-usuario, #senha-usuario {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
 }
 
 #esqueci-senha {
@@ -148,7 +162,7 @@ input::placeholder {
 
 #botaoLogin {
     background-color: var(--laranja);
-    width: 240px;
+    /* width: 80%; */
     height: 2.5em;
     color: #fff;
     font-size: 1em;
@@ -160,6 +174,11 @@ input::placeholder {
 
 }
 
+
+.botoes {
+    width: 100%;
+ }
+
 .btn {
     width: 100%;
     text-align: center;
@@ -168,7 +187,7 @@ input::placeholder {
 
 .btn p {
     
-    margin: 2em;
+    margin: 0.3em;
     font-size: 1.2em;
     color: #fff;
 }
@@ -181,7 +200,7 @@ input::placeholder {
 
 #botaoGoogle, #botaoGitHub {
     background-color: #fff;
-    max-width: 80vw;
+    /* width: 80%; */
     height: 2.5em;
     color: rgb(3, 3, 3);
     font-size: 1em;
@@ -193,7 +212,7 @@ input::placeholder {
 }
 
 #botaoGoogle {
-    margin-bottom: 1.5em;
+    margin-bottom: 1em;
 }
 
 /* -----------------------CADASTRO -----------------------------------------*/
@@ -203,7 +222,7 @@ input::placeholder {
 
 #botao-finalizar-cadastro{
     background-color: var(--laranja);
-    width: 55vw;
+    /* width: 80%; */
     height: 2.5em;
     color: #fff;
     font-size: 1em;
@@ -285,7 +304,7 @@ input::placeholder {
 
 #reset-id {
     background-color: var(--logo);
-    width: 50vw;
+    /* width: 50vw; */
     height: 2.5em;
     color: #fff;
     font-size: 1em;
@@ -301,12 +320,14 @@ input::placeholder {
 
 @media screen and (min-width: 1000px) {
 
-   
-  
 }
 
 @media screen and (min-width: 768px) {
 
+    .conteudo-login {
+        background: linear-gradient(90deg, rgba(2,0,36,1) 0%, #002855 35%, #2063ae 100%);
+      }
+    
     .conteudo-login {
         flex: 1;
     }
@@ -319,39 +340,80 @@ input::placeholder {
     .container {
         align-items: center;
     }
-    
-    #banner {
-        display: none;
-    } 
 
-    #banner-grande {
-        display: inline-block;
-        /* margin-left: 50%; */
-        height: 100vh;
+
+    .foto-principal {
+        /* display: inline-block;
+        height: 100%; */
         width: 100%;
         filter: contrast(0.8);
-        background-image: url(/img/foto-capa-grande.jpg);
-        background-size: cover;
-        background-position: right;
-        
-
+        background-image: url("/img/capa-desenho.png");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #fff;
+        position: relative;
+        flex: 1;
     }
+    
+    /* #banner {
+        display: none;
+    }  */
+
+    /* #banner-grande {
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        filter: contrast(0.8);
+        background-image: url("/img/capa-desenho.png");
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-color: #fff;
+    } */
 
     #texto-sobre {
     display: flex;
     flex-direction: column;
-    width: 45vw;
+    width: 100%;
+    font-size: 1.2em;
+    text-align: center;
     }
 
-    input {
-        max-width: 35vw;
-    }
-
-    .btn {
+    
+    /* .pagina-login label {
         text-align: left;
+    } */
 
+    .pagina-login input {
+        width: 100%;
+        margin: 1.5em 0;
+    }
+   
+    .btn {
+        text-align: center;
+        margin: 2em 0;
+
+    }
+
+    .btn p {
+        margin: 2em;
+    }
+
+    .pagina-login form {
+        text-align: center;
+        margin: 2em auto;
+        width: 70%;
+    }
+    
+    #esqueci-senha {
+        font-size: 1.25em;
     }
         
+
+    .botoes {
+       width: 85%;
+    }
 }
 
 
