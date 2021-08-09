@@ -9,6 +9,7 @@
     --azul-claro: #6ab1d1;
     --azul-escuro: #002855;
     --laranja: #fb8500;
+    --branco: #fff;
   }
 
 /* body {
@@ -37,7 +38,7 @@
     border-radius: 5px;
     width: 100%;
     height: 4vh;
-    background: white;
+    background: var(--branco);
     background-image: url(/img/vector-lupa.png);
     background-repeat: no-repeat;
     background-position-x: 95%;
@@ -59,7 +60,7 @@
 .editar-perfil {
     width: 30vw;
     height: 4vh;
-    background-color: white;
+    background-color: var(--branco);
     border-radius: 5px;
 }
 
@@ -70,11 +71,12 @@
 #post {
     margin-top: 1em;
     width: 100vw;
-    background-color: var(--azul-claro);
+    background-color: var(--azul-escuro);
+    color: var(--branco)
 }
 
 #post::placeholder {
-    color:#000;
+    color:rgb(255, 255, 255);
 }
 
 .campo-addFoto {
@@ -86,7 +88,7 @@
 }
 
 #link-github {
-    background-color: white;
+    background-color: var(--branco);
     width: 80vw;
     height: 4vh;
     border-radius: 5px;
@@ -103,7 +105,7 @@
     background-color: var(--laranja);
     width: 55vw;
     height: 2.5em;
-    color: #fff;
+    color: var(--branco);
     font-size: 1em;
     font-weight: bold;
     border-radius: 5px;
