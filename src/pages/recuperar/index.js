@@ -3,30 +3,35 @@ import { redefinirSenha } from "../../services/index.js";
 export const TemplateRecuperar = () => {
     const container = document.createElement('div');
     const template = ` 
+    <main class="principal pagina-login">
+      <div class="foto-principal"></div>
+
+      <section class="conteudo-login" >
   
-    <div id="banner-section">
-      <img id="banner" src="img/foto-capa.jpg" alt="Foto demonstrativo do site">
-      <div id="texto-sobre">
-          <h1 class="logo">FRONTERS</h1>
-          <h3>De frente com o Front</h3>
-          <h4>Está preparado para invadir 
-          o mundo dos Devs?</h4><br>
-      </div>
-    </div>
-    <div class="texto-reset">
-      <h3 class="text-id">Esqueci minha senha</h3>
-      <h4 class="text-h4">Uma nova senha será enviada 
-      ao seu email de cadastro</h4><br>
-    </div>
-    <form class="campo-form">
-      <div>
-        <label for="emailUsuario">Email:</label>
-        <input type="email" id="recuperar-email" placeholder="Digite o seu email">
-      </div>
-      <div id="botao-recuperar">
-        <button type="button" id="reset-id">Enviar</button>
-      </div>
-    </form>
+        <div id="banner-section">
+          <div id="texto-sobre">
+            <h1 class="logo">FRONTERS</h1>
+            <h3>De frente com o Front</h3>
+            <h4>Está preparado para invadir 
+            o mundo dos Devs?</h4><br>
+          </div>
+        </div>
+        <div class="texto-reset">
+          <h3 class="text-id">Esqueci minha senha</h3>
+          <h4 class="text-h4">Uma nova senha será enviada 
+          ao seu email de cadastro</h4><br>
+        </div>
+        <form >
+          <div class="campo-form">
+            <label for="emailUsuario">Email:</label>
+            <input type="email" id="recuperar-email" placeholder="Digite o seu email">
+          </div>
+          <div id="botao-recuperar">
+            <button type="button" class="botoes" id="reset-id">Enviar</button>
+          </div>
+        </form>
+      </section>
+    </main>
 
     <div class="popup-wrapper">
       <div class="popup">
