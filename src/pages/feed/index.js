@@ -38,10 +38,16 @@ export const TemplateFeed = () => {
 
     function addPostNaPagina(post) {
         const postTemplate = document.createElement('div');
+        postTemplate.setAttribute('class', 'div-post')
         postTemplate.innerHTML = `
             
             <input type="hidden" class="id-post" value="${post.id}" />
-            <p class="texto-publicado-usuário">${post.data().texto}</p>
+            <div class="texto-publicado-usuario">${post.data().texto}</div>
+            <div class="conteudo-editar">
+                <input class="campo-editar-texto" />
+                <button type="button" class="salvar-edicao">Salvar</button>
+            </div>
+            <button type="button" class="editar-publicacao">Editar Publicação</button>
             <div class="div-link-github-publicado">
                 <i class="fab fa-github"></i>
                 <input id="link-github" value="${post.data().link_github}" />      
@@ -92,21 +98,71 @@ export const TemplateFeed = () => {
             const estaCurtido = curtir.classList.contains('fas');
             let numeroDeCurtidas = postTemplate.querySelector('.numero-curtidas')
             let conteudoNumeroDeCurtidas = Number(numeroDeCurtidas.innerHTML);
-            
 
             if (estaCurtido == true) {
                 curtir.classList.replace('fas', 'far');
                 conteudoNumeroDeCurtidas--
-                                                                  
-
             }
+
             else {
                 curtir.classList.replace('far', 'fas');
                 conteudoNumeroDeCurtidas++
-                                
             }
 
             numeroDeCurtidas.innerHTML = conteudoNumeroDeCurtidas;
+        })
+
+        postTemplate.querySelector('.editar-publicacao').addEventListener('click', () => {
+            const conteudoEditarTexto = postTemplate.querySelector('.conteudo-editar')
+            conteudoEditarTexto.style.display = "block"
+            const editarTexto = postTemplate.querySelector('.campo-editar-texto')
+            const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario')
+            const textoEscrito = postTemplate.querySelector('.texto-publicado-usuario').innerHTML
+            divTextoEscrito.style.display = "none"
+
+            editarTexto.value = textoEscrito;
+
+            // firebase.firestore().collection("posts").doc('J0iQdVBFRojz4sYq0M92')
+            //     // .update({texto: 'Tamaraaaa?' })
+            //     .update({ texto: textoEscrito })
+            //     .then(() => {
+            //         console.log("atualizado")
+
+            //     })
+            //     .catch(error => {
+            //         console.log('não atualizado-', error)
+            //     })
+
+
+        });
+
+
+        //SALVAR EDICAO
+
+        postTemplate.querySelector('.salvar-edicao').addEventListener('click', () => {
+            const valorInputEditar = postTemplate.querySelector('.campo-editar-texto').value;
+            const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario')
+            const inputEBotaoSalvarEdicao = postTemplate.querySelector('.conteudo-editar')
+       
+            inputEBotaoSalvarEdicao.style.display = "none"
+            divTextoEscrito.style.display = "block"
+
+            divTextoEscrito.innerHTML = valorInputEditar
+
+                firebase.firestore().collection("posts").doc('J0iQdVBFRojz4sYq0M92')
+                .update({ texto: valorInputEditar })
+                .then(() => {
+                    console.log("atualizado")
+
+                })
+                .catch(error => {
+                    console.log('não atualizado-', error)
+                })
+
+
+
+
+
 
         })
 

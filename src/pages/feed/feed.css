@@ -75,9 +75,20 @@ text-align: center;
     display: none;
 }
 
+.conteudo-editar {
+    display: none;
+}
+
 /* .class-add {
     width: 50px;
     height: 50px;
     border: black;
     background-color: red;
 } */
+
+.div-post {
+    border: 1px solid rgb(156, 156, 156);
+    margin: 2em;
+    border-radius: 5px;
+    padding: 0.5em;
+}
