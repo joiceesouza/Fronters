@@ -3,7 +3,7 @@
 export const TemplatePerfil = () => {
 
     const main = document.createElement('div');
-    main.innerHTML =  ` 
+    main.innerHTML = ` 
 
     <header class="container-header">
 
@@ -30,7 +30,8 @@ export const TemplatePerfil = () => {
         <div class="campo-addFoto"><img id="add-foto" src="img/vector-addfoto.png">Adicionar Foto</div>
 
         <div class="div-link-do-github">
-            <i class="fab fa-github"></i><input id="link-github" placeholder="Colocar link do GitHub"></input>
+            <i class="fab fa-github"></i>
+            <input id="link-github" type="url" placeholder="Colocar link do GitHub"/>
         </div>
         <div class="btn-publicar">
             <button type="submit" id="publicar">Publicar</button>
@@ -43,92 +44,66 @@ export const TemplatePerfil = () => {
     
     `
     const botaoPublicar = main.querySelector('#publicar');
-    // const textoParaPublicar = main.querySelector('#post').value;
-     
-    botaoPublicar.addEventListener("click", () => {
-        const textoParaPublicar = main.querySelector('#post').value;             
-        const divTextoPublicado = main.querySelector('#div-vazia');
-        
-        // window.history.pushState({}, null, '/post')
-        // const popStateEvent = new PopStateEvent("popstate", {})
-        // dispatchEvent(popStateEvent)
 
-        divTextoPublicado.innerHTML = textoParaPublicar;
-       
+    botaoPublicar.addEventListener("click", (event) => {
+        event.preventDefault()
 
-    }); 
-
-    main.querySelector('#postForm').addEventListener("submit", function(event){
-        event.preventDefault();
         const text = main.querySelector('#post').value;
+        const linkGithub = main.querySelector('#link-github');
+           
+           if(linkGithub.checkValidity() == false) {
+               alert("Por gentileza, colocar um link válido")
+               return 
+           }
+
+
         const post = {
-            texto: text,
             id_usuario: "tamara",
-            curtidas: 0,
+            texto: text,
+            link_github: linkGithub.value,
+            curtidas: 10,
             comentarios: []
-        } 
+        }
 
         const colecaoPost = firebase.firestore().collection("posts")
-
         colecaoPost.add(post)
+            .then((res) => {
+                window.history.pushState({}, null, '/feed')
+                const popStateEvent = new PopStateEvent("popstate", {})
+                dispatchEvent(popStateEvent)
+            });
+
+
+           
+
+
+
+
+
 
     });
 
-
-    function addPost(post) {
-
-        const postTemplate = `
-        <li id='${post.id}'>
-            ${post.data().texto} ❤ ${post.data().curtidas}
-        </li>
-        
-        `
-        main.querySelector('#div-vazia').innerHTML += postTemplate
-    }
-
-    function carregarPost() {
-        const colecaoPost = firebase.firestore().collection("posts")
-        colecaoPost.get().then(snap => {
-            snap.forEach(post => {
-                addPost(post)
-                
-            })
-        })
-    }
-
-    carregarPost();
-    
-    function deletarPost(postId) {
-        const colecaoPost = firebase.firestore().collection("posts")
-        colecaoPost.doc(postId).delete().then(doc => {
-            console.log('Apagou!')
-            carregarPost()
-        })
-    }
-    
-    deletarPost("q6ORknzzuaoiCL04XXdC")
-     
     const logout = main.querySelector('#logout-id')
     logout.addEventListener("click", () => {
-       
+
         firebase
-        .auth()
-        .signOut()
-        .then(() => {
-           // Sign-out successful.
-           // alert('Você se deslogou')
-            window.history.pushState({}, null, '/login')
-            const popStateEvent = new PopStateEvent("popstate", {})
-            dispatchEvent(popStateEvent)
-          }).catch((error) => {
-            // An error happened.
-          });
-      
-        })
+            .auth()
+            .signOut()
+            .then(() => {
+                // Sign-out successful.
+                // alert('Você se deslogou')
+                window.history.pushState({}, null, '/login')
+                const popStateEvent = new PopStateEvent("popstate", {})
+                dispatchEvent(popStateEvent)
+            }).catch((error) => {
+                // An error happened.
+            });
+
+    })
 
 
 
-return main;
+    return main;
 
 }
 
