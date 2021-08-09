@@ -26,6 +26,10 @@ export const TemplateCadastro = () => {
 
         
       <form >
+       <div class="campo-form">
+          <label for="nomeUsuario">Nome:</label>
+          <input type="text" id="nome-cadastro" placeholder="Digite o seu nome">
+        </div>
         <div class="campo-form">
           <label for="emailUsuario">Email:</label>
           <input type="email" id="email-cadastro" placeholder="Digite o seu email">
@@ -45,6 +49,7 @@ export const TemplateCadastro = () => {
     </section>
 
 </main>
+
 
 <div class="popup-wrapper">
 <div class="popup">
