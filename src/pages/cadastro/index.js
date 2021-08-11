@@ -1,8 +1,10 @@
-import {cadastro} from '../../services/index.js';
+import { cadastro } from '../../services/index.js';
+// import {ocultarSenha} from '../../pages/login/index.js';
+
 
 export const TemplateCadastro = () => {
   const main = document.createElement('div');
-  main.innerHTML  = ` 
+  main.innerHTML = ` 
   <main class="principal pagina-login">
     <div class="foto-principal"></div>
 
@@ -32,15 +34,21 @@ export const TemplateCadastro = () => {
         </div>
         <div class="campo-form">
           <label for="emailUsuario">Email:</label>
-          <input type="email" id="email-cadastro" placeholder="Digite o seu email">
+          <input type="email" id="email-cadastro" placeholder="Digite o seu email"/>
         </div>
         <div class="campo-form">
           <label for="senhaUsuario">Senha:</label>
-          <input type="password" id="senha-cadastro" placeholder="Digite a sua senha">
+            <div class="campo-senha">
+              <input type="password" class="input-senha" id="senha-cadastro" placeholder="Digite a sua senha"/>
+              <i class="fas fa-eye-slash ocultar-senha"></i>
+            </div>
         </div>
         <div class="campo-form">
           <label for="confirmaSenhaUsuario">Senha:</label>
-          <input type="password" id="confirma-senha-cadastro" placeholder="Confirme a sua senha">
+          <div class="campo-senha">
+            <input type="password" class="input-senha" id="confirma-senha-cadastro" placeholder="Confirme a sua senha">
+            <i class="fas fa-eye-slash ocultar-senha"></i>
+          </div>
         </div>
         <div id="botao-cadastro">
           <button type="button" class="botoes" id="botao-finalizar-cadastro">Cadastrar</button>
@@ -62,49 +70,69 @@ export const TemplateCadastro = () => {
 </div>
     `
 
-    const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');
-  
-    botaoDoCadastro.addEventListener("click", () => {
-      
-      //pop up
-      const popup = main.querySelector('.popup-wrapper');
-      const fecharPopup = main.querySelector('.fechar-popup');
-      const conteudoPopup = main.querySelector('.conteudo-popup');
-      
-      // validação cadastro
-      const email = main.querySelector('#email-cadastro').value;
-      const password = main.querySelector('#confirma-senha-cadastro').value;
-  
-  
-     cadastro(email, password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user, 'Cadastrado!');
-          popup.style.display = 'block';
-          conteudoPopup.innerHTML = `<h2>Cadastro finalizado com sucesso!</h2>
+  const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');
+
+  botaoDoCadastro.addEventListener("click", () => {
+
+    //pop up
+    const popup = main.querySelector('.popup-wrapper');
+    const fecharPopup = main.querySelector('.fechar-popup');
+    const conteudoPopup = main.querySelector('.conteudo-popup');
+
+    // validação cadastro
+    const email = main.querySelector('#email-cadastro').value;
+    const password = main.querySelector('#confirma-senha-cadastro').value;
+
+
+    cadastro(email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user, 'Cadastrado!');
+        popup.style.display = 'block';
+        conteudoPopup.innerHTML = `<h2>Cadastro finalizado com sucesso!</h2>
           <button id="loginPopup"><a href="/#">Fazer Login</a></button>`
-          fecharPopup.style.display = 'none';
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log('Infelizmente aconteceu algum erro!', errorCode, errorMessage);
-          popup.style.display = 'block';
-          conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+        fecharPopup.style.display = 'none';
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log('Infelizmente aconteceu algum erro!', errorCode, errorMessage);
+        popup.style.display = 'block';
+        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
           <p> Preencha corretamente os campos </p>`;
-          fecharPopup.style.display = 'block';
-          fecharPopup.addEventListener("click", () => {
+        fecharPopup.style.display = 'block';
+        fecharPopup.addEventListener("click", () => {
           popup.style.display = 'none';
-  
-          })
-         
-        });
-    })
+
+        })
+
+      });
+  })
+
+  // ocultarSenha()
+ 
+
+  function ocultarSenha() {
+    const inputSenha = main.querySelector('.input-senha');
+    
+                         
+        if(inputSenha.type == "password") {
+            inputSenha.type = "text"
+            iconeOcultar.classList.replace('fa-eye-slash', 'fa-eye');
+
+        } else {
+            inputSenha.type = "password"
+            iconeOcultar.classList.replace('fa-eye', 'fa-eye-slash');
+        }                
+
+}
+
+const iconeOcultar = main.querySelector('.ocultar-senha');
+iconeOcultar.addEventListener("click", ocultarSenha)
 
 
-  
   return main;
 }
 
