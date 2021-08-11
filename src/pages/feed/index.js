@@ -121,19 +121,6 @@ export const TemplateFeed = () => {
             divTextoEscrito.style.display = "none"
 
             editarTexto.value = textoEscrito;
-
-            // firebase.firestore().collection("posts").doc('J0iQdVBFRojz4sYq0M92')
-            //     // .update({texto: 'Tamaraaaa?' })
-            //     .update({ texto: textoEscrito })
-            //     .then(() => {
-            //         console.log("atualizado")
-
-            //     })
-            //     .catch(error => {
-            //         console.log('não atualizado-', error)
-            //     })
-
-
         });
 
 
@@ -143,13 +130,14 @@ export const TemplateFeed = () => {
             const valorInputEditar = postTemplate.querySelector('.campo-editar-texto').value;
             const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario')
             const inputEBotaoSalvarEdicao = postTemplate.querySelector('.conteudo-editar')
+            const idPost = postTemplate.querySelector('.id-post').value
        
             inputEBotaoSalvarEdicao.style.display = "none"
             divTextoEscrito.style.display = "block"
 
             divTextoEscrito.innerHTML = valorInputEditar
-
-                firebase.firestore().collection("posts").doc('J0iQdVBFRojz4sYq0M92')
+            
+                firebase.firestore().collection("posts").doc(idPost)
                 .update({ texto: valorInputEditar })
                 .then(() => {
                     console.log("atualizado")
@@ -159,19 +147,11 @@ export const TemplateFeed = () => {
                     console.log('não atualizado-', error)
                 })
 
-
-
-
-
-
         })
 
         main.querySelector('#feed').appendChild(postTemplate)
 
     }
-
-
-
 
 
     // function deletarPost(postId) {
