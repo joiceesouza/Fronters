@@ -33,7 +33,6 @@ export const TemplateLogin = () => {
             <div class="campo-form">
                 <label for="senhaUsuario">Senha:</label>
                 <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
-                <div id="erros"></div>
             </div>
             <div>
                 <a href="/recuperar" id="esqueci-senha">Esqueci minha senha </a>
@@ -76,7 +75,6 @@ export const TemplateLogin = () => {
 
         const email = main.querySelector('#email-usuario').value;
         const password = main.querySelector('#senha-usuario').value;
-        const error = main.querySelector('#erros')
 
         if (email === '' || password === '') {
            // error.innerHTML = `<span> Preencha todos os campos </span>`;
@@ -111,7 +109,7 @@ export const TemplateLogin = () => {
                     case 'auth/invalid-email':
                         popup.style.display = 'block';
                         conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-                        <p> Usuário ou email inválido </p>`;
+                        <p> E-mail inválido </p>`;
                         fecharPopup.style.display = 'block';
                         fecharPopup.addEventListener("click", () => {
                         popup.style.display = 'none';
@@ -138,14 +136,13 @@ export const TemplateLogin = () => {
                     case 'auth/wrong-password':
                         popup.style.display = 'block';
                         conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-                        <p> Usuário ou email inválido </p>`;
+                        <p> Usuário ou senha inválido </p>`;
                         fecharPopup.style.display = 'block';
                         fecharPopup.addEventListener("click", () => {
                         popup.style.display = 'none';
                         });
                     break;
                     case 'auth/too-many-requests':
-                        console.log(errorCode)
                         popup.style.display = 'block';
                         conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
                         <p> Senha inválida </p>`;
