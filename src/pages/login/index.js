@@ -33,6 +33,7 @@ export const TemplateLogin = () => {
             <div class="campo-form">
                 <label for="senhaUsuario">Senha:</label>
                 <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
+                <div id="erros"></div>
             </div>
             <div>
                 <a href="/recuperar" id="esqueci-senha">Esqueci minha senha </a>
@@ -53,16 +54,43 @@ export const TemplateLogin = () => {
         </form>
     </section>
 </main>
+
+<div class="popup-wrapper">
+<div class="popup">
+    <div class="fechar-popup">X</div>
+  <div class="conteudo-popup">
+    <h2>Cadastro finalizado com sucesso!</h2>
+    <button id="loginPopup"><a href="/#">Fazer Login</a></button>
+  </div>
+</div>
+</div>
     `
 
     //LOGIN
     const botaoDoLogin = main.querySelector('#botaoLogin');
     botaoDoLogin.addEventListener("click", () => {
+        //pop up
+        const popup = main.querySelector('.popup-wrapper');
+        const fecharPopup = main.querySelector('.fechar-popup');
+        const conteudoPopup = main.querySelector('.conteudo-popup');
 
         const email = main.querySelector('#email-usuario').value;
         const password = main.querySelector('#senha-usuario').value;
+        const error = main.querySelector('#erros')
 
-        login(email, password)
+        if (email === '' || password === '') {
+           // error.innerHTML = `<span> Preencha todos os campos </span>`;
+           popup.style.display = 'block';
+           conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+           <p> Preencha corretamente todos os campos </p>`;
+           fecharPopup.style.display = 'block';
+           fecharPopup.addEventListener("click", () => {
+           popup.style.display = 'none';
+               });
+        } 
+        else {
+
+            login(email, password)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user, 'Deu certo o login! ihull');
@@ -77,8 +105,62 @@ export const TemplateLogin = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log('Infelizmente aconteceu algum com login! Conta não cadastrada', errorCode, errorMessage);
+                console.log('Infelizmente aconteceu algum erro!', errorCode, errorMessage);
+                switch (errorCode) {
+                    
+                    case 'auth/invalid-email':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> Usuário ou email inválido </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/user-disabled':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> Usuário desabilitado </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/user-not-found':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>O email está incorreto!</h2> 
+                        <p> Usuário não encontrado </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/wrong-password':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> Usuário ou email inválido </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/too-many-requests':
+                        console.log(errorCode)
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> Senha inválida </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                            });  
+                    default:
+                      error.innerHTML = `<span> ${errorMessage} </span>`;
+                    break;
+                  }
+                
+       
             });
-
+        }
     });
 
     //GOOGLE
@@ -146,6 +228,25 @@ export const TemplateLogin = () => {
 
     });
 
+    function validação(){
+        var form = main.querySelector('#campo-form')
+        var email= main.querySelector('#email-usuario').value
+        var text = main.querySelector('#text')
+        var pattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/
+
+        if(email.match(pattern)){
+            form.classList.add("Valid")
+            form.classList.remove("Invalid")
+            text.innerHTML = "Seu email é válido"
+            text.style.color = "#00ff00"
+        }
+        else{
+            form.classList.remove("Valid")
+            form.classList.add("Invalid")
+            text.innerHTML = "O email não é válido"
+            text.style.color = "#ff0000"
+        }
+      }
 
     return main;
 }
