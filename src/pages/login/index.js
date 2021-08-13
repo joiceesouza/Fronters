@@ -154,8 +154,6 @@ export const TemplateLogin = () => {
                       error.innerHTML = `<span> ${errorMessage} </span>`;
                     break;
                   }
-                
-       
             });
         }
     });
