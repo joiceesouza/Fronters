@@ -1,8 +1,10 @@
-import {cadastro} from '../../services/index.js';
+import { cadastro } from '../../services/index.js';
+// import {ocultarSenha} from '../../pages/login/index.js';
+
 
 export const TemplateCadastro = () => {
   const main = document.createElement('div');
-  main.innerHTML  = ` 
+  main.innerHTML = ` 
   <main class="principal pagina-login">
     <div class="foto-principal"></div>
 
@@ -33,25 +35,33 @@ export const TemplateCadastro = () => {
         </div>
         <div class="campo-form">
           <label for="emailUsuario">Email:</label>
+
           <input type="email" id="email-cadastro" placeholder="Digite o seu email" required>
           <div id="imp-error-email" class="erros"></div>
         </div>
         <div class="campo-form">
           <label for="senhaUsuario">Senha:</label>
-          <input type="password" id="senha-cadastro" placeholder="Digite a sua senha" required >
+            <div class="campo-senha">
+              <input type="password" class="input-senha" id="senha-cadastro" placeholder="Digite a sua senha" required />
+              <i class="fas fa-eye-slash ocultar-senha"></i>
+            </div>
         </div>
         <div class="campo-form">
-          <label for="confirmaSenhaUsuario">Senha:</label>
-          <input type="password" id="confirma-senha-cadastro"  placeholder="Confirme a sua senha" required min="6">
-          <div id="imp-error-senha" class="erros"></div>
+            <label for="confirmaSenhaUsuario">Senha:</label>
+            <div class="campo-senha">
+              <input type="password" id="confirma-senha-cadastro"  placeholder="Confirme a sua senha" required min="6">
+               <i class="fas fa-eye-slash ocultar-senha"></i>
+            </div>
+          <div id="imp-error-senha" class="erros"></div>                 
         </div>
+        
         <div id="botao-cadastro">
           <button type="button" class="botoes" id="botao-finalizar-cadastro">Cadastrar</button>
         </div>
       </form>
     </section>
 
-</main>
+
 
 
 <div class="popup-wrapper">
@@ -64,6 +74,7 @@ export const TemplateCadastro = () => {
 </div>
 </div>
     `
+
 
     const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');
   
@@ -146,10 +157,31 @@ export const TemplateCadastro = () => {
       }         
     }) 
   
+
+
+  // ocultarSenha()
+ 
+
+  function ocultarSenha() {
+    const inputSenha = main.querySelector('.input-senha');
     
+                         
+        if(inputSenha.type == "password") {
+            inputSenha.type = "text"
+            iconeOcultar.classList.replace('fa-eye-slash', 'fa-eye');
+
+        } else {
+            inputSenha.type = "password"
+            iconeOcultar.classList.replace('fa-eye', 'fa-eye-slash');
+        }                
+
+}
+
+const iconeOcultar = main.querySelector('.ocultar-senha');
+iconeOcultar.addEventListener("click", ocultarSenha)
 
 
-  
+
   return main;
 }
 

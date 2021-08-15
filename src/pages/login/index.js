@@ -28,11 +28,14 @@ export const TemplateLogin = () => {
         <form>
             <div class="campo-form">
                 <label for="emailUsuario">Email:</label>
-                <input type="email" id="email-usuario" placeholder="Digite o seu email">
+                <input type="email" id="email-usuario" placeholder="Digite o seu email" />
             </div>
             <div class="campo-form">
                 <label for="senhaUsuario">Senha:</label>
-                <input type="password" id="senha-usuario" placeholder="Digite a sua senha">
+                <div class="campo-senha">
+                    <input type="password" class="input-senha" id="senha-usuario" placeholder="Digite a sua senha" />
+                    <i class="fas fa-eye-slash ocultar-senha"></i>
+                </div>
             </div>
             <div>
                 <a href="/recuperar" id="esqueci-senha">Esqueci minha senha </a>
@@ -223,11 +226,12 @@ export const TemplateLogin = () => {
 
     });
 
+
     function validação(){
-        var form = main.querySelector('#campo-form')
-        var email= main.querySelector('#email-usuario').value
-        var text = main.querySelector('#text')
-        var pattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/
+        let form = main.querySelector('#campo-form')
+        let email= main.querySelector('#email-usuario').value
+        let text = main.querySelector('#text')
+        let pattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/
 
         if(email.match(pattern)){
             form.classList.add("Valid")
@@ -242,6 +246,28 @@ export const TemplateLogin = () => {
             text.style.color = "#ff0000"
         }
       }
+
+    //OCULTAR SENHA
+    
+        function ocultarSenha() {
+            const inputSenha = main.querySelector('.input-senha');
+            
+                                 
+                if(inputSenha.type == "password") {
+                    inputSenha.type = "text"
+                    iconeOcultar.classList.replace('fa-eye-slash', 'fa-eye');
+        
+                } else {
+                    inputSenha.type = "password"
+                    iconeOcultar.classList.replace('fa-eye', 'fa-eye-slash');
+                }                
+
+        }
+
+        const iconeOcultar = main.querySelector('.ocultar-senha');
+        iconeOcultar.addEventListener("click", ocultarSenha)
+      
+
 
     return main;
 }
