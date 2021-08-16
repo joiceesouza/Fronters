@@ -109,21 +109,21 @@ export const TemplateCadastro = () => {
             });
       } 
       else if (name.length < 10) {
-        erroNome.innerHTML = '<p><strong>Escreva um nome válido</strong></p>';
+        erroNome.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um nome válido</strong></p>';
       } 
       else if (formatoEmail.test(email) === false) {
         erroNome.innerHTML = ""
-        erroEmail.innerHTML = '<p><strong>Escreva um email válido </strong></p>';
+        erroEmail.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um email válido </strong></p>';
       } 
       else if (password.length < 6 ) {
         erroNome.innerHTML = ""
         erroEmail.innerHTML = ""
-        erroSenha.innerHTML = '<p><strong>A senha deve ter no mínimo 6 dígitos </strong></p>';
+        erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> A senha deve ter no mínimo 6 dígitos </strong></p>';
       } 
       else if (password !== senhaConf) {
         erroNome.innerHTML = ""
         erroEmail.innerHTML = ""
-        erroSenha.innerHTML = '<p><strong>As senhas não conferem</strong></p>';
+        erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> As senhas não conferem</strong></p>';
       } 
       else {
   
