@@ -2,9 +2,7 @@ export const TemplateFeed = () => {
 
     const main = document.createElement('div');
     main.innerHTML = `
-
     <header class="container-header">
-
       <h1 class="logo">FRONTERS</h1>
       <div class="campo-pesquisar">
         <input id="pesquisar" type="search" placeholder="Pesquisar"></input>
@@ -60,14 +58,13 @@ export const TemplateFeed = () => {
                  
         
                 <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
+                <span class="deletar"><i class="fas fa-trash-alt icone-deletar"></i></span>
                  
             </div>
-
             <div class="comentarios">
                 <input class="escrever-comentario" type="textarea"></input>
                 <button class="publicar-comentario" type="button">Publicar</button>
              </div>
-
              <div class="comentario-publicado">
              </div>
         
@@ -121,19 +118,6 @@ export const TemplateFeed = () => {
             divTextoEscrito.style.display = "none"
 
             editarTexto.value = textoEscrito;
-
-            // firebase.firestore().collection("posts").doc('J0iQdVBFRojz4sYq0M92')
-            //     // .update({texto: 'Tamaraaaa?' })
-            //     .update({ texto: textoEscrito })
-            //     .then(() => {
-            //         console.log("atualizado")
-
-            //     })
-            //     .catch(error => {
-            //         console.log('não atualizado-', error)
-            //     })
-
-
         });
 
 
@@ -143,13 +127,14 @@ export const TemplateFeed = () => {
             const valorInputEditar = postTemplate.querySelector('.campo-editar-texto').value;
             const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario')
             const inputEBotaoSalvarEdicao = postTemplate.querySelector('.conteudo-editar')
+            const idPost = postTemplate.querySelector('.id-post').value
        
             inputEBotaoSalvarEdicao.style.display = "none"
             divTextoEscrito.style.display = "block"
 
             divTextoEscrito.innerHTML = valorInputEditar
-
-                firebase.firestore().collection("posts").doc('J0iQdVBFRojz4sYq0M92')
+            
+                firebase.firestore().collection("posts").doc(idPost)
                 .update({ texto: valorInputEditar })
                 .then(() => {
                     console.log("atualizado")
@@ -159,19 +144,20 @@ export const TemplateFeed = () => {
                     console.log('não atualizado-', error)
                 })
 
+        })
 
-
-
-
-
+        const deletar = postTemplate.querySelector('.icone-deletar')
+        deletar.addEventListener('click', () =>{
+                const postCollection = firebase.firestore().collection("posts")
+                postCollection.doc(post.id).delete().then(doc => { 
+                    postTemplate.style.display = "none"
+                   
+                })
         })
 
         main.querySelector('#feed').appendChild(postTemplate)
 
     }
-
-
-
 
 
     // function deletarPost(postId) {
@@ -187,3 +173,4 @@ export const TemplateFeed = () => {
 
     return main;
 }
+
