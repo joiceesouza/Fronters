@@ -1,6 +1,5 @@
 import { cadastro } from '../../services/index.js';
-// import {ocultarSenha} from '../../pages/login/index.js';
-
+import {ocultarSenha} from '../../lib/index.js'
 
 export const TemplateCadastro = () => {
   const main = document.createElement('div');
@@ -29,9 +28,14 @@ export const TemplateCadastro = () => {
         
       <form >
        <div class="campo-form">
-          <label for="nomeUsuario">Nome:</label>
+          <label for="nome-cadastro">Nome:</label>                 
           <input type="text" id="nome-cadastro" placeholder="Digite o seu nome" required maxlength="25" minlength="2">
           <div id="imp-error-name" class="erros"></div>
+
+        </div>
+        <div class="campo-form">
+          <label for="sobrenome-cadastro">Sobrenome:</label>
+          <input type="text" id="sobrenome-cadastro" placeholder="Digite o seu sobrenonome">
         </div>
         <div class="campo-form">
           <label for="emailUsuario">Email:</label>
@@ -47,12 +51,14 @@ export const TemplateCadastro = () => {
             </div>
         </div>
         <div class="campo-form">
-            <label for="confirmaSenhaUsuario">Senha:</label>
+
+            <label for="confirma-senha-cadastro">Senha:</label>
             <div class="campo-senha">
-              <input type="password" id="confirma-senha-cadastro"  placeholder="Confirme a sua senha" required min="6">
+              <input type="password" id="confirma-senha-cadastro"  class="input-confirma-senha" placeholder="Confirme a sua senha" required min="6">
                <i class="fas fa-eye-slash ocultar-senha"></i>
             </div>
           <div id="imp-error-senha" class="erros"></div>                 
+
         </div>
         
         <div id="botao-cadastro">
@@ -159,27 +165,15 @@ export const TemplateCadastro = () => {
   
 
 
-  // ocultarSenha()
- 
+  //OCULTAR SENHA
 
-  function ocultarSenha() {
-    const inputSenha = main.querySelector('.input-senha');
-    
-                         
-        if(inputSenha.type == "password") {
-            inputSenha.type = "text"
-            iconeOcultar.classList.replace('fa-eye-slash', 'fa-eye');
+main.querySelector('.ocultar-senha').addEventListener("click", () => {
+  ocultarSenha('.input-senha', '.ocultar-senha')
+})
 
-        } else {
-            inputSenha.type = "password"
-            iconeOcultar.classList.replace('fa-eye', 'fa-eye-slash');
-        }                
-
-}
-
-const iconeOcultar = main.querySelector('.ocultar-senha');
-iconeOcultar.addEventListener("click", ocultarSenha)
-
+main.querySelector('.ocultar-confirma-senha').addEventListener("click", () => {
+  ocultarSenha('.input-confirma-senha', '.ocultar-confirma-senha')
+})
 
 
   return main;

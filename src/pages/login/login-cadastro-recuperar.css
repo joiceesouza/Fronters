@@ -160,7 +160,7 @@ ul li a button:hover:before {
     color: #fdc27e;
 }
 
-.ocultar-senha {
+.ocultar-senha, .ocultar-confirma-senha {
     color: var(--cinza-claro);
     margin-left: -2em;
 }
