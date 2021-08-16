@@ -1,4 +1,5 @@
 import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
+import {ocultarSenha} from '../../lib/index.js'
 
 export const TemplateLogin = () => {
     const main = document.createElement('div');
@@ -67,12 +68,14 @@ export const TemplateLogin = () => {
 
         login(email, password)
             .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user, 'Deu certo o login! ihull');
+
+                localStorage.setItem("credenciais", userCredential.user.uid)
+                //console.log('Deu certo o login! ihull', user);
+
                 window.history.pushState({}, null, '/perfil')
                 const popStateEvent = new PopStateEvent("popstate", {})
                 dispatchEvent(popStateEvent)
-               // OU window.location.pathname='/perfil';
+                // OU window.location.pathname='/perfil';
 
 
             })
@@ -92,22 +95,26 @@ export const TemplateLogin = () => {
         event.preventDefault()
 
         loginComGoogle()
-            .then((result) => {
-                console.log(result)
+            .then((userCredential) => {
+                localStorage.setItem("credenciais", userCredential.user.uid)
+                console.log('login google', userCredential)
+
+
                 window.history.pushState({}, null, '/perfil')
-            const popStateEvent = new PopStateEvent("popstate", {})
-            dispatchEvent(popStateEvent)
+                const popStateEvent = new PopStateEvent("popstate", {})
+                dispatchEvent(popStateEvent)
 
                 /** @type {firebase.auth.OAuthCredential} */
-                let credential = result.credential;
+                //let credential = result.credential;
 
                 // This gives you a Google Access Token. You can use it to access the Google API.
-                let token = credential.accessToken;
+                //let token = credential.accessToken;
                 // The signed-in user info.
-                let user = result.user;
+                //let user = result.user;
                 // ...
             }).catch((error) => {
                 // Handle Errors here.
+                console.error(error)
                 let errorCode = error.code;
                 let errorMessage = error.message;
                 // The email of the user's account used.
@@ -116,76 +123,46 @@ export const TemplateLogin = () => {
                 let credential = error.credential;
                 // ...
             });
-      
-        });
-
-
-
-//LOGIN GITHUB
-
-    const botaoDoGit = main.querySelector('#botaoGitHub')
-    botaoDoGit.addEventListener('click', (event)=> {
-        
-        event.preventDefault()
-        
-        loginComGithub()
-        .then((result) => {
-            console.log(result)
-            let credential = result.credential;
-            let token = credential.accessToken;
-            let user = result.user;
-            window.history.pushState({}, null, '/perfil')
-            const popStateEvent = new PopStateEvent("popstate", {})
-            dispatchEvent(popStateEvent)
-        })    
-        .catch(error=> {
-            let errorCode = error.code;
-            let errorMessage = error.message;
-            let email = error.email;
-            let credential = error.credential;
-            console.log(error)
-        });
-        
 
     });
 
+
+
+    //LOGIN GITHUB
+
+    const botaoDoGit = main.querySelector('#botaoGitHub')
+    botaoDoGit.addEventListener('click', (event) => {
+
+        event.preventDefault()
+
+        loginComGithub()
+            .then((result) => {
+                console.log("github", result)
+                let credential = result.credential;
+                let token = credential.accessToken;
+                let user = result.user;
+                window.history.pushState({}, null, '/perfil')
+                const popStateEvent = new PopStateEvent("popstate", {})
+                dispatchEvent(popStateEvent)
+            })
+            .catch(error => {
+                let errorCode = error.code;
+                let errorMessage = error.message;
+                let email = error.email;
+                let credential = error.credential;
+                console.log(error)
+            });
+
+
+    });
+    
+
     //OCULTAR SENHA
-    
-        // const inputSenha = main.querySelector('.input-senha');
-        // const iconeOcultar = main.querySelector('.ocultar-senha');
-        // iconeOcultar.addEventListener("click", () => {
-    
-           
-        //     if(inputSenha.type == "password") {
-        //         inputSenha.type = "text"
-        //         iconeOcultar.classList.replace('fa-eye-slash', 'fa-eye');
-    
-        //     } else {
-        //         inputSenha.type = "password"
-        //         iconeOcultar.classList.replace('fa-eye', 'fa-eye-slash');
-        //     }
-    
-        // })
+  
+    main.querySelector('.ocultar-senha').addEventListener("click", () => {
+        ocultarSenha('.input-senha', '.ocultar-senha')
+      })
 
-        function ocultarSenha() {
-            const inputSenha = main.querySelector('.input-senha');
-            
-                                 
-                if(inputSenha.type == "password") {
-                    inputSenha.type = "text"
-                    iconeOcultar.classList.replace('fa-eye-slash', 'fa-eye');
-        
-                } else {
-                    inputSenha.type = "password"
-                    iconeOcultar.classList.replace('fa-eye', 'fa-eye-slash');
-                }                
-
-        }
-
-        const iconeOcultar = main.querySelector('.ocultar-senha');
-        iconeOcultar.addEventListener("click", ocultarSenha)
-      
-
+    
     return main;
 }
-
