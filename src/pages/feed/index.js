@@ -177,9 +177,7 @@ export const TemplateFeed = () => {
                         postTemplate.style.display = "none"
                        
                     })
-                    }) 
-
-             
+                }) 
         })
 
         main.querySelector('#feed').appendChild(postTemplate)
