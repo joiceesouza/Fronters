@@ -153,6 +153,7 @@ export const TemplateFeed = () => {
                     postTemplate.style.display = "none"
                    
                 })
+
         })
 
         main.querySelector('#feed').appendChild(postTemplate)
@@ -160,15 +161,6 @@ export const TemplateFeed = () => {
     }
 
 
-    // function deletarPost(postId) {
-    //     const colecaoPost = firebase.firestore().collection("posts")
-    //     colecaoPost.doc(postId).delete().then(doc => {
-    //         console.log('Apagou!')
-    //         carregarPost()
-    //     })
-    // }
-
-    // deletarPost("sK0nSVSafJkwPsVauUlkC")
 
 
     return main;
