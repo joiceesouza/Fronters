@@ -122,4 +122,25 @@
     height: 20px;
 }
 
+.fez-publicacao {
+    color: black;
+    font-weight: normal;
+}
 
+.minhas-publicacoes {
+    margin: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+.texto-publicado-usuario {
+    margin: 0.5em;
+}
+
+.pagina-perfil {
+    background-color: var(--azul-claro);
+}
+
+.div-post {
+    background-color: var(--branco);
+}

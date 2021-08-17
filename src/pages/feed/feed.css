@@ -17,6 +17,8 @@
 
 .nome-usuario {
     font-weight: bold;
+    display: flex;
+    justify-content: space-around;
 }
 
 #editar-post {
@@ -40,8 +42,9 @@
 text-align: center;
 }
 
-#link-github {
-    border: 1px solid black;
+.link-github {
+    border: none;
+    width: 100%;
 }
 
 .icones {
@@ -75,7 +78,7 @@ text-align: center;
     display: none;
 }
 
-.conteudo-editar {
+.conteudo-editar-texto, .conteudo-editar-github {
     display: none;
 }
 
@@ -91,4 +94,8 @@ text-align: center;
     margin: 2em;
     border-radius: 5px;
     padding: 0.5em;
+}
+
+.salvar-edicao {
+    display: none;
 }

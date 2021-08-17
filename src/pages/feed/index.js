@@ -1,37 +1,28 @@
 export const TemplateFeed = () => {
-
     const main = document.createElement('div');
     main.innerHTML = `
 
     <header class="container-header">
-
       <h1 class="logo">FRONTERS</h1>
-      <div class="campo-pesquisar">
-        <input id="pesquisar" type="search" placeholder="Pesquisar"></input>
-        </div>
     </header>
     <div class="perfil">
-        <div class="foto">
-        <img id="foto-perfil" src="img/foto-perfil.png" alt="Foto do perfil">
-        <p><span class="nome-usuario">Viviane</span> fez uma publicação</p>
-        </div>
-        
-        <button type="button" id="editar-post">Editar</button>
+        <h1> FEED </h1>
     </div>
    
     <div id="feed"></div>
-      
-   
+         
     `
-
     function carregarPost() {
         const colecaoPost = firebase.firestore().collection("posts")
-        colecaoPost.get().then(snap => {
-            snap.forEach(post => {
-                addPostNaPagina(post)
+        // colecaoPost.where("id_usuario", "!=", localStorage.getItem("credenciais"))
+        colecaoPost.where("id_usuario", "!=", firebase.auth().currentUser.uid)
 
+            .get().then(snap => {
+                snap.forEach(post => {
+                    addPostNaPagina(post)
+
+                })
             })
-        })
     }
 
     carregarPost();
@@ -40,25 +31,27 @@ export const TemplateFeed = () => {
         const postTemplate = document.createElement('div');
         postTemplate.setAttribute('class', 'div-post')
         postTemplate.innerHTML = `
-            
-            <input type="hidden" class="id-post" value="${post.id}" />
+                    
+            <input type="hidden" class="id-post" value="${post.id}"/>
             <div class="texto-publicado-usuario">${post.data().texto}</div>
-            <div class="conteudo-editar">
+            <div class="conteudo-editar-texto">
                 <input class="campo-editar-texto" />
-                <button type="button" class="salvar-edicao">Salvar</button>
             </div>
-            <button type="button" class="editar-publicacao">Editar Publicação</button>
+            
             <div class="div-link-github-publicado">
                 <i class="fab fa-github"></i>
-                <input id="link-github" value="${post.data().link_github}" />      
+                <div class="link-github">${post.data().link_github}</div> 
             </div>
+            <div class="conteudo-editar-github">
+                <input class="campo-editar-github" />
+            </div>
+
             <div class="icones">
                 <span class="likes">
                     <i class="far fa-heart icone-curtir"></i>
                     <span class="numero-curtidas"> ${post.data().curtidas}</span>
                 </span>
-                 
-        
+                        
                 <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
                  
             </div>
@@ -66,17 +59,26 @@ export const TemplateFeed = () => {
             <div class="comentarios">
                 <input class="escrever-comentario" type="textarea"></input>
                 <button class="publicar-comentario" type="button">Publicar</button>
-             </div>
-
+            </div>
+           
              <div class="comentario-publicado">
              </div>
-        
+
         `
+        const linkGithub = postTemplate.querySelector('.link-github');
+        const conteudoLinkGithub = linkGithub.innerHTML;
+        const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
+        const editarlinkGithub = postTemplate.querySelector('.conteudo-editar-github');
+
+        if (conteudoLinkGithub == "") {
+            divlinkGithub.style.display = "none";
+            editarlinkGithub.style.display = "none"
+        }
+
         postTemplate.querySelector(".icone-comentar").addEventListener('click', () => {
             postTemplate.querySelector('.comentarios').style.display = "block";
             postTemplate.querySelector('.escrever-comentario').focus()
         })
-
 
         postTemplate.querySelector(".publicar-comentario").addEventListener('click', () => {
             //const idDoPost = postTemplate.querySelector('.id-post').value;
@@ -90,7 +92,6 @@ export const TemplateFeed = () => {
             comentarioEscrito.value = ""
 
         })
-
 
         const curtir = postTemplate.querySelector('.icone-curtir');
         curtir.addEventListener("click", () => {
@@ -112,58 +113,10 @@ export const TemplateFeed = () => {
             numeroDeCurtidas.innerHTML = conteudoNumeroDeCurtidas;
         })
 
-        postTemplate.querySelector('.editar-publicacao').addEventListener('click', () => {
-            const conteudoEditarTexto = postTemplate.querySelector('.conteudo-editar')
-            conteudoEditarTexto.style.display = "block"
-            const editarTexto = postTemplate.querySelector('.campo-editar-texto')
-            const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario')
-            const textoEscrito = postTemplate.querySelector('.texto-publicado-usuario').innerHTML
-            divTextoEscrito.style.display = "none"
-
-            editarTexto.value = textoEscrito;
-        });
-
-
-        //SALVAR EDICAO
-
-        postTemplate.querySelector('.salvar-edicao').addEventListener('click', () => {
-            const valorInputEditar = postTemplate.querySelector('.campo-editar-texto').value;
-            const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario')
-            const inputEBotaoSalvarEdicao = postTemplate.querySelector('.conteudo-editar')
-            const idPost = postTemplate.querySelector('.id-post').value
-       
-            inputEBotaoSalvarEdicao.style.display = "none"
-            divTextoEscrito.style.display = "block"
-
-            divTextoEscrito.innerHTML = valorInputEditar
-            
-                firebase.firestore().collection("posts").doc(idPost)
-                .update({ texto: valorInputEditar })
-                .then(() => {
-                    console.log("atualizado")
-
-                })
-                .catch(error => {
-                    console.log('não atualizado-', error)
-                })
-
-        })
 
         main.querySelector('#feed').appendChild(postTemplate)
 
     }
-
-
-    // function deletarPost(postId) {
-    //     const colecaoPost = firebase.firestore().collection("posts")
-    //     colecaoPost.doc(postId).delete().then(doc => {
-    //         console.log('Apagou!')
-    //         carregarPost()
-    //     })
-    // }
-
-    // deletarPost("sK0nSVSafJkwPsVauUlkC")
-
 
     return main;
 }
