@@ -99,3 +99,7 @@ text-align: center;
 .salvar-edicao {
     display: none;
 }
+
+.icone-deletar {
+    margin: 1em;
+}

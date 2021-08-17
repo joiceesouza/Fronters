@@ -57,16 +57,42 @@ export const TemplateLogin = () => {
         </form>
     </section>
 </main>
+
+<div class="popup-wrapper">
+<div class="popup">
+    <div class="fechar-popup">X</div>
+  <div class="conteudo-popup">
+    <h2>Cadastro finalizado com sucesso!</h2>
+    <button id="loginPopup"><a href="/#">Fazer Login</a></button>
+  </div>
+</div>
+</div>
     `
 
     //LOGIN
     const botaoDoLogin = main.querySelector('#botaoLogin');
     botaoDoLogin.addEventListener("click", () => {
+        //pop up
+        const popup = main.querySelector('.popup-wrapper');
+        const fecharPopup = main.querySelector('.fechar-popup');
+        const conteudoPopup = main.querySelector('.conteudo-popup');
 
         const email = main.querySelector('#email-usuario').value;
         const password = main.querySelector('#senha-usuario').value;
 
-        login(email, password)
+        if (email === '' || password === '') {
+           // error.innerHTML = `<span> Preencha todos os campos </span>`;
+           popup.style.display = 'block';
+           conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+           <p> Preencha corretamente todos os campos </p>`;
+           fecharPopup.style.display = 'block';
+           fecharPopup.addEventListener("click", () => {
+           popup.style.display = 'none';
+               });
+        } 
+        else {
+
+            login(email, password)
             .then((userCredential) => {
                 window.history.pushState({}, null, '/perfil')
                 const popStateEvent = new PopStateEvent("popstate", {})
@@ -79,8 +105,59 @@ export const TemplateLogin = () => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 console.log('Infelizmente aconteceu algum com login! Conta não cadastrada', errorCode, errorMessage);
+                console.log('Infelizmente aconteceu algum erro!', errorCode, errorMessage);
+                switch (errorCode) {
+                    
+                    case 'auth/invalid-email':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> E-mail inválido </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/user-disabled':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> Usuário desabilitado </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/user-not-found':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>O email está incorreto!</h2> 
+                        <p> Usuário não encontrado </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/wrong-password':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> Usuário ou senha inválido </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                        });
+                    break;
+                    case 'auth/too-many-requests':
+                        popup.style.display = 'block';
+                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+                        <p> Senha inválida </p>`;
+                        fecharPopup.style.display = 'block';
+                        fecharPopup.addEventListener("click", () => {
+                        popup.style.display = 'none';
+                            });  
+                    default:
+                      error.innerHTML = `<span> ${errorMessage} </span>`;
+                    break;
+                  }
             });
-
+        }
     });
 
     //GOOGLE
@@ -145,16 +222,35 @@ export const TemplateLogin = () => {
                 console.log(error)
             });
 
-
     });
     
+    function validação(){
+        let form = main.querySelector('#campo-form')
+        let email= main.querySelector('#email-usuario').value
+        let text = main.querySelector('#text')
+        let pattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/
+
+        if(email.match(pattern)){
+            form.classList.add("Valid")
+            form.classList.remove("Invalid")
+            text.innerHTML = "Seu email é válido"
+            text.style.color = "#00ff00"
+        }
+        else{
+            form.classList.remove("Valid")
+            form.classList.add("Invalid")
+            text.innerHTML = "O email não é válido"
+            text.style.color = "#ff0000"
+        }
+      }
+  
 
     //OCULTAR SENHA
-  
+      
     main.querySelector('.ocultar-senha').addEventListener("click", () => {
         ocultarSenha('.input-senha', '.ocultar-senha')
       })
+   
 
-    
     return main;
 }
