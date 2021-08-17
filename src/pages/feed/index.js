@@ -1,7 +1,6 @@
 export const TemplateFeed = () => {
     const main = document.createElement('div');
     main.innerHTML = `
-
     <header class="container-header">
       <h1 class="logo">FRONTERS</h1>
     </header>
@@ -53,12 +52,13 @@ export const TemplateFeed = () => {
                 </span>
                         
                 <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
+                <span class="deletar"><i class="fas fa-trash-alt icone-deletar"></i></span>
                  
             </div>
-
             <div class="comentarios">
                 <input class="escrever-comentario" type="textarea"></input>
                 <button class="publicar-comentario" type="button">Publicar</button>
+
             </div>
            
              <div class="comentario-publicado">
@@ -114,9 +114,21 @@ export const TemplateFeed = () => {
         })
 
 
+        const deletar = postTemplate.querySelector('.icone-deletar')
+        deletar.addEventListener('click', () =>{
+                const postCollection = firebase.firestore().collection("posts")
+                postCollection.doc(post.id).delete().then(doc => { 
+                    postTemplate.style.display = "none"
+                   
+                })
+
+        })
+
         main.querySelector('#feed').appendChild(postTemplate)
 
     }
 
+
     return main;
 }
+
