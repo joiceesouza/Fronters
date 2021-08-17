@@ -52,7 +52,7 @@ export const TemplateFeed = () => {
                 </span>
                         
                 <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
-                <span class="deletar"><i class="fas fa-trash-alt icone-deletar"></i></span>
+                
                  
             </div>
             <div class="comentarios">
@@ -65,15 +65,7 @@ export const TemplateFeed = () => {
              </div>
 
 
-             <div class="popup-wrapper">
-                <div class="popup">
-                        <div class="fechar-popup">X</div>
-                    <div class="conteudo-popup">
-                        <h2>Tem certeza que deseja deletar sua postagem?</h2>
-                        <p> <button type="button" class="delete-class">Deletar</button> </p>
-                    </div>
-                </div>
-            </div>
+            
         
         `
         const linkGithub = postTemplate.querySelector('.link-github');
@@ -125,37 +117,12 @@ export const TemplateFeed = () => {
         })
 
 
-        //Deletar post
         
-        const deletar = postTemplate.querySelector('.icone-deletar')
-        deletar.addEventListener('click', () =>{
-
-            const popup = postTemplate.querySelector('.popup-wrapper');
-            const fecharPopup = postTemplate.querySelector('.fechar-popup');
-            const conteudoPopup = postTemplate.querySelector('.conteudo-popup');
-                popup.style.display = 'block';
-                conteudoPopup.innerHTML = ` <h2>Tem certeza que deseja deletar sua postagem?</h2> 
-                <p> <button type="button" class="delete-class">Deletar</button> </p>`;
-                fecharPopup.style.display = 'block';
-                fecharPopup.addEventListener("click", () => {
-                popup.style.display = 'none';
-                }); 
-                const button = postTemplate.querySelector('.delete-class')
-                button.addEventListener('click', () => {
-                const postCollection = firebase.firestore().collection("posts")
-                postCollection.doc(post.id).delete().then(doc => { 
-                    postTemplate.style.display = "none"
-                   
-                })
-
-
-        })
 
         main.querySelector('#feed').appendChild(postTemplate)
 
-    }
-
+        
+    };
 
     return main;
 }
-
