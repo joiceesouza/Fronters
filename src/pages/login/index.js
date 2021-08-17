@@ -94,10 +94,6 @@ export const TemplateLogin = () => {
 
             login(email, password)
             .then((userCredential) => {
-
-                localStorage.setItem("credenciais", userCredential.user.uid)
-                //console.log('Deu certo o login! ihull', user);
-
                 window.history.pushState({}, null, '/perfil')
                 const popStateEvent = new PopStateEvent("popstate", {})
                 dispatchEvent(popStateEvent)
@@ -173,11 +169,7 @@ export const TemplateLogin = () => {
 
         loginComGoogle()
             .then((userCredential) => {
-                localStorage.setItem("credenciais", userCredential.user.uid)
-                console.log('login google', userCredential)
-
-
-                window.history.pushState({}, null, '/perfil')
+                            window.history.pushState({}, null, '/perfil')
                 const popStateEvent = new PopStateEvent("popstate", {})
                 dispatchEvent(popStateEvent)
 
