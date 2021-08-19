@@ -8,7 +8,7 @@ import {TemplateFeed} from './pages/feed/index.js';
 export const routeRender = () => {
   
  
-
+  
   // const credenciais = localStorage.getItem('credenciais')
   firebase.auth().onAuthStateChanged((user) => {
         //const usuario = user.uid;

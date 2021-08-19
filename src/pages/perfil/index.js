@@ -57,12 +57,16 @@ export const TemplatePerfil = () => {
         const nomeUsuarioGoogle = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
 
+        
+
+
+
         const post = {
             nome: nomeUsuarioGoogle,
             id_usuario: idDoUsuario,
             texto: text,
             link_github: linkGithub.value,
-            curtidas: 10,
+            curtidas: [],
             comentarios: []
         }
 
@@ -134,7 +138,7 @@ export const TemplatePerfil = () => {
         <div class="icones">
             <span class="likes">
                 <i class="far fa-heart icone-curtir"></i>
-                <span class="numero-curtidas"> ${post.data().curtidas}</span>
+                <span class="numero-curtidas"> ${post.data().curtidas.length || 0}</span>
             </span>
                     
             <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>

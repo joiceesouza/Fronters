@@ -144,3 +144,8 @@
 .div-post {
     background-color: var(--branco);
 }
+
+.fas.fa-heart{
+    color: red;
+
+}
