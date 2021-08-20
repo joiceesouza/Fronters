@@ -96,13 +96,18 @@ export const TemplatePerfil = () => {
         const objetoUsuario = firebase.auth().currentUser;
         const nomeUsuarioGoogle = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
+        const horaPublicacao = new Date().toLocaleString();
+        
+
+
 
         const post = {
             nome: nomeUsuarioGoogle,
             id_usuario: idDoUsuario,
+            data: horaPublicacao,
             texto: text,
             link_github: linkGithub.value,
-            curtidas: 10,
+            curtidas: [],
             comentarios: []
         }
 
@@ -155,8 +160,10 @@ export const TemplatePerfil = () => {
         postTemplate.setAttribute('class', 'div-post')
         postTemplate.innerHTML = `
                 
-                <input type="hidden" class="id-post" value="${post.id}"/>
-        <div class="nome-usuario"><i class="fas fa-female boneco"></i>${post.data().nome} <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> </div>
+        <input type="hidden" class="id-post" value="${post.id}"/>
+        <div class="nome-usuario">
+            <i class="fas fa-female boneco"></i>${post.data().nome} <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
+        </div>
        
         <div class="texto-publicado-usuario">${post.data().texto}</div>
         <div class="conteudo-editar-texto">
@@ -174,7 +181,7 @@ export const TemplatePerfil = () => {
         <div class="icones">
             <span class="likes">
                 <i class="far fa-heart icone-curtir"></i>
-                <span class="numero-curtidas"> ${post.data().curtidas}</span>
+                <span class="numero-curtidas"> ${post.data().curtidas.length || 0}</span>
             </span>
                     
             <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>

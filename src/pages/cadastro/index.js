@@ -55,7 +55,7 @@ export const TemplateCadastro = () => {
             <label for="confirma-senha-cadastro">Senha:</label>
             <div class="campo-senha">
               <input type="password" id="confirma-senha-cadastro"  class="input-confirma-senha" placeholder="Confirme a sua senha" required min="6">
-               <i class="fas fa-eye-slash ocultar-senha"></i>
+               <i class="fas fa-eye-slash ocultar-confirma-senha"></i>
             </div>
           <div id="imp-error-senha" class="erros"></div>                 
 
