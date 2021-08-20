@@ -89,6 +89,7 @@ export const TemplateCadastro = () => {
       const email = main.querySelector('#email-cadastro').value
       const password = main.querySelector('#senha-cadastro').value
       const senhaConf = main.querySelector('#confirma-senha-cadastro').value
+      const sobreNome = main.querySelector('#sobrenome-cadastro').value
       const erroNome = main.querySelector('#imp-error-name')
       const erroEmail = main.querySelector('#imp-error-email')
       const erroSenha = main.querySelector('#imp-error-senha')
@@ -99,7 +100,7 @@ export const TemplateCadastro = () => {
       const fecharPopup = main.querySelector('.fechar-popup');
       const conteudoPopup = main.querySelector('.conteudo-popup');
       
-      if (email === '' || password === '') {
+      if (email === '' || password === '' || sobreNome === '') {
         popup.style.display = 'block';
         conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
         <p> Preencha corretamente todos os campos </p>`;
@@ -108,7 +109,7 @@ export const TemplateCadastro = () => {
         popup.style.display = 'none';
             });
       } 
-      else if (name.length < 10) {
+      else if (name.length < 3) {
         erroNome.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um nome válido</strong></p>';
       } 
       else if (formatoEmail.test(email) === false) {
@@ -130,7 +131,6 @@ export const TemplateCadastro = () => {
         cadastro(email, password)
           .then((userCredential) => {
             // Signed in
-          
             const user = userCredential.user;
             console.log(user, 'Cadastrado!');
             popup.style.display = 'block';
