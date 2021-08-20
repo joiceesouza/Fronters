@@ -72,6 +72,9 @@ text-align: center;
 
 .escrever-comentario {
     color: black;
+    border-radius: 6px;
+    border: solid 1px orange;
+    padding: 0.5em;
 }
 
 .icone-curtido {
@@ -90,7 +93,7 @@ text-align: center;
 } */
 
 .div-post {
-    border: 1px solid rgb(156, 156, 156);
+    border: 3px solid var(--laranja);
     margin: 2em;
     border-radius: 5px;
     padding: 0.5em;
@@ -102,4 +105,55 @@ text-align: center;
 
 .icone-deletar {
     margin: 1em;
+}
+
+.nome-feed {
+    font-weight: bold;
+}
+
+.publicar-comentario {
+    background-color: #fb8500;
+    border-radius: 6px;
+    border: solid 1px #f1eded;
+    padding: 0.5em;
+    color: #f1eded;
+    font-weight: bold;
+}
+
+.publicar-comentario:hover {
+    
+    border: solid 2px black;
+
+}
+
+.foto-publicada {
+    width: 70vw;
+    height: 33vh;
+    border-radius: 15px;
+}
+
+.img-publicada {
+    text-align: center;
+}
+
+.mostrar-comentarios {
+    display: none;
+}
+
+.foto-comentario {
+    width: 10%;
+}
+
+.nome-comentario {
+    font-weight: bold;
+}
+
+.header-comentario {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.hora-comentario {
+    font-size: small;
 }

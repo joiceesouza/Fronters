@@ -144,3 +144,17 @@
 .div-post {
     background-color: var(--branco);
 }
+
+.fas.fa-heart{
+    color: var(--laranja);
+
+}
+
+.delete-class {
+    background-color: var(--laranja);
+    color: var(--branco);
+    padding: 5px;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 1.5em;
+}

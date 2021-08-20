@@ -7,19 +7,16 @@ export const TemplateFeed = () => {
     <div class="perfil">
         <h1> FEED </h1>
     </div>
-   
+     
     <div id="feed"></div>
-         
     `
     function carregarPost() {
         const colecaoPost = firebase.firestore().collection("posts")
-        // colecaoPost.where("id_usuario", "!=", localStorage.getItem("credenciais"))
         colecaoPost.where("id_usuario", "!=", firebase.auth().currentUser.uid)
 
             .get().then(snap => {
                 snap.forEach(post => {
                     addPostNaPagina(post)
-
                 })
             })
     }
@@ -29,10 +26,40 @@ export const TemplateFeed = () => {
     function addPostNaPagina(post) {
         const postTemplate = document.createElement('div');
         postTemplate.setAttribute('class', 'div-post')
+
+        // console.log("-------")
+        // post.data().curtidas.forEach(item => {            
+        //     console.log(item.nome, item.uid)
+        // })
+
+        const arrayMinhasCurtidas = post.data().curtidas.filter((item) => {
+            if (item.uid == firebase.auth().currentUser.uid) {
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+        const classeCurtir = (arrayMinhasCurtidas.length == 1) ? 'fas' : 'far';
+                      
+        let conteudoComentarios = "";
+        //post.data().comentarios.forEach(templateComentario) 
+        post.data().comentarios.forEach((comentario) => {
+          conteudoComentarios += gerarTemplateComentario(comentario)
+        })
+
+
         postTemplate.innerHTML = `
-                    
             <input type="hidden" class="id-post" value="${post.id}"/>
+            <div>
+                <img src="../../img/foto-usuario.png">
+                <p class="nome-feed">Tamara<p>
+            </div>
+            
             <div class="texto-publicado-usuario">${post.data().texto}</div>
+            <div class="img-publicada">
+                <img class="foto-publicada" src="../../img/foto-projeto.png">
+            </div>
             <div class="conteudo-editar-texto">
                 <input class="campo-editar-texto" />
             </div>
@@ -47,8 +74,8 @@ export const TemplateFeed = () => {
 
             <div class="icones">
                 <span class="likes">
-                    <i class="far fa-heart icone-curtir"></i>
-                    <span class="numero-curtidas"> ${post.data().curtidas}</span>
+                    <i class="${classeCurtir} fa-heart icone-curtir"></i>
+                    <span class="numero-curtidas">${post.data().curtidas.length || 0}</span>
                 </span>
                         
                 <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
@@ -56,18 +83,16 @@ export const TemplateFeed = () => {
                  
             </div>
             <div class="comentarios">
-                <input class="escrever-comentario" type="textarea"></input>
+                <input class="escrever-comentario" type="textarea" placeholder="Comentar"></input>
                 <button class="publicar-comentario" type="button">Publicar</button>
 
             </div>
-           
-             <div class="comentario-publicado">
-             </div>
-
-
-            
+                      
+             <div class="mostrar-comentarios">${conteudoComentarios}</div>
+                      
         
         `
+
         const linkGithub = postTemplate.querySelector('.link-github');
         const conteudoLinkGithub = linkGithub.innerHTML;
         const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
@@ -81,48 +106,120 @@ export const TemplateFeed = () => {
         postTemplate.querySelector(".icone-comentar").addEventListener('click', () => {
             postTemplate.querySelector('.comentarios').style.display = "block";
             postTemplate.querySelector('.escrever-comentario').focus()
+            const mostrarComentarios = postTemplate.querySelector('.mostrar-comentarios')
+            mostrarComentarios.style.display = "block"
+
         })
 
         postTemplate.querySelector(".publicar-comentario").addEventListener('click', () => {
-            //const idDoPost = postTemplate.querySelector('.id-post').value;
-            const comentarioEscrito = postTemplate.querySelector('.escrever-comentario');
-            const divComentarioPublicado = postTemplate.querySelector('.comentario-publicado');
-            const inputComentar = postTemplate.querySelector('.comentarios')
 
-            divComentarioPublicado.innerHTML = comentarioEscrito.value
-            divComentarioPublicado.style.display = "block";
+            const idDoPost = postTemplate.querySelector('.id-post').value;
+            const comentarioEscrito = postTemplate.querySelector('.escrever-comentario');
+            const divComentarioPublicado = postTemplate.querySelector('.mostrar-comentarios');
+            const inputComentar = postTemplate.querySelector('.comentarios')
+            const objetoComentario = comentar(idDoPost, comentarioEscrito.value)
+            const templateComentarioPublicado = gerarTemplateComentario(objetoComentario)
+            
+            divComentarioPublicado.innerHTML = templateComentarioPublicado + divComentarioPublicado.innerHTML;
+            //divComentarioPublicado.style.display = "block";
             inputComentar.style.display = "none";
             comentarioEscrito.value = ""
-
+                     
         })
 
         const curtir = postTemplate.querySelector('.icone-curtir');
         curtir.addEventListener("click", () => {
             //fas = coração preenchido
-            const estaCurtido = curtir.classList.contains('fas');
+            const naoEstavaCurtido = curtir.classList.contains('far');
             let numeroDeCurtidas = postTemplate.querySelector('.numero-curtidas')
             let conteudoNumeroDeCurtidas = Number(numeroDeCurtidas.innerHTML);
+            const idPost = postTemplate.querySelector('.id-post').value
 
-            if (estaCurtido == true) {
-                curtir.classList.replace('fas', 'far');
-                conteudoNumeroDeCurtidas--
+            if (naoEstavaCurtido == true) {
+                curtir.classList.replace('far', 'fas');
+                conteudoNumeroDeCurtidas++
+                curtirPost(idPost)
             }
 
             else {
-                curtir.classList.replace('far', 'fas');
-                conteudoNumeroDeCurtidas++
+                curtir.classList.replace('fas', 'far');
+                conteudoNumeroDeCurtidas--
+                descurtirPost(idPost)
             }
 
             numeroDeCurtidas.innerHTML = conteudoNumeroDeCurtidas;
+
         })
-
-
-        
 
         main.querySelector('#feed').appendChild(postTemplate)
 
-        
     };
+
+
+    function curtirPost(idDoPost) {
+
+        let curtida =
+        {
+            uid: firebase.auth().currentUser.uid,
+            nome: firebase.auth().currentUser.displayName
+        }
+
+        let documentoPost = firebase.firestore().collection("posts").doc(idDoPost);
+        documentoPost.update({
+            curtidas: firebase.firestore.FieldValue.arrayUnion(curtida)
+        });
+
+    }
+
+
+    function descurtirPost(idDoPost) {
+        let curtida =
+        {
+            uid: firebase.auth().currentUser.uid,
+            nome: firebase.auth().currentUser.displayName
+        }
+
+        let documentoPost = firebase.firestore().collection("posts").doc(idDoPost);
+        documentoPost.update({
+            curtidas: firebase.firestore.FieldValue.arrayRemove(curtida)
+        });
+    }
+
+    function comentar(idDoPost, texto) {
+
+        let comentario =
+        {
+            uid: firebase.auth().currentUser.uid,
+            nome: firebase.auth().currentUser.displayName,
+            textoComentario: texto,
+            data: new Date().toLocaleString()
+
+        }
+
+        let documentoPost = firebase.firestore().collection("posts").doc(idDoPost);
+        documentoPost.update({
+            comentarios: firebase.firestore.FieldValue.arrayUnion(comentario)
+        });
+        return comentario;
+
+    }
+
+    function gerarTemplateComentario(comentario) {
+        return `
+        <div class="template-comentario">
+            <header class="header-comentario">
+                <img class="foto-comentario" src="../../img/foto-usuario.png"><p class="nome-comentario">${comentario.nome} </p>
+                <p class="hora-comentario">${comentario.data}</p>            
+            </header>
+            ${comentario.textoComentario}
+        </div>
+        
+        `
+    }
 
     return main;
 }
+
+
+
+
