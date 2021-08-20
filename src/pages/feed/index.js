@@ -2,7 +2,24 @@ export const TemplateFeed = () => {
     const main = document.createElement('div');
     main.innerHTML = `
     <header class="container-header">
-      <h1 class="logo">FRONTERS</h1>
+        <h1 class="logo">FRONTERS</h1>
+        <nav id="nav-id">
+            <button aria-label="Abrir Menu" id="btn-mobile" aria-haspopup="true" aria-controls="menu" aria-expanded="false">
+                <span id="hamburguer"></span>
+            </button>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            
+                <ul id="menu" role="menu">
+                    <li><a href="/feed"> <i class="far fa-list-alt"></i> Feed</a></li>
+                    <li><a href="/perfil"> <i class="fas fa-user-alt"></i> Perfil</a></li>
+                    <li id="logout-id"><p><a href=""> <i class="fas fa-sign-out-alt"></i> Sair</a></p></li>
+                </ul>
+            
+        </nav>
     </header>
     <div class="perfil">
         <h1> FEED </h1>
@@ -13,6 +30,7 @@ export const TemplateFeed = () => {
      
     <div id="feed"></div>
     `
+
     function carregarPost() {
         const colecaoPost = firebase.firestore().collection("posts")
         colecaoPost.where("id_usuario", "!=", firebase.auth().currentUser.uid)
@@ -220,9 +238,30 @@ export const TemplateFeed = () => {
         `
     }
 
+   
+            //Menu Hamburguer
+           const btnMobile = main.querySelector('#btn-mobile');
+
+            function toggleMenu(event) {
+                if(event.type === 'touchstart') event.preventDefaut()
+                const nav = main.querySelector('#nav-id');
+                nav.classList.toggle('active');
+                const active = nav.classList.contains('active')
+                event.currentTarget.setAttribute('aria-expanded', active)
+                if (active) {
+                    event.currentTarget.setAttribute('aria-label', 'Fechar Menu')
+                } 
+                else{event.currentTarget.setAttribute('aria-label', 'Abrir Menu')}
+            }
+            btnMobile.addEventListener('click', toggleMenu);
+            btnMobile.addEventListener('touchstart', toggleMenu)
+
+    
+
+    
+
     return main;
 }
-
 
 
 

@@ -5,6 +5,23 @@ export const TemplatePerfil = () => {
     <main class="pagina-perfil">
         <header class="container-header">
         <h1 class="logo">FRONTERS</h1>
+        <nav id="nav-id">
+            <button aria-label="Abrir Menu" id="btn-mobile" aria-haspopup="true" aria-controls="menu" aria-expanded="false">
+                <span id="hamburguer"></span>
+            </button>
+            <div class="mobile-menu">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </div>
+            <ul id="menu" role="menu">
+                
+                <li><a href="/feed"> <i class="far fa-list-alt"></i> Feed</a></li>
+                <li><a href="/perfil"> <i class="fas fa-user-alt"></i> Perfil</a></li>
+                <li><a href="" id="logout-id"> <i class="fas fa-sign-out-alt"></i> Sair</a></li>
+               
+            </ul>
+        </nav>
         </header>
 
         <div class="perfil">
@@ -14,12 +31,11 @@ export const TemplatePerfil = () => {
             </div>
         
             <button class="editar-perfil"> Editar Perfil </button>
-            <button class="logout" id="logout-id"> Sair </button>
         </div>
 
         <form action="" id="postForm">
             <div>
-                <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"></textarea>
+                <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"required minlength="1"></textarea>
             </div>        
         
             <div class="campo-addFoto"><img id="add-foto" src="img/vector-addfoto.png">Adicionar Foto</div>
@@ -38,6 +54,16 @@ export const TemplatePerfil = () => {
 
         </form>
     </main>
+
+    <div class="popup-wrapper">
+<div class="popup">
+    <div class="fechar-popup">X</div>
+  <div class="conteudo-popup">
+    <h2>Cadastro finalizado com sucesso!</h2>
+    <button id="loginPopup"><a href="/#">Fazer Login</a></button>
+  </div>
+</div>
+</div>
     
     `
     const botaoPublicar = main.querySelector('#publicar');
@@ -47,10 +73,24 @@ export const TemplatePerfil = () => {
 
         const text = main.querySelector('#post').value;
         const linkGithub = main.querySelector('#link-github');
+        //pop up
+        const popup = main.querySelector('.popup-wrapper');
+        const fecharPopup = main.querySelector('.fechar-popup');
+        const conteudoPopup = main.querySelector('.conteudo-popup');
 
-        if (linkGithub.checkValidity() == false) {
-            alert("Por gentileza, colocar um link válido")
-            return
+        if(text === ""){
+            popup.style.display = 'block';
+            conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+            <p> Por gentileza, escreva algo antes de salvar </p>`;
+            fecharPopup.style.display = 'block';
+            fecharPopup.addEventListener("click", () => {
+            popup.style.display = 'none';
+            });
+        }
+        else{
+            if (linkGithub.checkValidity() == false) {
+                alert("Por gentileza, colocar um link válido")
+                return
         }
 
         const objetoUsuario = firebase.auth().currentUser;
@@ -80,7 +120,7 @@ export const TemplatePerfil = () => {
                 const popStateEvent = new PopStateEvent("popstate", {})
                 dispatchEvent(popStateEvent)
             });
-
+        }
 
     });
 
@@ -272,7 +312,7 @@ export const TemplatePerfil = () => {
             const conteudoPopup = postTemplate.querySelector('.conteudo-popup');
             popup.style.display = 'block';
             conteudoPopup.innerHTML = ` <h2>Tem certeza que deseja deletar sua postagem?</h2> 
-        <p> <button type="button" class="delete-class">Deletar</button> </p>`;
+            <p> <button type="button" class="delete-class">Deletar</button> </p>`;
             fecharPopup.style.display = 'block';
             fecharPopup.addEventListener("click", () => {
                 popup.style.display = 'none';
@@ -295,6 +335,24 @@ export const TemplatePerfil = () => {
         main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate)
 
     }
+
+        //Menu Hamburguer
+        const btnMobile = main.querySelector('#btn-mobile');
+
+        function toggleMenu(event) {
+            if(event.type === 'touchstart') event.preventDefaut()
+            const nav = main.querySelector('#nav-id');
+            nav.classList.toggle('active');
+            const active = nav.classList.contains('active')
+            event.currentTarget.setAttribute('aria-expanded', active)
+            if (active) {
+                event.currentTarget.setAttribute('aria-label', 'Fechar Menu')
+            } 
+            else{event.currentTarget.setAttribute('aria-label', 'Abrir Menu')}
+        }
+        btnMobile.addEventListener('click', toggleMenu);
+        btnMobile.addEventListener('touchstart', toggleMenu)
+
     return main;
 
 }
