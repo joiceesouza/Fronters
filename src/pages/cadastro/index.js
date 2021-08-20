@@ -71,13 +71,13 @@ export const TemplateCadastro = () => {
 
 
 <div class="popup-wrapper">
-<div class="popup">
+  <div class="popup">
     <div class="fechar-popup">X</div>
-  <div class="conteudo-popup">
-    <h2>Cadastro finalizado com sucesso!</h2>
-    <button id="loginPopup"><a href="/#">Fazer Login</a></button>
+    <div class="conteudo-popup">
+      <h2>Cadastro finalizado com sucesso!</h2>
+      <button id="loginPopup"><a href="/#">Fazer Login</a></button>
+    </div>
   </div>
-</div>
 </div>
     `
 
@@ -129,6 +129,7 @@ export const TemplateCadastro = () => {
   
         cadastro(email, password)
           .then((userCredential) => {
+           
             // Signed in
           
             const user = userCredential.user;
@@ -137,6 +138,8 @@ export const TemplateCadastro = () => {
             conteudoPopup.innerHTML = `<h2>Cadastro finalizado com sucesso!</h2>
             <button id="loginPopup"><a href="/#">Fazer Login</a></button>`
             fecharPopup.style.display = 'none';
+
+
             // ...
           })
           .catch((error) => {
