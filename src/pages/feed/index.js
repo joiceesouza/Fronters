@@ -24,6 +24,9 @@ export const TemplateFeed = () => {
     <div class="perfil">
         <h1> FEED </h1>
     </div>
+    <div id="div-gif">
+        <img class="gif" src="../img/48531-htmlcssjs.gif" alt="gif">
+    </div>
      
     <div id="feed"></div>
     `
@@ -229,7 +232,7 @@ export const TemplateFeed = () => {
                 <img class="foto-comentario" src="../../img/foto-usuario.png"><p class="nome-comentario">${comentario.nome} </p>
                 <p class="hora-comentario">${comentario.data}</p>            
             </header>
-            ${comentario.textoComentario}
+            <p class="texto-comentario-template">${comentario.textoComentario}</p>
         </div>
         
         `

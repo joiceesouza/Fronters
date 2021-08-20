@@ -94,14 +94,15 @@ export const TemplatePerfil = () => {
         }
 
         const objetoUsuario = firebase.auth().currentUser;
+        
         const nomeUsuarioGoogle = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
         const horaPublicacao = new Date().toLocaleString();
-        
-
+        const fotoUsuario = objetoUsuario.photoURL           
 
 
         const post = {
+            foto: fotoUsuario,
             nome: nomeUsuarioGoogle,
             id_usuario: idDoUsuario,
             data: horaPublicacao,

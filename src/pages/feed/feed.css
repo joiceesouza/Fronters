@@ -1,4 +1,29 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
+:root {
+    --azul-claro: #6ab1d1;
+    --azul-escuro: #002855;
+    --laranja: #fb8500;
+    --laranja-claro: #FFE8CD;
+    --cinza-claro: #F1EDED;
+    --branco: #fff;
+    --preto: #000;
+  }
+
+#div-gif {
+    text-align: center;
+}
+
+.gif {
+    width: 50vw;
+}
 
 .perfil {
     display: flex;
@@ -60,7 +85,7 @@ text-align: center;
 
 #input-comentario {
     
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid var(--preto);
     outline: none;
     margin: auto 10px;
     
@@ -71,9 +96,9 @@ text-align: center;
 }
 
 .escrever-comentario {
-    color: black;
+    color: var(--preto);
     border-radius: 6px;
-    border: solid 1px orange;
+    border: solid 1px var(--laranja);
     padding: 0.5em;
 }
 
@@ -84,13 +109,6 @@ text-align: center;
 .conteudo-editar-texto, .conteudo-editar-github {
     display: none;
 }
-
-/* .class-add {
-    width: 50px;
-    height: 50px;
-    border: black;
-    background-color: red;
-} */
 
 .div-post {
     border: 3px solid var(--laranja);
@@ -244,17 +262,17 @@ a:hover {
 }
 
 .publicar-comentario {
-    background-color: #fb8500;
+    background-color: var(--laranja);
     border-radius: 6px;
-    border: solid 1px #f1eded;
+    border: solid 1px var(--cinza-claro);
     padding: 0.5em;
-    color: #f1eded;
+    color: var(--cinza-claro);
     font-weight: bold;
 }
 
 .publicar-comentario:hover {
     
-    border: solid 2px black;
+    border: solid 2px var(--preto);
 
 }
 
@@ -270,14 +288,22 @@ a:hover {
 
 .mostrar-comentarios {
     display: none;
+    margin-top: 2em;
+}
+
+.template-comentario {
+    background-color: rgb(235, 186, 95);
+    border-radius: 5px;
 }
 
 .foto-comentario {
     width: 10%;
+    margin-right: 0.75em;
 }
 
 .nome-comentario {
     font-weight: bold;
+    color: var(--preto);
 }
 
 .header-comentario {
@@ -288,5 +314,10 @@ a:hover {
 
 .hora-comentario {
     font-size: small;
+    color: var(--preto);
+}
 
+.texto-comentario-template {
+    margin: 0.75em;
+    color: var(--preto);
 }
