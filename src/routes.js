@@ -6,14 +6,9 @@ import {TemplateRecuperar} from './pages/recuperar/index.js';
 import {TemplateFeed} from './pages/feed/index.js';
 
 export const routeRender = () => {
-  
  
-  
-  // const credenciais = localStorage.getItem('credenciais')
   firebase.auth().onAuthStateChanged((user) => {
-        //const usuario = user.uid;
-    
-    const rotaAtual = window.location.pathname
+     const rotaAtual = window.location.pathname
     if(user == null && rotaAtual != "/cadastro" && rotaAtual != "/recuperar" && rotaAtual != "/login") {
       window.history.pushState({}, null, '/login')
       const popStateEvent = new PopStateEvent("popstate", {})
@@ -34,10 +29,9 @@ export const routeRender = () => {
     element.innerHTML = '';
     element.appendChild(routes[window.location.pathname]());
 
-
   });
   
-    
+   
 };
 
 window.addEventListener('popstate', routeRender);

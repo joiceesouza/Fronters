@@ -56,7 +56,7 @@ export const TemplatePerfil = () => {
         const objetoUsuario = firebase.auth().currentUser;
         const nomeUsuarioGoogle = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
-
+        const horaPublicacao = new Date().toLocaleString();
         
 
 
@@ -64,6 +64,7 @@ export const TemplatePerfil = () => {
         const post = {
             nome: nomeUsuarioGoogle,
             id_usuario: idDoUsuario,
+            data: horaPublicacao,
             texto: text,
             link_github: linkGithub.value,
             curtidas: [],
@@ -119,8 +120,10 @@ export const TemplatePerfil = () => {
         postTemplate.setAttribute('class', 'div-post')
         postTemplate.innerHTML = `
                 
-                <input type="hidden" class="id-post" value="${post.id}"/>
-        <div class="nome-usuario"><i class="fas fa-female boneco"></i>${post.data().nome} <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> </div>
+        <input type="hidden" class="id-post" value="${post.id}"/>
+        <div class="nome-usuario">
+            <i class="fas fa-female boneco"></i>${post.data().nome} <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
+        </div>
        
         <div class="texto-publicado-usuario">${post.data().texto}</div>
         <div class="conteudo-editar-texto">
