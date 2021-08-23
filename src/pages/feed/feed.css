@@ -98,8 +98,12 @@ text-align: center;
 .escrever-comentario {
     color: var(--preto);
     border-radius: 6px;
-    border: solid 1px var(--laranja);
+    border: solid 2px var(--laranja);
     padding: 0.5em;
+}
+
+.escrever-comentario:focus {
+    border: solid 2px var(--laranja);
 }
 
 .icone-curtido {
@@ -153,16 +157,88 @@ a:hover {
     align-items: center;
     height: 70px;
     justify-content: space-between;
+    
+   
 
 }
 
 #menu a {
-    display: block;
+    /* display: block; */
+    display: flex;
     padding: .5rem;
 }
 
 #btn-mobile {
     display: none;
+}
+
+.nome-feed {
+    font-weight: bold;
+}
+
+.publicar-comentario {
+    background-color: var(--laranja);
+    border-radius: 6px;
+    border: solid 1px var(--cinza-claro);
+    padding: 0.5em;
+    color: var(--cinza-claro);
+    font-weight: bold;
+}
+
+.publicar-comentario:hover {
+    
+    border: solid 2px var(--preto);
+
+}
+
+.foto-publicada {
+    width: 70vw;
+    height: 33vh;
+    border-radius: 15px;
+}
+
+.img-publicada {
+    text-align: center;
+}
+
+.mostrar-comentarios {
+    display: none;
+    margin-top: 2em;
+}
+
+.template-comentario {
+    background-color: rgb(235, 186, 95);
+    border-radius: 5px;
+}
+
+.foto-comentario {
+    width: 10%;
+    margin-right: 0.75em;
+}
+
+.nome-comentario {
+    font-weight: bold;
+    color: var(--preto);
+}
+
+.header-comentario {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.hora-comentario {
+    font-size: small;
+    color: var(--preto);
+}
+
+.texto-comentario-template {
+    margin: 0.75em;
+    color: var(--preto);
+}
+
+.fas.fa-heart {
+    color: var(--laranja)
 }
 
 @media (max-width: 600px){
@@ -172,6 +248,7 @@ a:hover {
     }*/
     .far.fa-list-alt, .fas.fa-user-alt, .fas.fa-sign-out-alt {
         display: block;
+        margin-right: 2em;
     }
 
 
@@ -257,67 +334,5 @@ a:hover {
         display: flex; flex-direction: column; 
     }*/
 
-.nome-feed {
-    font-weight: bold;
-}
+   }
 
-.publicar-comentario {
-    background-color: var(--laranja);
-    border-radius: 6px;
-    border: solid 1px var(--cinza-claro);
-    padding: 0.5em;
-    color: var(--cinza-claro);
-    font-weight: bold;
-}
-
-.publicar-comentario:hover {
-    
-    border: solid 2px var(--preto);
-
-}
-
-.foto-publicada {
-    width: 70vw;
-    height: 33vh;
-    border-radius: 15px;
-}
-
-.img-publicada {
-    text-align: center;
-}
-
-.mostrar-comentarios {
-    display: none;
-    margin-top: 2em;
-}
-
-.template-comentario {
-    background-color: rgb(235, 186, 95);
-    border-radius: 5px;
-}
-
-.foto-comentario {
-    width: 10%;
-    margin-right: 0.75em;
-}
-
-.nome-comentario {
-    font-weight: bold;
-    color: var(--preto);
-}
-
-.header-comentario {
-    display: flex;
-    justify-content: space-between;
-
-}
-
-.hora-comentario {
-    font-size: small;
-    color: var(--preto);
-}
-
-.texto-comentario-template {
-    margin: 0.75em;
-    color: var(--preto);
-}
