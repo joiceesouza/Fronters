@@ -29,6 +29,13 @@ export const TemplatePerfil = () => {
                 <img id="foto-perfil" src="img/foto-perfil.png" alt="Foto do perfil">
                 <p class="nome">Tamara</p>
             </div>
+            <div class="upload">
+                <input type="file" id="foto"></input>
+                <button id="carregar-img">Upload</button> 
+                <div class="msg-carregando"></div>  
+                <img id="image"/>             
+            
+            </div>
         
             <button class="editar-perfil"> Editar Perfil </button>
         </div>
@@ -38,8 +45,9 @@ export const TemplatePerfil = () => {
                 <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"required minlength="1"></textarea>
             </div>        
         
-            <div class="campo-addFoto"><img id="add-foto" src="img/vector-addfoto.png">Adicionar Foto</div>
-
+            <div class="campo-addFoto"><img id="add-foto" src="img/vector-addfoto.png"><input type="file" id="photoFeed"></input> <button id="imagem-feed">Adicionar imagem</button> 
+            </div>
+            <img id="imagem-feed"/>  
             <div class="div-link-do-github">
                 <i class="fab fa-github icone-github"></i>
                 <input id="link-github" type="url" placeholder="Colocar link do GitHub"/>
@@ -50,6 +58,7 @@ export const TemplatePerfil = () => {
         
             <div class="minhas-publicacoes"><h2>Minhas Publicações</h2></div>
             <div id="div-minhas-publicacoes"></div>
+            
 
 
         </form>
@@ -197,6 +206,8 @@ export const TemplatePerfil = () => {
         
         <button type="button" class="salvar-edicao">Salvar</button>
          <div class="comentario-publicado"></div>
+       
+
          
 
         <div class="popup-wrapper">
@@ -332,6 +343,62 @@ export const TemplatePerfil = () => {
 
         });
 
+        //carregar imagens
+        const carregarImagens = main.querySelector('#carregar-img');
+      
+        carregarImagens.addEventListener('click', () => {
+            const msgImg = main.querySelector('.msg-carregando');
+
+            msgImg.innerHTML = 'Carregando imagem...';
+        
+            const ref = firebase.storage().ref('imagens/perfil');
+            //ref caminho onde ira salvar a imagem
+            const file = main.querySelector('#foto').files[0];
+            //file 
+            const name = `${new Date()}-${file.name}`;
+            const metadata = {
+                contentType: file.type,
+            };
+            const task = ref.child(name).put(file, metadata);
+            //child nomeia a imagem
+            //put comando q faz o upload da imagem
+            task
+                .then((snapshot) => snapshot.ref.getDownloadURL())
+                .then((url) => {
+                    console.log('deu certo')
+                    msgImg.innerHTML = ''
+                    const image = main.querySelector('#image');
+                    image.src = url;                    
+                    
+                });
+            })
+
+        
+            const idImagemFeed = main.querySelector('#imagem-feed')
+            idImagemFeed.addEventListener('click', () => {
+                const ref = firebase.storage().ref('imagens/feed');
+                //ref caminho onde ira salvar a imagem
+                const file = main.querySelector('#photoFeed').files[0];
+                //file 
+                const name = `${new Date()}-${file.name}`;
+                const metadata = {
+                    contentType: file.type,
+                };
+                const task = ref.child(name).put(file, metadata);
+                //child nomeia a imagem
+                //put comando q faz o upload da imagem
+                task
+                    .then((snapshot) => snapshot.ref.getDownloadURL())
+                    .then((url) => {
+                        console.log('deu certo')
+                        const imagefeed = main.querySelector('#imagem-feed')
+                        imagefeed.src = url
+              //      photoMsgMobile.innerHTML = ''
+                    });
+            })
+        
+
+
         main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate)
 
     }
@@ -340,7 +407,7 @@ export const TemplatePerfil = () => {
         const btnMobile = main.querySelector('#btn-mobile');
 
         function toggleMenu(event) {
-            if(event.type === 'touchstart') event.preventDefaut()
+            if(event.type === 'touchstart') event.preventDefault()
             const nav = main.querySelector('#nav-id');
             nav.classList.toggle('active');
             const active = nav.classList.contains('active')
