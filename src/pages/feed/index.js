@@ -194,6 +194,7 @@ export const TemplateFeed = () => {
 
 
     function descurtirPost(idDoPost) {
+        
         let curtida =
         {
             uid: firebase.auth().currentUser.uid,
@@ -243,7 +244,7 @@ export const TemplateFeed = () => {
            const btnMobile = main.querySelector('#btn-mobile');
 
             function toggleMenu(event) {
-                if(event.type === 'touchstart') event.preventDefaut()
+                if(event.type === 'touchstart') event.preventDefault()
                 const nav = main.querySelector('#nav-id');
                 nav.classList.toggle('active');
                 const active = nav.classList.contains('active')
