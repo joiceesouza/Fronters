@@ -12,9 +12,6 @@
     --branco: #fff;
   }
 
-/* body {
-    background-color: var(--azul-claro);
-} */
 
 .container-header {
     background-color: var(--azul-escuro);
@@ -29,27 +26,6 @@
     font-size: 1.5em;
 }
 
-.campo-pesquisar {
-    display: block;
-   
-}
-
-#pesquisar {
-    border-radius: 5px;
-    width: 100%;
-    height: 4vh;
-    background: var(--branco);
-    background-image: url(/img/vector-lupa.png);
-    background-repeat: no-repeat;
-    background-position-x: 95%;
-    background-position-y: center;
-
-}
-
-#pesquisar::placeholder {
-    color: black;
-}
-
 
 .perfil {
     display: flex;
@@ -62,6 +38,21 @@
     height: 4vh;
     background-color: var(--branco);
     border-radius: 5px;
+}
+
+.editar-nome {
+    display: flex;
+    align-items: center;
+}
+
+.btn-editar-nome {
+    color: var(--azul-escuro);
+}
+
+.fas.fa-save {
+    display: none;
+    color: var(--azul-escuro);
+    margin-right: 1em;
 }
 
 .foto p {

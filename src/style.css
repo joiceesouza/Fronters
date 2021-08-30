@@ -1,4 +1,10 @@
-* {
+@import url('./pages/feed/feed.css');
+@import url('./pages/login/login-cadastro-recuperar.css');
+@import url('./pages/perfil/perfil-style.css');
+
+
+
+/* * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -101,7 +107,7 @@ margin: 8px;
          display: none;
      } */
 
-     #nav-list {
+     /* #nav-list {
         list-style: none;
         display: flex;
     }
@@ -115,5 +121,5 @@ margin: 8px;
         max-width: 300px;
     }
 
-}
-
+} */
+ 
