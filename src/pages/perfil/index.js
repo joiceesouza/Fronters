@@ -1,3 +1,5 @@
+import { deletarPost} from "../../lib/index.js";
+
 export const TemplatePerfil = () => {
 
     const main = document.createElement('div');
@@ -211,6 +213,7 @@ export const TemplatePerfil = () => {
     function addPostNaPagina(post) {
         const postTemplate = document.createElement('div');
         postTemplate.setAttribute('class', 'div-post')
+        postTemplate.dataset.id = post.id
         postTemplate.innerHTML = `
                 
         <input type="hidden" class="id-post" value="${post.id}"/>
@@ -358,19 +361,17 @@ export const TemplatePerfil = () => {
                 })
         });
 
-        // efeito remover post
-        function efeitoRemoverPost(post) {
-            const target = document.querySelector('.div-post');
+
+        //Efeito remover post
+        function efeitoRemoverPost(postId) {
+            const target = document.querySelector(`[data-id="${postId}"]`);
             target.addEventListener('transitionend', () => target.remove());
             target.style.opacity = '0';
         }
 
-
         //Deletar post
-
         const deletar = postTemplate.querySelector('.icone-deletar')
         deletar.addEventListener('click', () => {
-
             const popup = postTemplate.querySelector('.popup-wrapper');
             const fecharPopup = postTemplate.querySelector('.fechar-popup');
             const conteudoPopup = postTemplate.querySelector('.conteudo-popup');
@@ -383,16 +384,11 @@ export const TemplatePerfil = () => {
             });
             const button = postTemplate.querySelector('.delete-class')
             button.addEventListener('click', () => {
-                const postCollection = firebase.firestore().collection("posts")
-                postCollection.doc(post.id).delete().then(doc => {
+                deletarPost(post.id).then(()=>{
                     efeitoRemoverPost(post.id)
                 })
-
-
-            })
-
-
-
+                popup.style.display = 'none';
+            });
         });
 
         
