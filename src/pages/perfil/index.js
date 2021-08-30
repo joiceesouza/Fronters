@@ -27,7 +27,7 @@ export const TemplatePerfil = () => {
         <div class="perfil">
             <div class="foto">
                 <img id="foto-perfil" src="img/foto-perfil.png" alt="Foto do perfil">
-                <p class="nome">Tamara</p>
+                <div class="editar-nome"><p class="nome" contentEditable='false'>Tamara </p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
             </div>
             <div class="upload">
                 <input type="file" id="foto"></input>
@@ -75,6 +75,43 @@ export const TemplatePerfil = () => {
 </div>
     
     `
+
+
+        //EDITAR NOME USUÁRIO
+        main.querySelector('.btn-editar-nome').addEventListener('click', () => {
+            const nomeEditar = main.querySelector('.nome')
+            const btnSalvarEdicao = main.querySelector('.btn-salvar-edicao-nome')
+            nomeEditar.contentEditable = true;
+            nomeEditar.focus()
+            btnSalvarEdicao.style.display = "block";
+
+        });
+
+        //SALVAR NOME USUÁRIO
+        main.querySelector('.btn-salvar-edicao-nome').addEventListener('click', (event) => {
+            event.preventDefault();
+            const nomeEditar = main.querySelector('.nome')
+            const btnSalvarEdicao = main.querySelector('.btn-salvar-edicao-nome')
+            nomeEditar.contentEditable = false;
+            btnSalvarEdicao.style.display = "none";
+        
+            // const updateUserProfile = (name, url) => {
+            //     const user = firebase.auth().currentUser;
+            //     user.updateProfile({
+            //         displayName: name,
+            //         photoURL: url,
+            //     }).then(() => {
+            //         console.log('Perfil atualizado');
+            //     });
+            // }
+
+
+        });
+
+
+
+
+
     const botaoPublicar = main.querySelector('#publicar');
 
     botaoPublicar.addEventListener("click", (event) => {
@@ -107,13 +144,17 @@ export const TemplatePerfil = () => {
         const nomeUsuarioGoogle = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
         const horaPublicacao = new Date().toLocaleString();
-        const fotoUsuario = objetoUsuario.photoURL   
+        const fotoUsuario = objetoUsuario.photoURL; 
+        const nomePerfil = 'uva'
+        
+        
         // const refImg = firebase.storage().ref('imagens/feed');        
 
 
         const post = {
             foto: fotoUsuario,
             nome: nomeUsuarioGoogle,
+            nomeSalvoPerfil: nomePerfil,
             id_usuario: idDoUsuario,
             data: horaPublicacao,
             texto: text,
@@ -174,7 +215,7 @@ export const TemplatePerfil = () => {
                 
         <input type="hidden" class="id-post" value="${post.id}"/>
         <div class="nome-usuario">
-            <i class="fas fa-female boneco"></i>${post.data().nome} <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
+            <i class="fas fa-female boneco"></i>${post.data().nome || post.data().nomeSalvoPerfil} <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
         </div>
        
         <div class="texto-publicado-usuario">${post.data().texto}</div>
@@ -250,6 +291,7 @@ export const TemplatePerfil = () => {
             comentarioEscrito.value = ""
 
         })
+
 
         //EDITAR PUBLICAÇÃO
 
