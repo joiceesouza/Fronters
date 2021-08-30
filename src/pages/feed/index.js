@@ -194,6 +194,7 @@ export const TemplateFeed = () => {
 
 
     function descurtirPost(idDoPost) {
+        
         let curtida =
         {
             uid: firebase.auth().currentUser.uid,

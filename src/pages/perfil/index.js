@@ -45,7 +45,7 @@ export const TemplatePerfil = () => {
                 <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"required minlength="1"></textarea>
             </div>        
         
-            <div class="campo-addFoto"><img id="add-foto" src="img/vector-addfoto.png"><input type="file" id="photoFeed"></input> <button id="imagem-feed">Adicionar imagem</button> 
+            <div class="campo-addFoto"><img id="add-foto" src="img/vector-addfoto.png"><input type="file" id="photoFeed"></input> <button id="btn-imagem-feed">Adicionar imagem</button> 
             </div>
             <img id="imagem-feed"/>  
             <div class="div-link-do-github">
@@ -107,7 +107,8 @@ export const TemplatePerfil = () => {
         const nomeUsuarioGoogle = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
         const horaPublicacao = new Date().toLocaleString();
-        const fotoUsuario = objetoUsuario.photoURL           
+        const fotoUsuario = objetoUsuario.photoURL   
+        // const refImg = firebase.storage().ref('imagens/feed');        
 
 
         const post = {
@@ -119,6 +120,7 @@ export const TemplatePerfil = () => {
             link_github: linkGithub.value,
             curtidas: [],
             comentarios: []
+            // imgPost: refImg
         }
 
         const colecaoPost = firebase.firestore().collection("posts")
@@ -176,6 +178,7 @@ export const TemplatePerfil = () => {
         </div>
        
         <div class="texto-publicado-usuario">${post.data().texto}</div>
+        <div class="foto-publicado-usuario">aqui deve carregar a img </div>
         <div class="conteudo-editar-texto">
             <input class="campo-editar-texto" />
         </div>
@@ -313,6 +316,14 @@ export const TemplatePerfil = () => {
                 })
         });
 
+        // efeito remover post
+        function efeitoRemoverPost(post) {
+            const target = document.querySelector('.div-post');
+            target.addEventListener('transitionend', () => target.remove());
+            target.style.opacity = '0';
+        }
+
+
         //Deletar post
 
         const deletar = postTemplate.querySelector('.icone-deletar')
@@ -332,8 +343,7 @@ export const TemplatePerfil = () => {
             button.addEventListener('click', () => {
                 const postCollection = firebase.firestore().collection("posts")
                 postCollection.doc(post.id).delete().then(doc => {
-                    postTemplate.style.display = "none"
-
+                    efeitoRemoverPost(post.id)
                 })
 
 
@@ -342,6 +352,15 @@ export const TemplatePerfil = () => {
 
 
         });
+
+        
+
+
+
+
+
+
+
 
         //carregar imagens
         const carregarImagens = main.querySelector('#carregar-img');
@@ -374,7 +393,7 @@ export const TemplatePerfil = () => {
             })
 
         
-            const idImagemFeed = main.querySelector('#imagem-feed')
+            const idImagemFeed = main.querySelector('#btn-imagem-feed')
             idImagemFeed.addEventListener('click', () => {
                 const ref = firebase.storage().ref('imagens/feed');
                 //ref caminho onde ira salvar a imagem
