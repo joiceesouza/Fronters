@@ -29,16 +29,26 @@ export const TemplatePerfil = () => {
         <div class="perfil">
             <div class="foto">
                 <input type="file" id="foto-id"></input>
-                <img src="${firebase.auth().currentUser.photoURL}" id="image" alt="Foto do perfil" />
-                <button id="button-foto" src="img/camera.png" alt="botao perfil"></button>
+                <img src="${firebase.auth().currentUser.photoURL}" class="foto-perfil" id="image" alt="Foto do perfil" />
+                <button id="button-foto" src="img/camera.png" alt="botao perfil"><i class="fas fa-camera" id="escolher-foto"></i></button>
+
                 <div class="editar-nome"><p class="nome" contentEditable='false'>${firebase.auth().currentUser.displayName || 'Nome do Usuário'}</p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
                 <p class="conf-atualizaçao" id="conf-atualizaçao" hidden>Alterações salvas com sucesso!</p>
             </div>
+           
+            <div class="upload">
+                <input type="file" id="foto"></input>
+                <button id="carregar-img">Upload </button> 
+                <div class="msg-carregando"></div>  
+                <img id="image"/>             
+            
+            </div>
+
         </div>
         <button type="submit" id="btn-salvar">Salvar</button>
 
-        <form action="" id="postForm">
-            <div>
+        <form action="" id="postForm" class="container">
+            <div class="div-textarea">
                 <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"required minlength="1"></textarea>
             </div>        
         
@@ -55,13 +65,14 @@ export const TemplatePerfil = () => {
             <div class="btn-publicar">
                 <button type="submit" id="publicar">Publicar</button>
             </div>
+        </form>
         
-            <div class="minhas-publicacoes"><h2>Minhas Publicações</h2></div>
-            <div id="div-minhas-publicacoes"></div>
+        <div class="minhas-publicacoes container"><h2>Minhas Publicações</h2></div>
+        <div id="div-minhas-publicacoes" class="container"></div>
             
 
 
-        </form>
+       
     </main>
 
     <div class="popup-wrapper">
@@ -202,7 +213,7 @@ export const TemplatePerfil = () => {
 
     function addPostNaPagina(post) {
         const postTemplate = document.createElement('div');
-        postTemplate.setAttribute('class', 'div-post')
+        postTemplate.setAttribute('class', 'div-post container')
         postTemplate.dataset.id = post.id
         postTemplate.innerHTML = `
                 
