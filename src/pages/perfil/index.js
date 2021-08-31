@@ -29,7 +29,7 @@ export const TemplatePerfil = () => {
         <div class="perfil">
             <div class="foto">
                 <img id="foto-perfil" src="img/foto-perfil.png" alt="Foto do perfil">
-                <div class="editar-nome"><p class="nome" contentEditable='false'>Tamara </p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
+                <div class="editar-nome"><p class="nome" contentEditable='false'>${firebase.auth().currentUser.displayName || 'Nome do Usuário'}</p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
             </div>
             <div class="upload">
                 <input type="file" id="foto"></input>
@@ -96,22 +96,18 @@ export const TemplatePerfil = () => {
             const btnSalvarEdicao = main.querySelector('.btn-salvar-edicao-nome')
             nomeEditar.contentEditable = false;
             btnSalvarEdicao.style.display = "none";
-        
-            // const updateUserProfile = (name, url) => {
-            //     const user = firebase.auth().currentUser;
-            //     user.updateProfile({
-            //         displayName: name,
-            //         photoURL: url,
-            //     }).then(() => {
-            //         console.log('Perfil atualizado');
-            //     });
-            // }
+            const idPost = document.querySelector('.id-post').value
 
+            
+            const user = firebase.auth().currentUser;
+            user.updateProfile({
+            displayName: nomeEditar.innerHTML,
+            //photoURL: url,
+            }).then(() => {
+            console.log('Nome atualizado');
+            })
 
         });
-
-
-
 
 
     const botaoPublicar = main.querySelector('#publicar');
@@ -142,21 +138,18 @@ export const TemplatePerfil = () => {
         }
 
         const objetoUsuario = firebase.auth().currentUser;
-        
-        const nomeUsuarioGoogle = objetoUsuario.displayName;
+        const nomeUsuario = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
         const horaPublicacao = new Date().toLocaleString();
         const fotoUsuario = objetoUsuario.photoURL; 
-        const nomePerfil = 'uva'
-        
-        
+       
+               
         // const refImg = firebase.storage().ref('imagens/feed');        
 
 
         const post = {
             foto: fotoUsuario,
-            nome: nomeUsuarioGoogle,
-            nomeSalvoPerfil: nomePerfil,
+            nome: nomeUsuario,
             id_usuario: idDoUsuario,
             data: horaPublicacao,
             texto: text,
@@ -197,8 +190,7 @@ export const TemplatePerfil = () => {
 
     function carregarPost() {
         const colecaoPost = firebase.firestore().collection("posts")
-        // colecaoPost.where("id_usuario", "!=", localStorage.getItem("credenciais"))
-        colecaoPost.where("id_usuario", "==", firebase.auth().currentUser.uid)
+            colecaoPost.where("id_usuario", "==", firebase.auth().currentUser.uid)
 
             .get().then(snap => {
                 snap.forEach(post => {
@@ -283,7 +275,6 @@ export const TemplatePerfil = () => {
         })
 
         postTemplate.querySelector(".publicar-comentario").addEventListener('click', () => {
-            //const idDoPost = postTemplate.querySelector('.id-post').value;
             const comentarioEscrito = postTemplate.querySelector('.escrever-comentario');
             const divComentarioPublicado = postTemplate.querySelector('.comentario-publicado');
             const inputComentar = postTemplate.querySelector('.comentarios')
@@ -392,14 +383,6 @@ export const TemplatePerfil = () => {
         });
 
         
-
-
-
-
-
-
-
-
         //carregar imagens
         const carregarImagens = main.querySelector('#carregar-img');
       
@@ -475,7 +458,7 @@ export const TemplatePerfil = () => {
             else{event.currentTarget.setAttribute('aria-label', 'Abrir Menu')}
         }
         btnMobile.addEventListener('click', toggleMenu);
-        btnMobile.addEventListener('touchstart', toggleMenu)
+        btnMobile.addEventListener('touchstart', toggleMenu);
 
     return main;
 

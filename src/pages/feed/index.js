@@ -22,7 +22,7 @@ export const TemplateFeed = () => {
         </nav>
     </header>
     <div class="perfil">
-        <h1> FEED </h1>
+        <h1 class="titulo-feed"> FEED </h1>
     </div>
     <div id="div-gif">
         <img class="gif" src="../img/48531-htmlcssjs.gif" alt="gif">
@@ -233,11 +233,19 @@ export const TemplateFeed = () => {
                 <img class="foto-comentario" src="../../img/foto-usuario.png"><p class="nome-comentario">${comentario.nome} </p>
                 <p class="hora-comentario">${comentario.data}</p>            
             </header>
-            <p class="texto-comentario-template">${comentario.textoComentario}</p>
+            <p class="texto-comentario-template" contentEditable="false">${comentario.textoComentario}</p>
+            <i class="fas fa-pen"></i>
+            <i class="fas fa-trash-alt"></i>
         </div>
         
         `
     }
+
+     
+
+
+
+
 
    
             //Menu Hamburguer
