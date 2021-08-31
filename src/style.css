@@ -2,6 +2,11 @@
 @import url('./pages/login/login-cadastro-recuperar.css');
 @import url('./pages/perfil/perfil-style.css');
 
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
 
 
 /* * {

@@ -197,7 +197,6 @@ a:hover {
     }*/
 
     #menu {
-        display: flex;
         position: absolute;
         width: 100%;
         top: 70px;
@@ -223,7 +222,11 @@ a:hover {
         padding: 1rem 0;
         margin: 0 1rem;
         border-bottom: 2px solid rgba(0, 0, 0, .2);
+        display: flex;
+        flex-direction: row;
     }
+
+    
 
 
     #btn-mobile {
@@ -266,7 +269,7 @@ a:hover {
         transform: rotate(-135deg);
         top: -7px;
     }
-    .fas.fa-sign-out-alt{
+    /* .fas.fa-sign-out-alt, .fas.fa-user-alt, .far.fa-list-alt{
         display: inline-flex;
-    }
+    } */
 }
