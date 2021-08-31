@@ -17,6 +17,10 @@
     --preto: #000;
   }
 
+.titulo-feed {
+    color: var(--azul-escuro);
+}
+
 #div-gif {
     text-align: center;
 }
@@ -61,7 +65,9 @@
     padding: 1em;
 }
 
-
+.texto-publicado-usuario {
+    text-align: center;
+}
 
 .div-link-github-publicado {
 text-align: center;
@@ -192,13 +198,14 @@ a:hover {
 }
 
 .foto-publicada {
-    width: 70vw;
+    width: 90%;
     height: 33vh;
     border-radius: 15px;
 }
 
 .img-publicada {
     text-align: center;
+    width: 100%;
 }
 
 .mostrar-comentarios {
@@ -334,5 +341,31 @@ a:hover {
         display: flex; flex-direction: column; 
     }*/
 
+    }
+
+   @media (min-width: 601px) and (max-width: 800px){
+    /* #feed {
+        max-width: 60%;
+        margin: auto;
+    } */
+
    }
 
+
+  
+   @media (min-width: 801px) {
+    #div-gif {
+        max-width: 60%;
+        margin: auto;
+    }
+
+    .gif {
+        width: 30%;
+    }
+
+    #feed {
+        max-width: 60%;
+        margin: auto;
+    }
+
+   }
