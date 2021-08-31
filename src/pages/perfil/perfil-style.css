@@ -31,6 +31,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    flex-direction: column;
 }
 
 .editar-perfil {
@@ -43,6 +44,7 @@
 .editar-nome {
     display: flex;
     align-items: center;
+    padding: 1em;
 }
 
 .btn-editar-nome {
@@ -55,13 +57,33 @@
     margin-right: 1em;
 }
 
+
+.foto {
+    background: white;
+    border-radius: 1em;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 5%;
+    max-width: 60vw;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 25%);
+}
+
 .foto p {
     text-align: center;
 }
 
+.foto-perfil {
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+    margin: 1em auto;
+}
+
+
 #post {
     margin-top: 1em;
-    width: 100vw;
+    width: 100%;
     background-color: var(--azul-escuro);
     color: var(--branco)
 }
@@ -74,16 +96,20 @@
     margin: 15px;
 }
 
+.div-link-do-github {
+    text-align: center;
+}
+
 .link-do-github {
     text-align: center;
 }
 
 #link-github {
     background-color: var(--branco);
-    width: 80vw;
+    width: 100%;
     height: 4vh;
     border-radius: 5px;
-    margin: 10px;
+    margin-top: 1em;
 }
 
 #link-github::placeholder {
@@ -94,7 +120,7 @@
 
 #publicar {
     background-color: var(--laranja);
-    width: 55vw;
+    width: 270px;
     height: 2.5em;
     color: var(--branco);
     font-size: 1em;
@@ -134,6 +160,8 @@
 
 .div-post {
     background-color: var(--branco);
+    box-shadow: 5px 5px 12px rgb(0 0 0 / 50%);
+    transition: opacity 1s;
 }
 
 
@@ -163,10 +191,6 @@ a:hover {
     display: none;
 }
 
-.div-post {
-    transition: opacity 1s;
-  }
-
 
 .fas.fa-heart{
     color: var(--laranja);
@@ -188,7 +212,11 @@ a:hover {
 }
 
 
+
+/* --------------------------ADAPTAÇÃO TELAS MAIORES-------------*/
+
 @media (max-width: 600px){
+    
 
     /*.class-li {
         margin-top: 50px;
@@ -272,4 +300,41 @@ a:hover {
     /* .fas.fa-sign-out-alt, .fas.fa-user-alt, .far.fa-list-alt{
         display: inline-flex;
     } */
+}
+
+@media (min-width: 601px) {
+    #post, .div-link-do-github {
+        width: 70%;
+    }
+
+    .div-post {
+        max-width: 70%;
+    }
+
+}
+
+@media (min-width: 801px) {
+    #post, .div-link-do-github {
+        width: 70%;
+    }
+
+    .div-post {
+        max-width: 70%;
+    }
+
+}
+
+@media (min-width: 1025px) {
+    #post, .div-link-do-github {
+        width: 70%;
+    }
+
+    .div-post {
+        max-width: 70%;
+    }
+
+    .popup {
+        width: 70%;
+    }
+
 }
