@@ -39,6 +39,11 @@
 #foto-perfil {
     margin: 1em;
 }
+#imagem-id {
+    width: 80px;
+    height: 80px;
+    border-radius: 100%;
+}
 
 .nome-usuario {
     font-weight: bold;

@@ -49,6 +49,36 @@
     color: var(--azul-escuro);
 }
 
+.btn-foto-class {
+    
+    background:no-repeat;
+    background-color: transparent;
+    background-size: 100%;
+    outline: none;
+    border: solid 0pt;
+    cursor: pointer;
+    background-image: url(img/camera.png);
+}
+
+#button-foto {
+    height: 4.5vh;
+    width: 4.5vh;
+}
+
+#foto-id {
+    opacity: 0;
+}
+
+#photoFeed {
+    opacity: 0;
+}
+
+#image {
+    width: 160px;
+    height: 160px;
+    border-radius: 100%;
+}
+
 .fas.fa-save {
     display: none;
     color: var(--azul-escuro);
