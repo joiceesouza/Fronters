@@ -1,3 +1,5 @@
+//import {goBackToFeed}from "./index.js";
+
 export const TemplateFeed = () => {
     const main = document.createElement('div');
     main.innerHTML = `
@@ -73,7 +75,7 @@ export const TemplateFeed = () => {
         postTemplate.innerHTML = `
             <input type="hidden" class="id-post" value="${post.id}"/>
             <div>
-                <img src="../../img/foto-usuario.png">
+                <img src="${firebase.auth().currentUser.photoURL}" id="imagem-id">
                 <p class="nome-feed">Tamara<p>
             </div>
             
