@@ -1,10 +1,5 @@
 // // aqui você exportará as funções que precisa
 
-// export const myFunction = () => {
-//   // aqui vai seu código
-//   console.log('Olá mundo!');
-// };
-
 export function ocultarSenha(seletorInputSenha, seletorOlho) {
     const inputSenha = document.querySelector(seletorInputSenha);
     const iconeOcultar = document.querySelector(seletorOlho);
@@ -20,4 +15,9 @@ export function ocultarSenha(seletorInputSenha, seletorOlho) {
 
 }
 
+export function deletarPost(postId) {
+    const postCollection = firebase.firestore().collection("posts")
+    return postCollection.doc(postId).delete()
+    
+}
 

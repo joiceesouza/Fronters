@@ -1,3 +1,5 @@
+import { deletarPost} from "../../lib/index.js";
+
 export const TemplatePerfil = () => {
 
     const main = document.createElement('div');
@@ -27,9 +29,9 @@ export const TemplatePerfil = () => {
         <div class="perfil">
             <div class="foto">
                 <input type="file" id="foto-id"></input>
-                <img src="${firebase.auth().currentUser.photoURL}" id="image"/>
-                <img id="button-foto" src="img/camera.png" alt="botao perfil"></button>
-                <div class="editar-nome"><p class="nome" contentEditable='false'></p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
+                <img src="${firebase.auth().currentUser.photoURL}" id="image" alt="Foto do perfil" />
+                <button id="button-foto" src="img/camera.png" alt="botao perfil"></button>
+                <div class="editar-nome"><p class="nome" contentEditable='false'>${firebase.auth().currentUser.displayName || 'Nome do Usuário'}</p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
                 <p class="conf-atualizaçao" id="conf-atualizaçao" hidden>Alterações salvas com sucesso!</p>
             </div>
         </div>
@@ -92,22 +94,18 @@ export const TemplatePerfil = () => {
             const btnSalvarEdicao = main.querySelector('.btn-salvar-edicao-nome')
             nomeEditar.contentEditable = false;
             btnSalvarEdicao.style.display = "none";
-        
-            // const updateUserProfile = (name, url) => {
-            //     const user = firebase.auth().currentUser;
-            //     user.updateProfile({
-            //         displayName: name,
-            //         photoURL: url,
-            //     }).then(() => {
-            //         console.log('Perfil atualizado');
-            //     });
-            // }
+            const idPost = document.querySelector('.id-post').value
 
+            
+            const user = firebase.auth().currentUser;
+            user.updateProfile({
+            displayName: nomeEditar.innerHTML,
+            //photoURL: url,
+            }).then(() => {
+            console.log('Nome atualizado');
+            })
 
         });
-
-
-
 
 
     const botaoPublicar = main.querySelector('#publicar');
@@ -138,21 +136,18 @@ export const TemplatePerfil = () => {
         }
 
         const objetoUsuario = firebase.auth().currentUser;
-        
-        const nomeUsuarioGoogle = objetoUsuario.displayName;
+        const nomeUsuario = objetoUsuario.displayName;
         const idDoUsuario = objetoUsuario.uid;
         const horaPublicacao = new Date().toLocaleString();
         const fotoUsuario = objetoUsuario.photoURL; 
-        const nomePerfil = 'uva'
-        
-        
+       
+               
         // const refImg = firebase.storage().ref('imagens/feed');        
 
 
         const post = {
             foto: fotoUsuario,
-            nome: nomeUsuarioGoogle,
-            nomeSalvoPerfil: nomePerfil,
+            nome: nomeUsuario,
             id_usuario: idDoUsuario,
             data: horaPublicacao,
             texto: text,
@@ -193,8 +188,7 @@ export const TemplatePerfil = () => {
 
     function carregarPost() {
         const colecaoPost = firebase.firestore().collection("posts")
-        // colecaoPost.where("id_usuario", "!=", localStorage.getItem("credenciais"))
-        colecaoPost.where("id_usuario", "==", firebase.auth().currentUser.uid)
+            colecaoPost.where("id_usuario", "==", firebase.auth().currentUser.uid)
 
             .get().then(snap => {
                 snap.forEach(post => {
@@ -209,6 +203,7 @@ export const TemplatePerfil = () => {
     function addPostNaPagina(post) {
         const postTemplate = document.createElement('div');
         postTemplate.setAttribute('class', 'div-post')
+        postTemplate.dataset.id = post.id
         postTemplate.innerHTML = `
                 
         <input type="hidden" class="id-post" value="${post.id}"/>
@@ -287,7 +282,6 @@ export const TemplatePerfil = () => {
         })
 
         postTemplate.querySelector(".publicar-comentario").addEventListener('click', () => {
-            //const idDoPost = postTemplate.querySelector('.id-post').value;
             const comentarioEscrito = postTemplate.querySelector('.escrever-comentario');
             const divComentarioPublicado = postTemplate.querySelector('.comentario-publicado');
             const inputComentar = postTemplate.querySelector('.comentarios')
@@ -365,19 +359,17 @@ export const TemplatePerfil = () => {
                 })
         });
 
-        // efeito remover post
-        function efeitoRemoverPost(post) {
-            const target = document.querySelector('.div-post');
+
+        //Efeito remover post
+        function efeitoRemoverPost(postId) {
+            const target = document.querySelector(`[data-id="${postId}"]`);
             target.addEventListener('transitionend', () => target.remove());
             target.style.opacity = '0';
         }
 
-
         //Deletar post
-
         const deletar = postTemplate.querySelector('.icone-deletar')
         deletar.addEventListener('click', () => {
-
             const popup = postTemplate.querySelector('.popup-wrapper');
             const fecharPopup = postTemplate.querySelector('.fechar-popup');
             const conteudoPopup = postTemplate.querySelector('.conteudo-popup');
@@ -390,19 +382,13 @@ export const TemplatePerfil = () => {
             });
             const button = postTemplate.querySelector('.delete-class')
             button.addEventListener('click', () => {
-                const postCollection = firebase.firestore().collection("posts")
-                postCollection.doc(post.id).delete().then(doc => {
+                deletarPost(post.id).then(()=>{
                     efeitoRemoverPost(post.id)
                 })
-
-
-            })
-
-
-
+                popup.style.display = 'none';
+            });
         });
 
-        
 
         //carregar imagens
         const carregarImagens = main.querySelector('#foto-id');
@@ -560,7 +546,7 @@ export const TemplatePerfil = () => {
             else{event.currentTarget.setAttribute('aria-label', 'Abrir Menu')}
         }
         btnMobile.addEventListener('click', toggleMenu);
-        btnMobile.addEventListener('touchstart', toggleMenu)
+        btnMobile.addEventListener('touchstart', toggleMenu);
 
     return main;
 
