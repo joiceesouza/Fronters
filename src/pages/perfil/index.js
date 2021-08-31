@@ -28,11 +28,14 @@ export const TemplatePerfil = () => {
 
         <div class="perfil">
             <div class="foto">
-                <input type="file" id="foto-id"></input>
+                
                 <img src="${firebase.auth().currentUser.photoURL}" class="foto-perfil" id="image" alt="Foto do perfil" />
                 <button id="button-foto" src="img/camera.png" alt="botao perfil"><i class="fas fa-camera" id="escolher-foto"></i></button>
+                <input type="file" id="foto-id"></input>
+                <button type="submit" id="btn-salvar">Salvar</button>
 
                 <div class="editar-nome"><p class="nome" contentEditable='false'>${firebase.auth().currentUser.displayName || 'Nome do Usuário'}</p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
+
                 <p class="conf-atualizaçao" id="conf-atualizaçao" hidden>Alterações salvas com sucesso!</p>
             </div>
            
@@ -45,7 +48,7 @@ export const TemplatePerfil = () => {
             </div>
 
         </div>
-        <button type="submit" id="btn-salvar">Salvar</button>
+        
 
         <form action="" id="postForm" class="container">
             <div class="div-textarea">
@@ -271,9 +274,11 @@ export const TemplatePerfil = () => {
 
         // aparecer o escolher foto
         const botaoFoto = main.querySelector('#button-foto');
+        const botaoSalvarFoto = main.querySelector('#btn-salvar');
         const esconderButton = main.querySelector('#foto-id');
         botaoFoto.addEventListener('click', () => {
             esconderButton.style.opacity = 1;
+            botaoSalvarFoto.style.display = "block"
         });    
 
 
