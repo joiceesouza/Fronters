@@ -65,10 +65,19 @@
 #button-foto {
     height: 4.5vh;
     width: 4.5vh;
+    margin: auto;
 }
 
 #foto-id {
     opacity: 0;
+    margin-top: 1em;
+}
+
+#btn-salvar {
+    width: 20%;
+    margin: auto;
+    margin-top: 1em;
+    display: none;
 }
 
 #photoFeed {
