@@ -131,6 +131,12 @@
     color:rgb(255, 255, 255);
 }
 
+.foto-perfil-comentario {
+    width: 70px;
+    height: 70px;
+    border-radius: 100%;
+}
+
 .campo-addFoto {
     margin: 15px;
 }

@@ -75,8 +75,8 @@ export const TemplateFeed = () => {
         postTemplate.innerHTML = `
             <input type="hidden" class="id-post" value="${post.id}"/>
             <div>
-                <img src="${firebase.auth().currentUser.photoURL}" id="imagem-id">
-                <p class="nome-feed">Tamara<p>
+                <img src="${post.data().fotoDoUsuario}" id="imagem-id">
+                <p class="nome-feed">${post.data().nome}<p>
             </div>
             
             <div class="texto-publicado-usuario">${post.data().texto}</div>
@@ -215,6 +215,7 @@ export const TemplateFeed = () => {
         {
             uid: firebase.auth().currentUser.uid,
             nome: firebase.auth().currentUser.displayName,
+            foto: firebase.auth().currentUser.photoURL,
             textoComentario: texto,
             data: new Date().toLocaleString()
 
@@ -232,7 +233,7 @@ export const TemplateFeed = () => {
         return `
         <div class="template-comentario">
             <header class="header-comentario">
-                <img class="foto-comentario" src="../../img/foto-usuario.png"><p class="nome-comentario">${comentario.nome} </p>
+            <img class="foto-perfil-comentario" src="${comentario.foto}" /><p class="nome-comentario">${comentario.nome} </p>
                 <p class="hora-comentario">${comentario.data}</p>            
             </header>
             <p class="texto-comentario-template" contentEditable="false">${comentario.textoComentario}</p>
