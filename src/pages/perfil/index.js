@@ -1,4 +1,4 @@
-import { deletarPost} from "../../lib/index.js";
+import { deletarPost } from '../../lib/index.js';
 
 export const TemplatePerfil = () => {
 
@@ -125,7 +125,7 @@ export const TemplatePerfil = () => {
 
     const botaoPublicar = main.querySelector('#publicar');
 
-    botaoPublicar.addEventListener("click", (event) => {
+    botaoPublicar.addEventListener('click', (event) => {
         event.preventDefault()
 
         const text = main.querySelector('#post').value;
@@ -280,11 +280,11 @@ export const TemplatePerfil = () => {
 
         // aparecer o escolher foto
         const botaoFoto = main.querySelector('#button-foto');
-        const botaoSalvarFoto = main.querySelector('#btn-salvar');
+        // const botaoSalvarFoto = main.querySelector('#btn-salvar');
         const esconderButton = main.querySelector('#foto-id');
         botaoFoto.addEventListener('click', () => {
             esconderButton.style.opacity = 1;
-            botaoSalvarFoto.style.display = "block"
+            // botaoSalvarFoto.style.display = "block"
         });    
 
 
@@ -482,10 +482,13 @@ export const TemplatePerfil = () => {
         //carregar imagens
         const carregarImagens = main.querySelector('#foto-id'); //input file
         const imagemPerfil = main.querySelector('#image');
+        const botaoSalvarFoto = main.querySelector('#btn-salvar');
      //   const inputPhoto = container.querySelector('#photo');
         
         
         carregarImagens.addEventListener('change', () => {
+            
+            
 
                 
                 imagemPerfil.src = '';
@@ -507,6 +510,7 @@ export const TemplatePerfil = () => {
                 const validarUrl = (url) => {
                     imagemPerfil.src = '';
                     imagemPerfil.src = url;
+                    botaoSalvarFoto.style.display = "block"
                 };
 
                 addImagem(carregarImagens, validarUrl);
@@ -530,7 +534,7 @@ export const TemplatePerfil = () => {
                 };
                 atualizarPerfil(imagemPerfil.src);
                 confirmMessage.hidden = false;
-                //main.style.display = 'block';
+                // main.style.display = 'block';
             })
 
     return main;
