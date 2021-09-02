@@ -1,5 +1,5 @@
 import { cadastro } from '../../services/index.js';
-import {ocultarSenha} from '../../lib/index.js'
+import { ocultarSenha } from '../../lib/index.js';
 
 export const TemplateCadastro = () => {
   const main = document.createElement('div');
@@ -67,123 +67,95 @@ export const TemplateCadastro = () => {
       </form>
     </section>
 
-
-
-
 <div class="popup-wrapper">
   <div class="popup">
     <div class="fechar-popup">X</div>
-    <div class="conteudo-popup">
-      <h2>Cadastro finalizado com sucesso!</h2>
-      <button id="loginPopup"><a href="/#">Fazer Login</a></button>
-    </div>
+    <div class="conteudo-popup"></div>
   </div>
 </div>
-    `
+    `;
 
+  const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');
 
-    const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');
-  
-    botaoDoCadastro.addEventListener("click", () => {
-      const name = main.querySelector('#nome-cadastro').value
-      const email = main.querySelector('#email-cadastro').value
-      const password = main.querySelector('#senha-cadastro').value
-      const senhaConf = main.querySelector('#confirma-senha-cadastro').value
-      const sobreNome = main.querySelector('#sobrenome-cadastro').value
-      const erroNome = main.querySelector('#imp-error-name')
-      const erroEmail = main.querySelector('#imp-error-email')
-      const erroSenha = main.querySelector('#imp-error-senha')
-      const formatoEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      
-      //pop up
-      const popup = main.querySelector('.popup-wrapper');
-      const fecharPopup = main.querySelector('.fechar-popup');
-      const conteudoPopup = main.querySelector('.conteudo-popup');
-      
-      if (email === '' || password === '' || sobreNome === '') {
-        popup.style.display = 'block';
-        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-        <p> Preencha corretamente todos os campos </p>`;
-        fecharPopup.style.display = 'block';
-        fecharPopup.addEventListener("click", () => {
-        popup.style.display = 'none';
-            });
-      } 
-      else if (name.length < 3) {
-        erroNome.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um nome válido</strong></p>';
-      } 
-      else if (formatoEmail.test(email) === false) {
-        erroNome.innerHTML = ""
-        erroEmail.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um email válido </strong></p>';
-      } 
-      else if (password.length < 6 ) {
-        erroNome.innerHTML = ""
-        erroEmail.innerHTML = ""
-        erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> A senha deve ter no mínimo 6 dígitos </strong></p>';
-      } 
-      else if (password !== senhaConf) {
-        erroNome.innerHTML = ""
-        erroEmail.innerHTML = ""
-        erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> As senhas não conferem</strong></p>';
-      } 
-      else {
-  
-        cadastro(email, password)
-          .then((userCredential) => {
-           
-            // Signed in
-            const user = userCredential.user;
-            console.log(user, 'Cadastrado!');
-            popup.style.display = 'block';
-            conteudoPopup.innerHTML = `<h2>Cadastro finalizado com sucesso!</h2>
-            <button id="loginPopup"><a href="/#">Fazer Login</a></button>`
-            fecharPopup.style.display = 'none';
+  botaoDoCadastro.addEventListener('click', () => {
+    const name = main.querySelector('#nome-cadastro').value;
+    const email = main.querySelector('#email-cadastro').value;
+    const password = main.querySelector('#senha-cadastro').value;
+    const senhaConf = main.querySelector('#confirma-senha-cadastro').value;
+    const sobreNome = main.querySelector('#sobrenome-cadastro').value;
+    const erroNome = main.querySelector('#imp-error-name');
+    const erroEmail = main.querySelector('#imp-error-email');
+    const erroSenha = main.querySelector('#imp-error-senha');
+    const formatoEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+    function mostrarPopup(mensagem) {
+      const popup = document.querySelector('.popup-wrapper');
+      const conteudoPopup = document.querySelector('.conteudo-popup');
+      conteudoPopup.innerHTML = mensagem;
+      popup.style.display = 'block';
+    }
 
-            // ...
-          })
-          .catch((error) => {
-            
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            switch (errorCode) {
-                    
-              case 'auth/email-already-in-use':
-                popup.style.display = 'block';
-                conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-                <p> E-mail já cadastrado </p>`;
-                fecharPopup.style.display = 'block';
-                fecharPopup.addEventListener("click", () => {
-                popup.style.display = 'none';
-                });
+    // fechar pop up
+    const popup = main.querySelector('.popup-wrapper');
+    const fecharPopup = main.querySelector('.fechar-popup');
+    fecharPopup.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
+
+    if (email === '' || password === '' || sobreNome === '') {
+      mostrarPopup(` <h2>Algo deu errado!</h2> 
+      <p> Preencha corretamente todos os campos </p>`);
+    } else if (name.length < 3) {
+      erroNome.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um nome válido</strong></p>';
+    } else if (formatoEmail.test(email) === false) {
+      erroNome.innerHTML = '';
+      erroEmail.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um email válido </strong></p>';
+    } else if (password.length < 6) {
+      erroNome.innerHTML = '';
+      erroEmail.innerHTML = '';
+      erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> A senha deve ter no mínimo 6 dígitos </strong></p>';
+    } else if (password !== senhaConf) {
+      erroNome.innerHTML = '';
+      erroEmail.innerHTML = '';
+      erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> As senhas não conferem</strong></p>';
+    } else {
+      console.log('cadastrou????')
+
+      cadastro(email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user, 'Cadastrado!');
+          mostrarPopup(`<h2>Cadastro finalizado com sucesso!</h2>
+          <button id="loginPopup"><a href="/#">Fazer Login</a></button>`);
+          // alert('Cadastrado, você será redirecionado para login');
+          // window.history.pushState({}, null, '/login')
+          // const popStateEvent = new PopStateEvent("popstate", {})
+          // dispatchEvent(popStateEvent);
+          // ...
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          switch (errorCode) {
+            case 'auth/email-already-in-use':
+              mostrarPopup('<h2>Algo deu errado!</h2><p> E-mail já cadastrado </p>');
               break;
-              default:
-                error.innerHTML = `<span> ${errorMessage} </span>`;
+            default:
+              console.error(error, error.message);
               break;
-            }    
-          })  
-        
-      }         
-    }) 
-  
+          }
+        });
+    }
+  });
 
+  // OCULTAR SENHA
 
-  //OCULTAR SENHA
+  main.querySelector('.ocultar-senha').addEventListener('click', () => {
+    ocultarSenha('.input-senha', '.ocultar-senha');
+  });
 
-main.querySelector('.ocultar-senha').addEventListener("click", () => {
-  ocultarSenha('.input-senha', '.ocultar-senha')
-})
-
-main.querySelector('.ocultar-confirma-senha').addEventListener("click", () => {
-  ocultarSenha('.input-confirma-senha', '.ocultar-confirma-senha')
-})
-
+  main.querySelector('.ocultar-confirma-senha').addEventListener('click', () => {
+    ocultarSenha('.input-confirma-senha', '.ocultar-confirma-senha');
+  });
 
   return main;
-}
-
-
-    
-   
-
-
+};

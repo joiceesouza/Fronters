@@ -56,6 +56,10 @@
     background-position: center;
 }
 
+.campo-form.invalid input {
+    border: 1px red solid;
+}
+
 /* #banner-grande {
     display: none;
 
