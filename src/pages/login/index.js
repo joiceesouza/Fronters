@@ -1,9 +1,9 @@
 import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
-import {ocultarSenha} from '../../lib/index.js'
+import { ocultarSenha } from '../../lib/index.js';
 
 export const TemplateLogin = () => {
-    const main = document.createElement('div');
-    main.innerHTML = `
+  const main = document.createElement('div');
+  main.innerHTML = `
 <main class="principal pagina-login">
         <div class="foto-principal"></div>
         
@@ -15,21 +15,18 @@ export const TemplateLogin = () => {
                 o mundo dos Devs?</h4>
             </div>
         
-
         <nav id="nav">
-            <ul id="login-cadastro">
-                    
+            <ul id="login-cadastro">                  
                 <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
                 <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
-            
             </ul>
         </nav>
-
 
         <form>
             <div class="campo-form">
                 <label for="emailUsuario">Email:</label>
                 <input type="email" id="email-usuario" placeholder="Digite o seu email" />
+                <p id="text"> </p>
             </div>
             <div class="campo-form">
                 <label for="senhaUsuario">Senha:</label>
@@ -67,190 +64,147 @@ export const TemplateLogin = () => {
   </div>
 </div>
 </div>
-    `
+    `;
 
-    //LOGIN
-    const botaoDoLogin = main.querySelector('#botaoLogin');
-    botaoDoLogin.addEventListener("click", () => {
-        //pop up
-        const popup = main.querySelector('.popup-wrapper');
-        const fecharPopup = main.querySelector('.fechar-popup');
-        const conteudoPopup = main.querySelector('.conteudo-popup');
+  function validacao() {
+    const form = main.querySelector('.campo-form');
+    const email = main.querySelector('#email-usuario').value;
+    const text = main.querySelector('#text');
+    const pattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/;
+    let retorno;
 
-        const email = main.querySelector('#email-usuario').value;
-        const password = main.querySelector('#senha-usuario').value;
+    if (email.match(pattern)) {
+      form.classList.remove('invalid');
+      text.innerHTML = '';
+      retorno = true;
+    } else {
+      form.classList.add('invalid');
+      text.innerHTML = 'O email não é válido';
+      text.style.color = '#ff0000';
+      retorno = false;
+    }
 
-        if (email === '' || password === '') {
-           // error.innerHTML = `<span> Preencha todos os campos </span>`;
-           popup.style.display = 'block';
-           conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-           <p> Preencha corretamente todos os campos </p>`;
-           fecharPopup.style.display = 'block';
-           fecharPopup.addEventListener("click", () => {
-           popup.style.display = 'none';
-               });
-        } 
-        else {
+    return retorno;
+  }
 
-            login(email, password)
-            .then((userCredential) => {
-                window.history.pushState({}, null, '/perfil')
-                const popStateEvent = new PopStateEvent("popstate", {})
-                dispatchEvent(popStateEvent)
-                // OU window.location.pathname='/perfil';
+  // LOGIN
+  const botaoDoLogin = main.querySelector('#botaoLogin');
+  botaoDoLogin.addEventListener('click', () => {
+    if (validacao() === false) {
+      return;
+    }
 
+    function mostrarPopup(mensagem) {
+      const popup = document.querySelector('.popup-wrapper');
+      const conteudoPopup = document.querySelector('.conteudo-popup');
+      conteudoPopup.innerHTML = mensagem;
+      popup.style.display = 'block';
+    }
 
-            })
-            .catch((error) => {
-                const errorCode = error.code;
-                const errorMessage = error.message;
-                console.log('Infelizmente aconteceu algum com login! Conta não cadastrada', errorCode, errorMessage);
-                console.log('Infelizmente aconteceu algum erro!', errorCode, errorMessage);
-                switch (errorCode) {
-                    
-                    case 'auth/invalid-email':
-                        popup.style.display = 'block';
-                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-                        <p> E-mail inválido </p>`;
-                        fecharPopup.style.display = 'block';
-                        fecharPopup.addEventListener("click", () => {
-                        popup.style.display = 'none';
-                        });
-                    break;
-                    case 'auth/user-disabled':
-                        popup.style.display = 'block';
-                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-                        <p> Usuário desabilitado </p>`;
-                        fecharPopup.style.display = 'block';
-                        fecharPopup.addEventListener("click", () => {
-                        popup.style.display = 'none';
-                        });
-                    break;
-                    case 'auth/user-not-found':
-                        popup.style.display = 'block';
-                        conteudoPopup.innerHTML = ` <h2>O email está incorreto!</h2> 
-                        <p> Usuário não encontrado </p>`;
-                        fecharPopup.style.display = 'block';
-                        fecharPopup.addEventListener("click", () => {
-                        popup.style.display = 'none';
-                        });
-                    break;
-                    case 'auth/wrong-password':
-                        popup.style.display = 'block';
-                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-                        <p> Usuário ou senha inválido </p>`;
-                        fecharPopup.style.display = 'block';
-                        fecharPopup.addEventListener("click", () => {
-                        popup.style.display = 'none';
-                        });
-                    break;
-                    case 'auth/too-many-requests':
-                        popup.style.display = 'block';
-                        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-                        <p> Senha inválida </p>`;
-                        fecharPopup.style.display = 'block';
-                        fecharPopup.addEventListener("click", () => {
-                        popup.style.display = 'none';
-                            });  
-                    default:
-                      error.innerHTML = `<span> ${errorMessage} </span>`;
-                    break;
-                  }
-            });
-        }
+    // fechar pop up
+    const popup = main.querySelector('.popup-wrapper');
+    const fecharPopup = main.querySelector('.fechar-popup');
+    fecharPopup.addEventListener('click', () => {
+      popup.style.display = 'none';
     });
 
-    //GOOGLE
+    const email = main.querySelector('#email-usuario').value;
+    const password = main.querySelector('#senha-usuario').value;
+    if (email === '' || password === '') {
+      mostrarPopup('<h2>Algo deu errado!</h2> <p>Preencha corretamente todos os campos </p>');
+      // <p> Preencha corretamente todos os campos </p>`)
+      // error.innerHTML = `<span> Preencha todos os campos </span>`;
+    } else {
+      login(email, password)
+        .then(() => {
+          window.history.pushState({}, null, '/perfil');
+          const popStateEvent = new PopStateEvent('popstate', {});
+          dispatchEvent(popStateEvent);
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log('Infelizmente aconteceu algum com login! Conta não cadastrada', errorCode, errorMessage);
+          console.log('Infelizmente aconteceu algum erro!', errorCode, errorMessage);
+          switch (errorCode) {
+            case 'auth/invalid-email':
+              mostrarPopup('<h2>Algo deu errado!</h2> <p>E-mail inválido</p>');
+              break;
+            case 'auth/user-disabled':
+              mostrarPopup('<h2>Algo deu errado!</h2> <p>Usuário desabilitado</p>');
+              break;
+            case 'auth/user-not-found':
+              mostrarPopup('<h2>O email está incorreto!!</h2> <p>Usuário não encontrado</p>');
+              break;
+            case 'auth/wrong-password':
+              mostrarPopup('<h2>Algo deu errado!</h2> <p>Usuário ou senha inválido </p>');
+              break;
+            case 'auth/too-many-requests':
+              mostrarPopup('<h2>Algo deu errado!</h2> <p>Senha inválida</p>');
+              break;
+            default:
+              error.innerHTML = `<span> ${errorMessage} </span>`;
+              break;
+          }
+        });
+    }
+  });
 
-    const botaoDoGoogle = main.querySelector('#botaoGoogle')
-    botaoDoGoogle.addEventListener('click', (event) => {
+  // GOOGLE
+  const botaoDoGoogle = main.querySelector('#botaoGoogle');
+  botaoDoGoogle.addEventListener('click', (event) => {
+    event.preventDefault();
+    loginComGoogle()
+      .then((userCredential) => {
+        window.history.pushState({}, null, '/perfil');
+        const popStateEvent = new PopStateEvent('popstate', {});
+        dispatchEvent(popStateEvent);
 
-        event.preventDefault()
+        /** @type {firebase.auth.OAuthCredential} */
+        // let credential = result.credential;
 
-        loginComGoogle()
-            .then((userCredential) => {
-                            window.history.pushState({}, null, '/perfil')
-                const popStateEvent = new PopStateEvent("popstate", {})
-                dispatchEvent(popStateEvent)
+        // This gives you a Google Access Token. You can use it to access the Google API.
+        // let token = credential.accessToken;
+        // The signed-in user info.
+        // let user = result.user;
+        // ...
+      }).catch((error) => {
+        // Handle Errors here.
+        console.error(error);
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        // The email of the user's account used.
+        const email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        const credential = error.credential;
+        // ...
+      });
+  });
 
-                /** @type {firebase.auth.OAuthCredential} */
-                //let credential = result.credential;
+  // LOGIN GITHUB
+  const botaoDoGit = main.querySelector('#botaoGitHub');
+  botaoDoGit.addEventListener('click', (event) => {
+    event.preventDefault();
 
-                // This gives you a Google Access Token. You can use it to access the Google API.
-                //let token = credential.accessToken;
-                // The signed-in user info.
-                //let user = result.user;
-                // ...
-            }).catch((error) => {
-                // Handle Errors here.
-                console.error(error)
-                let errorCode = error.code;
-                let errorMessage = error.message;
-                // The email of the user's account used.
-                let email = error.email;
-                // The firebase.auth.AuthCredential type that was used.
-                let credential = error.credential;
-                // ...
-            });
-
-    });
-
-
-
-    //LOGIN GITHUB
-
-    const botaoDoGit = main.querySelector('#botaoGitHub')
-    botaoDoGit.addEventListener('click', (event) => {
-
-        event.preventDefault()
-
-        loginComGithub()
-            .then((result) => {
-                console.log("github", result)
-                let credential = result.credential;
-                let token = credential.accessToken;
-                let user = result.user;
-                window.history.pushState({}, null, '/perfil')
-                const popStateEvent = new PopStateEvent("popstate", {})
-                dispatchEvent(popStateEvent)
-            })
-            .catch(error => {
-                let errorCode = error.code;
-                let errorMessage = error.message;
-                let email = error.email;
-                let credential = error.credential;
-                console.log(error)
-            });
-
-    });
-    
-    function validação(){
-        let form = main.querySelector('#campo-form')
-        let email= main.querySelector('#email-usuario').value
-        let text = main.querySelector('#text')
-        let pattern = /^[^ ]+@[^]+\.[a-z]{2,3}$/
-
-        if(email.match(pattern)){
-            form.classList.add("Valid")
-            form.classList.remove("Invalid")
-            text.innerHTML = "Seu email é válido"
-            text.style.color = "#00ff00"
-        }
-        else{
-            form.classList.remove("Valid")
-            form.classList.add("Invalid")
-            text.innerHTML = "O email não é válido"
-            text.style.color = "#ff0000"
-        }
-      }
-  
-
-    //OCULTAR SENHA
-      
-    main.querySelector('.ocultar-senha').addEventListener("click", () => {
-        ocultarSenha('.input-senha', '.ocultar-senha')
+    loginComGithub()
+      .then((result) => {
+        console.log('github', result);
+        window.history.pushState({}, null, '/perfil');
+        const popStateEvent = new PopStateEvent('popstate', {});
+        dispatchEvent(popStateEvent);
       })
-   
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        console.log(error);
+      });
+  });
 
-    return main;
-}
+  // OCULTAR SENHA
+  main.querySelector('.ocultar-senha').addEventListener('click', () => {
+    ocultarSenha('.input-senha', '.ocultar-senha');
+  });
+
+  return main;
+};
