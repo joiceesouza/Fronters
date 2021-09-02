@@ -84,6 +84,18 @@
     opacity: 0;
 }
 
+#imagem-feed {
+    width: 120px;
+    height: 120px;
+    border-radius: 10%;
+}
+
+.foto-feed {
+    width: 150px;
+    height: 150px;
+    border-radius: 10%;
+}
+
 #image {
     width: 160px;
     height: 160px;
