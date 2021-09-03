@@ -42,7 +42,25 @@ export const redefinirSenha = (email) => {
         .sendPasswordResetEmail(email);
 }
 
+// SAIR DO SITE
+export const sair = () => {
+    return firebase
+    .auth()
+    .signOut()
+}
 
+// const logout = main.querySelector('#logout-id');
+// logout.addEventListener('click', () => {
+//   firebase
+//     .auth()
+//     .signOut()
+//     .then(() => {
+//       localStorage.clear();
+//       irParaRota('/login');
+//     }).catch(() => {
+//       // An error happened.
+//     });
+// });
 
   
   

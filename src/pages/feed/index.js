@@ -1,4 +1,4 @@
-// import {goBackToFeed}from "./index.js";
+import {sair} from '../../services/index.js';
 
 export const TemplateFeed = () => {
   const main = document.createElement('div');
@@ -92,8 +92,7 @@ export const TemplateFeed = () => {
                     <span class="numero-curtidas">${post.data().curtidas.length || 0}</span>
                 </span>
                         
-                <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
-                
+                <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>               
                  
             </div>
             <div class="comentarios">
@@ -103,7 +102,7 @@ export const TemplateFeed = () => {
             </div>
                       
              <div class="mostrar-comentarios">${conteudoComentarios}</div>
-                      
+                    
         
         `;
 
@@ -231,6 +230,21 @@ export const TemplateFeed = () => {
   }
   btnMobile.addEventListener('click', toggleMenu);
   btnMobile.addEventListener('touchstart', toggleMenu);
+
+
+  // sair do site
+  const btnSair = main.querySelector('#logout-id');
+  btnSair.addEventListener('click', (event) => {
+    event.preventDefault();
+    sair()
+    .then(() => {
+      localStorage.clear();
+      irParaRota('/login');
+    }).catch(() => {
+    // An error happened.
+    });
+
+  })    
 
   return main;
 };
