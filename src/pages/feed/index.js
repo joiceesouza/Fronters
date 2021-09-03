@@ -1,8 +1,8 @@
-//import {goBackToFeed}from "./index.js";
+import {sair} from '../../services/index.js';
 
 export const TemplateFeed = () => {
-    const main = document.createElement('div');
-    main.innerHTML = `
+  const main = document.createElement('div');
+  main.innerHTML = `
     <header class="container-header">
         <h1 class="logo">FRONTERS</h1>
         <nav id="nav-id">
@@ -31,48 +31,39 @@ export const TemplateFeed = () => {
     </div>
      
     <div id="feed"></div>
-    `
+    `;
 
-    function carregarPost() {
-        const colecaoPost = firebase.firestore().collection("posts")
-        colecaoPost.where("id_usuario", "!=", firebase.auth().currentUser.uid)
+  function carregarPost() {
+    const colecaoPost = firebase.firestore().collection('posts');
+    colecaoPost.where('id_usuario', '!=', firebase.auth().currentUser.uid)
 
-            .get().then(snap => {
-                snap.forEach(post => {
-                    addPostNaPagina(post)
-                })
-            })
-    }
-
-    carregarPost();
-
-    function addPostNaPagina(post) {
-        const postTemplate = document.createElement('div');
-        postTemplate.setAttribute('class', 'div-post')
-
-        // console.log("-------")
-        // post.data().curtidas.forEach(item => {            
-        //     console.log(item.nome, item.uid)
-        // })
-
-        const arrayMinhasCurtidas = post.data().curtidas.filter((item) => {
-            if (item.uid == firebase.auth().currentUser.uid) {
-                return true;
-            } else {
-                return false;
-            }
+      .get().then((snap) => {
+        snap.forEach((post) => {
+          addPostNaPagina(post);
         });
+      });
+  }
 
-        const classeCurtir = (arrayMinhasCurtidas.length == 1) ? 'fas' : 'far';
-                      
-        let conteudoComentarios = "";
-        //post.data().comentarios.forEach(templateComentario) 
-        post.data().comentarios.forEach((comentario) => {
-          conteudoComentarios += gerarTemplateComentario(comentario)
-        })
+  carregarPost();
 
+  function addPostNaPagina(post) {
+    const postTemplate = document.createElement('div');
+    postTemplate.setAttribute('class', 'div-post');
+    const arrayMinhasCurtidas = post.data().curtidas.filter((item) => {
+      if (item.uid === firebase.auth().currentUser.uid) {
+        return true;
+      }
+      return false;
+    });
 
-        postTemplate.innerHTML = `
+    const classeCurtir = (arrayMinhasCurtidas.length === 1) ? 'fas' : 'far';
+
+    let conteudoComentarios = '';
+    post.data().comentarios.forEach((comentario) => {
+      conteudoComentarios += gerarTemplateComentario(comentario);
+    });
+
+    postTemplate.innerHTML = `
             <input type="hidden" class="id-post" value="${post.id}"/>
             <div>
                 <img src="${post.data().fotoDoUsuario}" id="imagem-id">
@@ -101,8 +92,7 @@ export const TemplateFeed = () => {
                     <span class="numero-curtidas">${post.data().curtidas.length || 0}</span>
                 </span>
                         
-                <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
-                
+                <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>               
                  
             </div>
             <div class="comentarios">
@@ -112,168 +102,149 @@ export const TemplateFeed = () => {
             </div>
                       
              <div class="mostrar-comentarios">${conteudoComentarios}</div>
-                      
+                    
         
-        `
+        `;
 
-        const linkGithub = postTemplate.querySelector('.link-github');
-        const conteudoLinkGithub = linkGithub.innerHTML;
-        const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
-        const editarlinkGithub = postTemplate.querySelector('.conteudo-editar-github');
+    const linkGithub = postTemplate.querySelector('.link-github');
+    const conteudoLinkGithub = linkGithub.innerHTML;
+    const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
+    const editarlinkGithub = postTemplate.querySelector('.conteudo-editar-github');
 
-        if (conteudoLinkGithub == "") {
-            divlinkGithub.style.display = "none";
-            editarlinkGithub.style.display = "none"
-        }
-
-        postTemplate.querySelector(".icone-comentar").addEventListener('click', () => {
-            postTemplate.querySelector('.comentarios').style.display = "block";
-            postTemplate.querySelector('.escrever-comentario').focus()
-            const mostrarComentarios = postTemplate.querySelector('.mostrar-comentarios')
-            mostrarComentarios.style.display = "block"
-
-        })
-
-        postTemplate.querySelector(".publicar-comentario").addEventListener('click', () => {
-
-            const idDoPost = postTemplate.querySelector('.id-post').value;
-            const comentarioEscrito = postTemplate.querySelector('.escrever-comentario');
-            const divComentarioPublicado = postTemplate.querySelector('.mostrar-comentarios');
-            const inputComentar = postTemplate.querySelector('.comentarios')
-            const objetoComentario = comentar(idDoPost, comentarioEscrito.value)
-            const templateComentarioPublicado = gerarTemplateComentario(objetoComentario)
-            
-            divComentarioPublicado.innerHTML = templateComentarioPublicado + divComentarioPublicado.innerHTML;
-            //divComentarioPublicado.style.display = "block";
-            inputComentar.style.display = "none";
-            comentarioEscrito.value = ""
-                     
-        })
-
-        const curtir = postTemplate.querySelector('.icone-curtir');
-        curtir.addEventListener("click", () => {
-            //fas = coração preenchido
-            const naoEstavaCurtido = curtir.classList.contains('far');
-            let numeroDeCurtidas = postTemplate.querySelector('.numero-curtidas')
-            let conteudoNumeroDeCurtidas = Number(numeroDeCurtidas.innerHTML);
-            const idPost = postTemplate.querySelector('.id-post').value
-
-            if (naoEstavaCurtido == true) {
-                curtir.classList.replace('far', 'fas');
-                conteudoNumeroDeCurtidas++
-                curtirPost(idPost)
-            }
-
-            else {
-                curtir.classList.replace('fas', 'far');
-                conteudoNumeroDeCurtidas--
-                descurtirPost(idPost)
-            }
-
-            numeroDeCurtidas.innerHTML = conteudoNumeroDeCurtidas;
-
-        })
-
-        main.querySelector('#feed').appendChild(postTemplate)
-
-    };
-
-
-    function curtirPost(idDoPost) {
-
-        let curtida =
-        {
-            uid: firebase.auth().currentUser.uid,
-            nome: firebase.auth().currentUser.displayName
-        }
-
-        let documentoPost = firebase.firestore().collection("posts").doc(idDoPost);
-        documentoPost.update({
-            curtidas: firebase.firestore.FieldValue.arrayUnion(curtida)
-        });
-
+    if (conteudoLinkGithub === '') {
+      divlinkGithub.style.display = 'none';
+      editarlinkGithub.style.display = 'none';
     }
 
-
-    function descurtirPost(idDoPost) {
-        
-        let curtida =
-        {
-            uid: firebase.auth().currentUser.uid,
-            nome: firebase.auth().currentUser.displayName
-        }
-
-        let documentoPost = firebase.firestore().collection("posts").doc(idDoPost);
-        documentoPost.update({
-            curtidas: firebase.firestore.FieldValue.arrayRemove(curtida)
-        });
-    }
+    postTemplate.querySelector('.icone-comentar').addEventListener('click', () => {
+      postTemplate.querySelector('.comentarios').style.display = 'block';
+      postTemplate.querySelector('.escrever-comentario').focus();
+      const mostrarComentarios = postTemplate.querySelector('.mostrar-comentarios');
+      mostrarComentarios.style.display = 'block';
+    });
 
     function comentar(idDoPost, texto) {
+      const comentario = {
+        uid: firebase.auth().currentUser.uid,
+        nome: firebase.auth().currentUser.displayName,
+        foto: firebase.auth().currentUser.photoURL,
+        textoComentario: texto,
+        data: new Date().toLocaleString(),
 
-        let comentario =
-        {
-            uid: firebase.auth().currentUser.uid,
-            nome: firebase.auth().currentUser.displayName,
-            foto: firebase.auth().currentUser.photoURL,
-            textoComentario: texto,
-            data: new Date().toLocaleString()
+      };
 
-        }
-
-        let documentoPost = firebase.firestore().collection("posts").doc(idDoPost);
-        documentoPost.update({
-            comentarios: firebase.firestore.FieldValue.arrayUnion(comentario)
-        });
-        return comentario;
-
+      const documentoPost = firebase.firestore().collection('posts').doc(idDoPost);
+      documentoPost.update({
+        comentarios: firebase.firestore.FieldValue.arrayUnion(comentario),
+      });
+      return comentario;
     }
 
     function gerarTemplateComentario(comentario) {
-        return `
-        <div class="template-comentario">
-            <header class="header-comentario">
-            <img class="foto-perfil-comentario" src="${comentario.foto}" /><p class="nome-comentario">${comentario.nome} </p>
-                <p class="hora-comentario">${comentario.data}</p>            
-            </header>
-            <p class="texto-comentario-template" contentEditable="false">${comentario.textoComentario}</p>
-            <i class="fas fa-pen"></i>
-            <i class="fas fa-trash-alt"></i>
-        </div>
-        
-        `
+      return `
+            <div class="template-comentario">
+                <header class="header-comentario">
+                <img class="foto-perfil-comentario" src="${comentario.foto}" /><p class="nome-comentario">${comentario.nome} </p>
+                    <p class="hora-comentario">${comentario.data}</p>            
+                </header>
+                <p class="texto-comentario-template" contentEditable="false">${comentario.textoComentario}</p>
+                <i class="fas fa-pen"></i>
+                <i class="fas fa-trash-alt"></i>
+            </div>
+            
+            `;
     }
 
-     
+    postTemplate.querySelector('.publicar-comentario').addEventListener('click', () => {
+      const idDoPost = postTemplate.querySelector('.id-post').value;
+      const comentarioEscrito = postTemplate.querySelector('.escrever-comentario');
+      const divComentarioPublicado = postTemplate.querySelector('.mostrar-comentarios');
+      const inputComentar = postTemplate.querySelector('.comentarios');
+      const objetoComentario = comentar(idDoPost, comentarioEscrito.value);
+      const templateComentarioPublicado = gerarTemplateComentario(objetoComentario);
+      divComentarioPublicado.innerHTML = templateComentarioPublicado + divComentarioPublicado.innerHTML;
+      inputComentar.style.display = 'none';
+      comentarioEscrito.value = '';
+    });
+
+    function curtirPost(idDoPost) {
+      const curtida = {
+        uid: firebase.auth().currentUser.uid,
+        nome: firebase.auth().currentUser.displayName,
+      };
+
+      const documentoPost = firebase.firestore().collection('posts').doc(idDoPost);
+      documentoPost.update({
+        curtidas: firebase.firestore.FieldValue.arrayUnion(curtida),
+      });
+    }
+
+    function descurtirPost(idDoPost) {
+      const curtida = {
+        uid: firebase.auth().currentUser.uid,
+        nome: firebase.auth().currentUser.displayName,
+      };
+
+      const documentoPost = firebase.firestore().collection('posts').doc(idDoPost);
+      documentoPost.update({
+        curtidas: firebase.firestore.FieldValue.arrayRemove(curtida),
+      });
+    }
+
+    const curtir = postTemplate.querySelector('.icone-curtir');
+    curtir.addEventListener('click', () => {
+      // fas = coração preenchido
+      const naoEstavaCurtido = curtir.classList.contains('far');
+      const numeroDeCurtidas = postTemplate.querySelector('.numero-curtidas');
+      let conteudoNumeroDeCurtidas = Number(numeroDeCurtidas.innerHTML);
+      const idPost = postTemplate.querySelector('.id-post').value;
+
+      if (naoEstavaCurtido === true) {
+        curtir.classList.replace('far', 'fas');
+        conteudoNumeroDeCurtidas++;
+        curtirPost(idPost);
+      } else {
+        curtir.classList.replace('fas', 'far');
+        conteudoNumeroDeCurtidas--;
+        descurtirPost(idPost);
+      }
+
+      numeroDeCurtidas.innerHTML = conteudoNumeroDeCurtidas;
+    });
+
+    main.querySelector('#feed').appendChild(postTemplate);
+  }
+
+  // Menu Hamburguer
+  const btnMobile = main.querySelector('#btn-mobile');
+
+  function toggleMenu(event) {
+    if (event.type === 'touchstart') event.preventDefault();
+    const nav = main.querySelector('#nav-id');
+    nav.classList.toggle('active');
+    const active = nav.classList.contains('active');
+    event.currentTarget.setAttribute('aria-expanded', active);
+    if (active) {
+      event.currentTarget.setAttribute('aria-label', 'Fechar Menu');
+    } else { event.currentTarget.setAttribute('aria-label', 'Abrir Menu'); }
+  }
+  btnMobile.addEventListener('click', toggleMenu);
+  btnMobile.addEventListener('touchstart', toggleMenu);
 
 
+  // sair do site
+  const btnSair = main.querySelector('#logout-id');
+  btnSair.addEventListener('click', (event) => {
+    event.preventDefault();
+    sair()
+    .then(() => {
+      localStorage.clear();
+      irParaRota('/login');
+    }).catch(() => {
+    // An error happened.
+    });
 
+  })    
 
-
-   
-            //Menu Hamburguer
-           const btnMobile = main.querySelector('#btn-mobile');
-
-            function toggleMenu(event) {
-                if(event.type === 'touchstart') event.preventDefault()
-                const nav = main.querySelector('#nav-id');
-                nav.classList.toggle('active');
-                const active = nav.classList.contains('active')
-                event.currentTarget.setAttribute('aria-expanded', active)
-                if (active) {
-                    event.currentTarget.setAttribute('aria-label', 'Fechar Menu')
-                } 
-                else{event.currentTarget.setAttribute('aria-label', 'Abrir Menu')}
-            }
-            btnMobile.addEventListener('click', toggleMenu);
-            btnMobile.addEventListener('touchstart', toggleMenu)
-
-    
-
-    
-
-    return main;
-}
-
-
-
+  return main;
+};

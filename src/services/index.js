@@ -56,6 +56,12 @@ export const addImagemFeed = (photo, callback) => {
 
 
 
+// SAIR DO SITE
+export const sair = () => {
+    return firebase
+    .auth()
+    .signOut()
+}
 
 
   
