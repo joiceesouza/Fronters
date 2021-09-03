@@ -46,19 +46,12 @@ export const TemplatePerfil = () => {
                 <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"required minlength="1"></textarea>
             </div>        
         
-            <div class="campo-addFoto">
-                <button id="btn-foto"><img id="add-foto" src="img/vector-addfoto.png"></button>
-                <button id="btn-imagem-feed">Adicionar imagem</button> 
-                <input type="file" id="photoFeed"></input>
-            </div>
-            <div class="upload">
+            <div class="upload-feed">
                 <input type="file" id="foto"></input>
-                <button id="carregar-img">Upload </button> 
                 <div class="msg-carregando"></div>  
-                <img id="image"/>             
-            
+                <img id="imagem-feed"/>   
+                <button id="carregar-img"> Salvar </button>          
             </div>
-            <img id="imagem-feed"/>  
             <div class="div-link-do-github">
                 <i class="fab fa-github icone-github"></i>
                 <input id="link-github" type="url" placeholder="Colocar link do GitHub"/>
@@ -85,7 +78,7 @@ export const TemplatePerfil = () => {
             </div>
         </div>
     </div>
-    
+
     `;
 
   // EDITAR NOME USUÁRIO
@@ -141,6 +134,7 @@ export const TemplatePerfil = () => {
       const idDoUsuario = objetoUsuario.uid;
       const horaPublicacao = new Date().toLocaleString();
       const fotoUsuario = objetoUsuario.photoURL;
+      // const refImg = main.querySelector('#foto').value;   
 
       // const refImg = firebase.storage().ref('imagens/feed');
 
@@ -209,9 +203,9 @@ export const TemplatePerfil = () => {
             ${post.data().nome || post.data().nomeSalvoPerfil} 
             <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
         </div>
-       
+        
         <div class="texto-publicado-usuario">${post.data().texto}</div>
-        <div class="foto-publicado-usuario">aqui deve carregar a img </div>
+        <img class="foto-feed" src="${post.data().imgPost}"" />
         <div class="conteudo-editar-texto">
             <input class="campo-editar-texto" />
         </div>
@@ -253,7 +247,6 @@ export const TemplatePerfil = () => {
          </div>
         </div>
     `;
-
     const linkGithub = postTemplate.querySelector('.link-github');
     const conteudoLinkGithub = linkGithub.innerHTML;
     const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
@@ -366,42 +359,78 @@ export const TemplatePerfil = () => {
       });
     });
 
-    // EM ANDAMENTO ( FOTO PARA APARECER NO POST)
-    main.querySelector('#btn-foto').addEventListener('click', (event) => {
-      event.preventDefault();
-      const btnfile = main.querySelector('#photoFeed');
-      btnfile.style.visibility = 'visible';
-    });
+    // EM ANDAMENTO ( FOTO PARA APARECER NO POST)   
 
-    const idImagemFeed = main.querySelector('#btn-imagem-feed');
-    idImagemFeed.addEventListener('click', () => {
-      const username = firebase.auth().currentUser.displayName;
-      const userImageUrl = firebase.auth().currentUser.photoURL;
-      const ref = firebase.storage().ref('imagens/feed');
-      // ref caminho onde ira salvar a imagem
-      const file = main.querySelector('#photoFeed').files[0];
-      // file
-      const name = `${new Date()}-${file.name}`;
-      const metadata = {
-        contentType: file.type,
-      };
-      const task = ref.child(name).put(file, metadata);
-      // child nomeia a imagem
-      // put comando q faz o upload da imagem
-      task
-        .then((snapshot) => snapshot.ref.getDownloadURL())
-        .then((url) => {
-          console.log('deu certo');
-          const imagefeed = main.querySelector('#imagem-feed');
-          imagefeed.src = url;
-          //      photoMsgMobile.innerHTML = ''
-        });
+   /*         main.querySelector('#btn-foto').addEventListener('click', (event) => {
+                event.preventDefault();
+                const btnfile = main.querySelector('#photoFeed');
+                btnfile.style.visibility = 'visible';
+              });*/
+ 
 
-      updateUserProfile(inputName.value, idImagemFeed.src);
-      confirmMessage.hidden = false;
-      main.style.display = 'block';
-    });
 
+            //imagem feed
+            const imagensFeed = main.querySelector('#foto'); //input file
+            const imagemPost = main.querySelector('#imagem-feed');
+            const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
+            imagensFeed.addEventListener('change', () => {
+                imagemPost.src = '';
+                //const file = event.target.files[0];
+                const file = imagensFeed.files[0];
+                console.log('file', file)
+                imagemPost.src = URL.createObjectURL(file);
+                
+                const addImagemFeed = (photo, callback) => {
+                    const file = photo.files[0];
+                    const storageRef = firebase.storage().ref(`imagens/${file.name}`);
+                    storageRef.put(file).then(() => {
+                      storageRef.getDownloadURL().then((url) => {
+                        callback(url);
+                      });
+                    });
+                  };
+
+                const validarUrlFeed = (url) => {
+                    imagemPost.src = '';
+                    imagemPost.src = url;
+                    botaoSalvarFotoFeed.style.display = "block"
+                };
+
+                addImagemFeed(imagensFeed, validarUrlFeed);
+            })
+
+
+  /*          const idImagemFeed = main.querySelector('#foto')
+            idImagemFeed.addEventListener('click', () => {
+             /*   const username = firebase.auth().currentUser.displayName;
+                const userImageUrl = firebase.auth().currentUser.photoURL;*/
+       /*         const ref = firebase.storage().ref('imagens/feed');
+                //ref caminho onde ira salvar a imagem
+                const file = main.querySelector('#carregar-img').files[0];
+                //file 
+                const name = `${new Date()}-${file.name}`;
+                const metadata = {
+                    contentType: file.type,
+                };
+                const task = ref.child(name).put(file, metadata);
+                //child nomeia a imagem
+                //put comando q faz o upload da imagem
+                task
+                    .then((snapshot) => snapshot.ref.getDownloadURL())
+                    .then((url) => {
+                        console.log('deu certo')
+                        const imagefeed = main.querySelector('#imagem-feed')
+                        imagefeed.src = url
+              //      photoMsgMobile.innerHTML = ''
+                    });
+
+                
+
+                updateUserProfile(inputName.value, idImagemFeed.src);
+                    confirmMessage.hidden = false;
+                    main.style.display = 'block';
+           })*/      
+   
     main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate);
   }
 
