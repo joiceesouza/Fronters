@@ -1,4 +1,5 @@
 import { deletarPost } from '../../lib/index.js';
+import { addImagemFeed } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
 
@@ -148,7 +149,7 @@ export const TemplatePerfil = () => {
         const idDoUsuario = objetoUsuario.uid;
         const horaPublicacao = new Date().toLocaleString();
         const fotoUsuario = objetoUsuario.photoURL; 
-        const refImg = main.querySelector('#foto').value;        
+        const refImg = imagemPost  
 
 
         const post = {
@@ -430,9 +431,21 @@ export const TemplatePerfil = () => {
         const imagemPerfil = main.querySelector('#image');
         const botaoSalvarFoto = main.querySelector('#btn-salvar');
      //   const inputPhoto = container.querySelector('#photo');
-        
-        
-        carregarImagens.addEventListener('change', () => {
+     carregarImagens.addEventListener('change', () => {
+        imagemPerfil.src = '';
+        //const file = event.target.files[0];
+        const file = carregarImagens.files[0];
+        imagemPerfil.src = URL.createObjectURL(file);
+
+        const validarUrl = (url) => {
+            imagemPerfil.src = '';
+            imagemPerfil.src = url;
+            botaoSalvarFoto.style.display = "block"
+        };
+
+        addImagemFeed(carregarImagens, validarUrl);
+        })
+ /*       carregarImagens.addEventListener('change', () => {
                 imagemPerfil.src = '';
                 //const file = event.target.files[0];
                 const file = carregarImagens.files[0];
@@ -476,7 +489,7 @@ export const TemplatePerfil = () => {
                 atualizarPerfil(imagemPerfil.src);
                 confirmMessage.hidden = false;
                 // main.style.display = 'block';
-            })
+            })*/
 
             //imagem feed
             const imagensFeed = main.querySelector('#foto'); //input file
@@ -486,12 +499,25 @@ export const TemplatePerfil = () => {
                 imagemPost.src = '';
                 //const file = event.target.files[0];
                 const file = imagensFeed.files[0];
-                console.log('file', file)
+                imagemPost.src = URL.createObjectURL(file);
+
+                const validarUrlFeed = (url) => {
+                    imagemPost.src = '';
+                    imagemPost.src = url;
+                    botaoSalvarFotoFeed.style.display = "block"
+                };
+                
+                addImagemFeed(imagensFeed, validarUrlFeed);
+                
+
+          /*      imagemPost.src = '';
+                //const file = event.target.files[0];
+                const file = imagensFeed.files[0];
                 imagemPost.src = URL.createObjectURL(file);
                 
                 const addImagemFeed = (photo, callback) => {
                     const file = photo.files[0];
-                    const storageRef = firebase.storage().ref(`imagens/${file.name}`);
+                    const storageRef = firebase.storage().ref(`imagens/feed/${file.name}`);
                     storageRef.put(file).then(() => {
                       storageRef.getDownloadURL().then((url) => {
                         callback(url);
@@ -505,7 +531,7 @@ export const TemplatePerfil = () => {
                     botaoSalvarFotoFeed.style.display = "block"
                 };
 
-                addImagemFeed(imagensFeed, validarUrlFeed);
+                addImagemFeed(imagensFeed, validarUrlFeed);*/
             })
 
 
