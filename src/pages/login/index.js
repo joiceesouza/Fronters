@@ -1,5 +1,5 @@
 import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
-import { ocultarSenha } from '../../lib/index.js';
+import { ocultarSenha, irParaRota } from '../../lib/index.js';
 
 export const TemplateLogin = () => {
   const main = document.createElement('div');
@@ -17,8 +17,8 @@ export const TemplateLogin = () => {
         
         <nav id="nav">
             <ul id="login-cadastro">                  
-                <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
-                <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
+                <li><button class="nav-btn" id="nav-login">Login</button></li>
+                <li><button class="nav-btn" id="nav-cadastro">Cadastro</button></li>
             </ul>
         </nav>
 
@@ -58,13 +58,22 @@ export const TemplateLogin = () => {
 <div class="popup-wrapper">
 <div class="popup">
     <div class="fechar-popup">X</div>
-  <div class="conteudo-popup">
-    <h2>Cadastro finalizado com sucesso!</h2>
-    <button id="loginPopup"><a href="/#">Fazer Login</a></button>
-  </div>
+  <div class="conteudo-popup"></div>
 </div>
 </div>
     `;
+
+  main.querySelector('#nav-login').addEventListener('click', () => {
+    setTimeout(() => {
+      irParaRota('/login');
+    }, 500);
+  });
+
+  main.querySelector('#nav-cadastro').addEventListener('click', () => {
+    setTimeout(() => {
+      irParaRota('/cadastro');
+    }, 500);
+  });
 
   function validacao() {
     const form = main.querySelector('.campo-form');
@@ -112,14 +121,10 @@ export const TemplateLogin = () => {
     const password = main.querySelector('#senha-usuario').value;
     if (email === '' || password === '') {
       mostrarPopup('<h2>Algo deu errado!</h2> <p>Preencha corretamente todos os campos </p>');
-      // <p> Preencha corretamente todos os campos </p>`)
-      // error.innerHTML = `<span> Preencha todos os campos </span>`;
     } else {
       login(email, password)
         .then(() => {
-          window.history.pushState({}, null, '/perfil');
-          const popStateEvent = new PopStateEvent('popstate', {});
-          dispatchEvent(popStateEvent);
+          irParaRota('/perfil');
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -155,29 +160,10 @@ export const TemplateLogin = () => {
   botaoDoGoogle.addEventListener('click', (event) => {
     event.preventDefault();
     loginComGoogle()
-      .then((userCredential) => {
-        window.history.pushState({}, null, '/perfil');
-        const popStateEvent = new PopStateEvent('popstate', {});
-        dispatchEvent(popStateEvent);
-
+      .then(() => {
+        irParaRota('/perfil');
         /** @type {firebase.auth.OAuthCredential} */
-        // let credential = result.credential;
-
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        // let token = credential.accessToken;
-        // The signed-in user info.
-        // let user = result.user;
-        // ...
       }).catch((error) => {
-        // Handle Errors here.
-        console.error(error);
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        // The email of the user's account used.
-        const email = error.email;
-        // The firebase.auth.AuthCredential type that was used.
-        const credential = error.credential;
-        // ...
       });
   });
 
@@ -189,9 +175,7 @@ export const TemplateLogin = () => {
     loginComGithub()
       .then((result) => {
         console.log('github', result);
-        window.history.pushState({}, null, '/perfil');
-        const popStateEvent = new PopStateEvent('popstate', {});
-        dispatchEvent(popStateEvent);
+        irParaRota('/perfil');
       })
       .catch((error) => {
         const errorCode = error.code;
