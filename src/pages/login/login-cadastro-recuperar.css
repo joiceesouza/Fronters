@@ -76,7 +76,7 @@
     font-size: 1.5em;
 }
 
-ul li a button:before {
+ul li button:before {
     content: '';
     position:absolute;
     top: 0;
@@ -90,7 +90,7 @@ ul li a button:before {
     transition: .5s;
 }
 
-ul li a button:hover:before {
+ul li button:hover:before {
     transform: scaleY(1);
     opacity: 1;
     

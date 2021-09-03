@@ -1,5 +1,5 @@
 import { cadastro } from '../../services/index.js';
-import { ocultarSenha } from '../../lib/index.js';
+import { ocultarSenha, irParaRota} from '../../lib/index.js';
 
 export const TemplateCadastro = () => {
   const main = document.createElement('div');
@@ -17,15 +17,13 @@ export const TemplateCadastro = () => {
 
       </div>
         
-
       <nav id="nav">
           <ul id="login-cadastro">            
-              <li><a href="/#"><button class="nav-btn" id="nav-login">Login</button></a></li>
-              <li><a href="/cadastro"><button class="nav-btn" id="nav-cadastro">Cadastro</button></a></li>
+            <li><button class="nav-btn" id="nav-login">Login</button></li>
+            <li><button class="nav-btn" id="nav-cadastro">Cadastro</button></li>
           </ul>
       </nav>
-
-        
+       
       <form >
        <div class="campo-form">
           <label for="nome-cadastro">Nome:</label>                 
@@ -67,16 +65,42 @@ export const TemplateCadastro = () => {
       </form>
     </section>
 
-<div class="popup-wrapper">
-  <div class="popup">
-    <div class="fechar-popup">X</div>
-    <div class="conteudo-popup"></div>
-  </div>
-</div>
+    <div class="popup-wrapper">
+      <div class="popup">
+        <div class="fechar-popup">X</div>
+        <div class="conteudo-popup"></div>
+      </div>
+    </div>
     `;
 
-  const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');
+  main.querySelector('#nav-login').addEventListener('click', () => {
+    setTimeout(() => {        
+      irParaRota('/login');
+    }, 500);
+  })
 
+  main.querySelector('#nav-cadastro').addEventListener('click', () => {
+    setTimeout(() => {        
+      irParaRota('/cadastro');
+    }, 500);
+  })
+    
+  
+  const popup = main.querySelector('.popup-wrapper');
+  const conteudoPopup = main.querySelector('.conteudo-popup');
+  const fecharPopup = main.querySelector('.fechar-popup');
+
+  function mostrarPopup(mensagem) {
+    conteudoPopup.innerHTML = mensagem;
+    popup.style.display = 'block';
+  }
+
+  // fechar pop up
+  fecharPopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
+  const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');    
   botaoDoCadastro.addEventListener('click', () => {
     const name = main.querySelector('#nome-cadastro').value;
     const email = main.querySelector('#email-cadastro').value;
@@ -87,21 +111,7 @@ export const TemplateCadastro = () => {
     const erroEmail = main.querySelector('#imp-error-email');
     const erroSenha = main.querySelector('#imp-error-senha');
     const formatoEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-    function mostrarPopup(mensagem) {
-      const popup = document.querySelector('.popup-wrapper');
-      const conteudoPopup = document.querySelector('.conteudo-popup');
-      conteudoPopup.innerHTML = mensagem;
-      popup.style.display = 'block';
-    }
-
-    // fechar pop up
-    const popup = main.querySelector('.popup-wrapper');
-    const fecharPopup = main.querySelector('.fechar-popup');
-    fecharPopup.addEventListener('click', () => {
-      popup.style.display = 'none';
-    });
-
+    
     if (email === '' || password === '' || sobreNome === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
       <p> Preencha corretamente todos os campos </p>`);
@@ -119,19 +129,12 @@ export const TemplateCadastro = () => {
       erroEmail.innerHTML = '';
       erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> As senhas não conferem</strong></p>';
     } else {
-      console.log('cadastrou????')
+      console.log('cadastrou????');
 
       cadastro(email, password)
-        .then((userCredential) => {
-          const user = userCredential.user;
-          console.log(user, 'Cadastrado!');
+        .then(() => {
           mostrarPopup(`<h2>Cadastro finalizado com sucesso!</h2>
-          <button id="loginPopup"><a href="/#">Fazer Login</a></button>`);
-          // alert('Cadastrado, você será redirecionado para login');
-          // window.history.pushState({}, null, '/login')
-          // const popStateEvent = new PopStateEvent("popstate", {})
-          // dispatchEvent(popStateEvent);
-          // ...
+          <button id="loginPopup" onclick="irParaRota()">Fazer Login</button>`);
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -148,7 +151,6 @@ export const TemplateCadastro = () => {
   });
 
   // OCULTAR SENHA
-
   main.querySelector('.ocultar-senha').addEventListener('click', () => {
     ocultarSenha('.input-senha', '.ocultar-senha');
   });
