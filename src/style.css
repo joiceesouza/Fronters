@@ -8,6 +8,17 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+:root {
+    --azul-claro: #6ab1d1;
+    --azul-escuro: #002855;
+    --laranja: #fb8500;
+    --laranja-claro: #FFE8CD;
+    --cinza-claro: #F1EDED;
+    --branco: #fff;
+    --preto: #000;
+  }
+
+
 .container {
     width: 90%;
     margin-left: auto;
