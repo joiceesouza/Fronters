@@ -79,10 +79,6 @@ export const TemplatePerfil = () => {
 
     `;
 
-    const linkGithub = main.querySelector('#link-github');
-    const valorLinkGithub = linkGithub.value;
-    
-
   // EDITAR NOME USUÁRIO
   main.querySelector('.btn-editar-nome').addEventListener('click', () => {
     const nomeEditar = main.querySelector('.nome');
@@ -121,7 +117,7 @@ export const TemplatePerfil = () => {
     event.preventDefault();
     const text = main.querySelector('#post').value;
     const linkGithub = main.querySelector('#link-github');
-    
+
     if (text === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
       <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup)
@@ -163,19 +159,19 @@ export const TemplatePerfil = () => {
     }
   });
 
- // sair do site
- const btnSair = main.querySelector('#logout-id');
- btnSair.addEventListener('click', (event) => {
-   event.preventDefault();
-   sair()
-   .then(() => {
-     localStorage.clear();
-     irParaRota('/login');
-   }).catch(() => {
-   // An error happened.
-   });
+  // sair do site
+  const btnSair = main.querySelector('#logout-id');
+  btnSair.addEventListener('click', (event) => {
+    event.preventDefault();
+    sair()
+      .then(() => {
+        localStorage.clear();
+        irParaRota('/login');
+      }).catch(() => {
+        // An error happened.
+      });
 
- })  
+  })
 
   function carregarPost() {
     const colecaoPost = firebase.firestore().collection('posts');
@@ -248,11 +244,11 @@ export const TemplatePerfil = () => {
     const linkGithub = postTemplate.querySelector('.link-github');
     const conteudoLinkGithub = linkGithub.innerHTML;
     const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
-   
+
 
     if (conteudoLinkGithub === '') {
       divlinkGithub.style.display = 'none';
-      
+
     }
 
     postTemplate.querySelector('.icone-comentar').addEventListener('click', () => {
@@ -280,13 +276,13 @@ export const TemplatePerfil = () => {
       const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
       divTextoEscrito.contentEditable = true;
       divTextoEscrito.focus()
-      
+
       // link github
       const divGithubEscrito = postTemplate.querySelector('.link-github');
       divGithubEscrito.contentEditable = true;
-     
+
     });
- 
+
     // SALVAR EDICAO
     postTemplate.querySelector('.salvar-edicao').addEventListener('click', (event) => {
       event.preventDefault();
@@ -298,17 +294,17 @@ export const TemplatePerfil = () => {
       divTextoEscrito.contentEditable = false;
       divGithubEscrito.contentEditable = false;
       firebase.firestore().collection('posts').doc(idPost)
-      .update({
-        texto: divTextoEscrito.innerHTML,
-        link_github: divGithubEscrito.innerHTML,
-      })
-      .then(() => {
-        console.log('atualizado');
-      })
-      .catch((error) => {
-        console.log('não atualizado-', error);
-      });
-      
+        .update({
+          texto: divTextoEscrito.innerHTML,
+          link_github: divGithubEscrito.innerHTML,
+        })
+        .then(() => {
+          console.log('atualizado');
+        })
+        .catch((error) => {
+          console.log('não atualizado-', error);
+        });
+
     });
 
     // Efeito remover post
@@ -335,76 +331,76 @@ export const TemplatePerfil = () => {
 
     // EM ANDAMENTO ( FOTO PARA APARECER NO POST)   
 
-   /*         main.querySelector('#btn-foto').addEventListener('click', (event) => {
-                event.preventDefault();
-                const btnfile = main.querySelector('#photoFeed');
-                btnfile.style.visibility = 'visible';
-              });*/
- 
+    /*         main.querySelector('#btn-foto').addEventListener('click', (event) => {
+                 event.preventDefault();
+                 const btnfile = main.querySelector('#photoFeed');
+                 btnfile.style.visibility = 'visible';
+               });*/
 
 
-            //imagem feed
-            const imagensFeed = main.querySelector('#foto'); //input file
-            const imagemPost = main.querySelector('#imagem-feed');
-            const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
-            imagensFeed.addEventListener('change', () => {
-                imagemPost.src = '';
-                //const file = event.target.files[0];
-                const file = imagensFeed.files[0];
-                console.log('file', file)
-                imagemPost.src = URL.createObjectURL(file);
-                
-                const addImagemFeed = (photo, callback) => {
-                    const file = photo.files[0];
-                    const storageRef = firebase.storage().ref(`imagens/${file.name}`);
-                    storageRef.put(file).then(() => {
-                      storageRef.getDownloadURL().then((url) => {
-                        callback(url);
-                      });
-                    });
-                  };
 
-                const validarUrlFeed = (url) => {
-                    imagemPost.src = '';
-                    imagemPost.src = url;
-                    botaoSalvarFotoFeed.style.display = "block"
-                };
+    //imagem feed
+    const imagensFeed = main.querySelector('#foto'); //input file
+    const imagemPost = main.querySelector('#imagem-feed');
+    const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
+    imagensFeed.addEventListener('change', () => {
+      imagemPost.src = '';
+      //const file = event.target.files[0];
+      const file = imagensFeed.files[0];
+      console.log('file', file)
+      imagemPost.src = URL.createObjectURL(file);
 
-                addImagemFeed(imagensFeed, validarUrlFeed);
-            })
+      const addImagemFeed = (photo, callback) => {
+        const file = photo.files[0];
+        const storageRef = firebase.storage().ref(`imagens/${file.name}`);
+        storageRef.put(file).then(() => {
+          storageRef.getDownloadURL().then((url) => {
+            callback(url);
+          });
+        });
+      };
+
+      const validarUrlFeed = (url) => {
+        imagemPost.src = '';
+        imagemPost.src = url;
+        botaoSalvarFotoFeed.style.display = "block"
+      };
+
+      addImagemFeed(imagensFeed, validarUrlFeed);
+    })
 
 
-  /*          const idImagemFeed = main.querySelector('#foto')
-            idImagemFeed.addEventListener('click', () => {
-             /*   const username = firebase.auth().currentUser.displayName;
-                const userImageUrl = firebase.auth().currentUser.photoURL;*/
-       /*         const ref = firebase.storage().ref('imagens/feed');
-                //ref caminho onde ira salvar a imagem
-                const file = main.querySelector('#carregar-img').files[0];
-                //file 
-                const name = `${new Date()}-${file.name}`;
-                const metadata = {
-                    contentType: file.type,
-                };
-                const task = ref.child(name).put(file, metadata);
-                //child nomeia a imagem
-                //put comando q faz o upload da imagem
-                task
-                    .then((snapshot) => snapshot.ref.getDownloadURL())
-                    .then((url) => {
-                        console.log('deu certo')
-                        const imagefeed = main.querySelector('#imagem-feed')
-                        imagefeed.src = url
-              //      photoMsgMobile.innerHTML = ''
-                    });
+    /*          const idImagemFeed = main.querySelector('#foto')
+              idImagemFeed.addEventListener('click', () => {
+               /*   const username = firebase.auth().currentUser.displayName;
+                  const userImageUrl = firebase.auth().currentUser.photoURL;*/
+    /*         const ref = firebase.storage().ref('imagens/feed');
+             //ref caminho onde ira salvar a imagem
+             const file = main.querySelector('#carregar-img').files[0];
+             //file 
+             const name = `${new Date()}-${file.name}`;
+             const metadata = {
+                 contentType: file.type,
+             };
+             const task = ref.child(name).put(file, metadata);
+             //child nomeia a imagem
+             //put comando q faz o upload da imagem
+             task
+                 .then((snapshot) => snapshot.ref.getDownloadURL())
+                 .then((url) => {
+                     console.log('deu certo')
+                     const imagefeed = main.querySelector('#imagem-feed')
+                     imagefeed.src = url
+           //      photoMsgMobile.innerHTML = ''
+                 });
 
-                
+             
 
-                updateUserProfile(inputName.value, idImagemFeed.src);
-                    confirmMessage.hidden = false;
-                    main.style.display = 'block';
-           })*/      
-   
+             updateUserProfile(inputName.value, idImagemFeed.src);
+                 confirmMessage.hidden = false;
+                 main.style.display = 'block';
+        })*/
+
     main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate);
   }
 
