@@ -79,6 +79,10 @@ export const TemplatePerfil = () => {
 
     `;
 
+    const linkGithub = main.querySelector('#link-github');
+    const valorLinkGithub = linkGithub.value;
+    
+
   // EDITAR NOME USUÁRIO
   main.querySelector('.btn-editar-nome').addEventListener('click', () => {
     const nomeEditar = main.querySelector('.nome');
@@ -118,7 +122,6 @@ export const TemplatePerfil = () => {
     const text = main.querySelector('#post').value;
     const linkGithub = main.querySelector('#link-github');
     
-
     if (text === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
       <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup)
@@ -202,19 +205,19 @@ export const TemplatePerfil = () => {
             <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
         </div>
         
-        <div class="texto-publicado-usuario">${post.data().texto}</div>
+        <div><p class="texto-publicado-usuario" contentEditable="false">${post.data().texto}</p></div>
         <img class="foto-feed" src="${post.data().imgPost}"" />
-        <div class="conteudo-editar-texto">
+        <!--<div class="conteudo-editar-texto">
             <input class="campo-editar-texto" />
-        </div>
+        </div>-->
         
         <div class="div-link-github-publicado">
             <i class="fab fa-github icone-github"></i>
-            <div class="link-github">${post.data().link_github}</div> 
+            <div class="div-conteudo-editar-github"><p class="link-github" contentEditable="false">${post.data().link_github}</p></div> 
         </div>
-        <div class="conteudo-editar-github">
+        <!--<div class="conteudo-editar-github">
             <input class="campo-editar-github" />
-        </div>
+        </div>-->
 
         <div class="icones">
             <span class="likes">
@@ -232,27 +235,24 @@ export const TemplatePerfil = () => {
             <button class="publicar-comentario" type="button">Publicar</button>
         </div>
         
-        <button type="button" class="salvar-edicao id=""">Salvar</button>
+        <button type="button" class="salvar-edicao" >Salvar</button>
          <div class="comentario-publicado"></div>            
 
         <div class="popup-wrapper">
          <div class="popup">
-                 <div class="fechar-popup">X</div>
-             <div class="conteudo-popup">
-                <!--<h2>Tem certeza que deseja deletar sua postagem?</h2>
-                <p> <button type="button" class="delete-class">Deletar</button> </p>-->
-             </div>
-         </div>
+            <div class="fechar-popup">X</div>
+            <div class="conteudo-popup"></div>             
+          </div>
         </div>
     `;
     const linkGithub = postTemplate.querySelector('.link-github');
     const conteudoLinkGithub = linkGithub.innerHTML;
     const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
-    const editarlinkGithub = postTemplate.querySelector('.conteudo-editar-github');
+   
 
     if (conteudoLinkGithub === '') {
       divlinkGithub.style.display = 'none';
-      editarlinkGithub.style.display = 'none';
+      
     }
 
     postTemplate.querySelector('.icone-comentar').addEventListener('click', () => {
@@ -277,55 +277,38 @@ export const TemplatePerfil = () => {
       salvarEdicao.style.display = 'block';
 
       // texto
-      const conteudoEditarTexto = postTemplate.querySelector('.conteudo-editar-texto');
-      conteudoEditarTexto.style.display = 'block';
-      const editarTexto = postTemplate.querySelector('.campo-editar-texto');
       const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
-      const textoEscrito = divTextoEscrito.innerHTML;
-      divTextoEscrito.style.display = 'none';
-
+      divTextoEscrito.contentEditable = true;
+      divTextoEscrito.focus()
+      
       // link github
-      const conteudoEditarGithub = postTemplate.querySelector('.conteudo-editar-github');
-      conteudoEditarGithub.style.display = 'block';
-      const editarGithub = postTemplate.querySelector('.campo-editar-github');
       const divGithubEscrito = postTemplate.querySelector('.link-github');
-      const linkGithubEscrito = divGithubEscrito.innerHTML;
-      divGithubEscrito.style.display = 'none';
-
-      editarTexto.value = textoEscrito;
-      editarGithub.value = linkGithubEscrito;
+      divGithubEscrito.contentEditable = true;
+     
     });
-
+ 
     // SALVAR EDICAO
-    postTemplate.querySelector('.salvar-edicao').addEventListener('click', () => {
-      const valorInputEditarTexto = postTemplate.querySelector('.campo-editar-texto').value;
-      const valorInputEditarGithub = postTemplate.querySelector('.campo-editar-github').value;
-
-      const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
-      const divLinkGithubEscrito = postTemplate.querySelector('.link-github');
-      const inputEdicaoTexto = postTemplate.querySelector('.conteudo-editar-texto');
-      const inputEdicaoLink = postTemplate.querySelector('.conteudo-editar-github');
+    postTemplate.querySelector('.salvar-edicao').addEventListener('click', (event) => {
+      event.preventDefault();
       const idPost = postTemplate.querySelector('.id-post').value;
-
-      inputEdicaoTexto.style.display = 'none';
-      inputEdicaoLink.style.display = 'none';
-      divTextoEscrito.style.display = 'block';
-      divLinkGithubEscrito.style.display = 'block';
-
-      divTextoEscrito.innerHTML = valorInputEditarTexto;
-      divLinkGithubEscrito.innerHTML = valorInputEditarGithub;
-
+      const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
+      const divGithubEscrito = postTemplate.querySelector('.link-github');
+      const btnSalvarEdicao = postTemplate.querySelector('.salvar-edicao');
+      btnSalvarEdicao.style.display = 'none';
+      divTextoEscrito.contentEditable = false;
+      divGithubEscrito.contentEditable = false;
       firebase.firestore().collection('posts').doc(idPost)
-        .update({
-          texto: valorInputEditarTexto,
-          link_github: valorInputEditarGithub,
-        })
-        .then(() => {
-          console.log('atualizado');
-        })
-        .catch((error) => {
-          console.log('não atualizado-', error);
-        });
+      .update({
+        texto: divTextoEscrito.innerHTML,
+        link_github: divGithubEscrito.innerHTML,
+      })
+      .then(() => {
+        console.log('atualizado');
+      })
+      .catch((error) => {
+        console.log('não atualizado-', error);
+      });
+      
     });
 
     // Efeito remover post

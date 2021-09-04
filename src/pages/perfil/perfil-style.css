@@ -153,6 +153,10 @@
     text-align: center;
 }
 
+.link-github[contentEditable="true"], .texto-publicado-usuario[contentEditable="true"] {
+    border: 1px solid black;
+}
+
 #link-github {
     background-color: var(--branco);
     width: 100%;
@@ -183,9 +187,18 @@
     text-align: center;
 }
 
-#tete {
+/* #tete {
     width: 200px;
     height: 20px;
+} */
+
+.salvar-edicao {
+    background-color: var(--laranja);
+    color: var(--branco);
+    box-shadow: 5px 5px 12px rgb(0 0 0 / 50%);
+    border: none;
+    padding: 0.5em;
+    border-radius: 0.5em;
 }
 
 .fez-publicacao {
