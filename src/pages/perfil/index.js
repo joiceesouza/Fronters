@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-import { deletarPost } from '../../lib/index.js';
+import { deletarPost, irParaRota } from '../../lib/index.js';
+import { sair } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
   const main = document.createElement('div');
@@ -161,20 +162,19 @@ export const TemplatePerfil = () => {
     }
   });
 
-  const logout = main.querySelector('#logout-id');
-  logout.addEventListener('click', () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        localStorage.clear();
-        window.history.pushState({}, null, '/login');
-        const popStateEvent = new PopStateEvent('popstate', {});
-        dispatchEvent(popStateEvent);
-      }).catch(() => {
-        // An error happened.
-      });
-  });
+ // sair do site
+ const btnSair = main.querySelector('#logout-id');
+ btnSair.addEventListener('click', (event) => {
+   event.preventDefault();
+   sair()
+   .then(() => {
+     localStorage.clear();
+     irParaRota('/login');
+   }).catch(() => {
+   // An error happened.
+   });
+
+ })  
 
   function carregarPost() {
     const colecaoPost = firebase.firestore().collection('posts');

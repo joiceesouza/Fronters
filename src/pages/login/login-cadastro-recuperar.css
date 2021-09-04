@@ -280,12 +280,17 @@ ul li button:hover:before {
     cursor: pointer;
 }
 
-#loginPopup {
+.loginPopup {
     padding: 5px;
+    background-color: var(--laranja);
+    color: white;
+    border: none;
+    box-shadow: 2px 1px 5px black;
+    margin-top: 0.5em;
      
 }
 
-#loginPopup a {
+.loginPopup a {
     color: black;
 }
 
