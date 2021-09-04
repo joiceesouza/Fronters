@@ -1,5 +1,5 @@
 import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
-import { ocultarSenha, irParaRota } from '../../lib/index.js';
+import { ocultarSenha, irParaRota, mostrarPopup } from '../../lib/index.js';
 
 export const TemplateLogin = () => {
   const main = document.createElement('div');
@@ -103,16 +103,12 @@ export const TemplateLogin = () => {
       return;
     }
 
-    function mostrarPopup(mensagem) {
-      const popup = document.querySelector('.popup-wrapper');
-      const conteudoPopup = document.querySelector('.conteudo-popup');
-      conteudoPopup.innerHTML = mensagem;
-      popup.style.display = 'block';
-    }
+    //seletores função mostrar popup
+    const popup = main.querySelector('.popup-wrapper');
+    const conteudoPopup = main.querySelector('.conteudo-popup');
+    const fecharPopup = main.querySelector('.fechar-popup');
 
     // fechar pop up
-    const popup = main.querySelector('.popup-wrapper');
-    const fecharPopup = main.querySelector('.fechar-popup');
     fecharPopup.addEventListener('click', () => {
       popup.style.display = 'none';
     });
@@ -120,7 +116,7 @@ export const TemplateLogin = () => {
     const email = main.querySelector('#email-usuario').value;
     const password = main.querySelector('#senha-usuario').value;
     if (email === '' || password === '') {
-      mostrarPopup('<h2>Algo deu errado!</h2> <p>Preencha corretamente todos os campos </p>');
+      mostrarPopup('<h2>Algo deu errado!</h2> <p>Preencha corretamente todos os campos </p>', popup, conteudoPopup);
     } else {
       login(email, password)
         .then(() => {
@@ -133,19 +129,19 @@ export const TemplateLogin = () => {
           console.log('Infelizmente aconteceu algum erro!', errorCode, errorMessage);
           switch (errorCode) {
             case 'auth/invalid-email':
-              mostrarPopup('<h2>Algo deu errado!</h2> <p>E-mail inválido</p>');
+              mostrarPopup('<h2>Algo deu errado!</h2> <p>E-mail inválido</p>', popup, conteudoPopup);
               break;
             case 'auth/user-disabled':
               mostrarPopup('<h2>Algo deu errado!</h2> <p>Usuário desabilitado</p>');
               break;
             case 'auth/user-not-found':
-              mostrarPopup('<h2>O email está incorreto!!</h2> <p>Usuário não encontrado</p>');
+              mostrarPopup('<h2>O email está incorreto!!</h2> <p>Usuário não encontrado</p>', popup, conteudoPopup);
               break;
             case 'auth/wrong-password':
-              mostrarPopup('<h2>Algo deu errado!</h2> <p>Usuário ou senha inválido </p>');
+              mostrarPopup('<h2>Algo deu errado!</h2> <p>Usuário ou senha inválido </p>', popup, conteudoPopup);
               break;
             case 'auth/too-many-requests':
-              mostrarPopup('<h2>Algo deu errado!</h2> <p>Senha inválida</p>');
+              mostrarPopup('<h2>Algo deu errado!</h2> <p>Senha inválida</p>', popup, conteudoPopup);
               break;
             default:
               error.innerHTML = `<span> ${errorMessage} </span>`;
