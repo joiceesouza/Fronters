@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { deletarPost, irParaRota } from '../../lib/index.js';
+import { deletarPost, irParaRota, mostrarPopup } from '../../lib/index.js';
 import { sair } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
@@ -73,10 +73,7 @@ export const TemplatePerfil = () => {
     <div class="popup-wrapper">
         <div class="popup">
             <div class="fechar-popup">X</div>
-            <div class="conteudo-popup">
-                <h2>Cadastro finalizado com sucesso!</h2>
-                <button id="loginPopup"><a href="/#">Fazer Login</a></button>
-            </div>
+            <div class="conteudo-popup"></div>
         </div>
     </div>
 
@@ -106,24 +103,25 @@ export const TemplatePerfil = () => {
     });
   });
 
+  // pop up
+  const popup = main.querySelector('.popup-wrapper');
+  const fecharPopup = main.querySelector('.fechar-popup');
+  const conteudoPopup = main.querySelector('.conteudo-popup');
+
+  fecharPopup.addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+
   const botaoPublicar = main.querySelector('#publicar');
   botaoPublicar.addEventListener('click', (event) => {
     event.preventDefault();
     const text = main.querySelector('#post').value;
     const linkGithub = main.querySelector('#link-github');
-    // pop up
-    const popup = main.querySelector('.popup-wrapper');
-    const fecharPopup = main.querySelector('.fechar-popup');
-    const conteudoPopup = main.querySelector('.conteudo-popup');
+    
 
     if (text === '') {
-      popup.style.display = 'block';
-      conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
-      <p> Por gentileza, escreva algo antes de salvar </p>`;
-      fecharPopup.style.display = 'block';
-      fecharPopup.addEventListener('click', () => {
-        popup.style.display = 'none';
-      });
+      mostrarPopup(` <h2>Algo deu errado!</h2> 
+      <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup)
     } else {
       if (linkGithub.checkValidity() === false) {
         alert('Por gentileza, colocar um link válido');
@@ -241,8 +239,8 @@ export const TemplatePerfil = () => {
          <div class="popup">
                  <div class="fechar-popup">X</div>
              <div class="conteudo-popup">
-                 <h2>Tem certeza que deseja deletar sua postagem?</h2>
-                 <p> <button type="button" class="delete-class">Deletar</button> </p>
+                <!--<h2>Tem certeza que deseja deletar sua postagem?</h2>
+                <p> <button type="button" class="delete-class">Deletar</button> </p>-->
              </div>
          </div>
         </div>
@@ -340,17 +338,10 @@ export const TemplatePerfil = () => {
     // Deletar post
     const deletar = postTemplate.querySelector('.icone-deletar');
     deletar.addEventListener('click', () => {
-      const popup = postTemplate.querySelector('.popup-wrapper');
-      const fecharPopup = postTemplate.querySelector('.fechar-popup');
-      const conteudoPopup = postTemplate.querySelector('.conteudo-popup');
-      popup.style.display = 'block';
-      conteudoPopup.innerHTML = ` <h2>Tem certeza que deseja deletar sua postagem?</h2> 
-            <p> <button type="button" class="delete-class">Deletar</button> </p>`;
-      fecharPopup.style.display = 'block';
-      fecharPopup.addEventListener('click', () => {
-        popup.style.display = 'none';
-      });
-      const button = postTemplate.querySelector('.delete-class');
+      mostrarPopup(` <h2>Tem certeza que deseja deletar sua postagem?</h2> 
+      <p> <button type="button" class="delete-class">Deletar</button> </p>`, popup, conteudoPopup)
+
+      const button = document.querySelector('.delete-class');
       button.addEventListener('click', () => {
         deletarPost(post.id).then(() => {
           efeitoRemoverPost(post.id);
