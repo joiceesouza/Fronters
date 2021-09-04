@@ -21,3 +21,9 @@ export function irParaRota(rota) {
   const popStateEvent = new PopStateEvent('popstate', {});
   dispatchEvent(popStateEvent);
 }
+
+export function mostrarPopup(mensagem, popup, divConteudoPopup) {
+  divConteudoPopup.innerHTML = mensagem
+  popup.style.display = 'block';
+
+}

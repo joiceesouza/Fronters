@@ -1,5 +1,5 @@
 import { cadastro } from '../../services/index.js';
-import { ocultarSenha, irParaRota } from '../../lib/index.js';
+import { ocultarSenha, irParaRota, mostrarPopup } from '../../lib/index.js';
 
 export const TemplateCadastro = () => {
   const main = document.createElement('div');
@@ -84,22 +84,7 @@ export const TemplateCadastro = () => {
       irParaRota('/cadastro');
     }, 500);
   })
-    
-  
-  const popup = main.querySelector('.popup-wrapper');
-  const conteudoPopup = main.querySelector('.conteudo-popup');
-  const fecharPopup = main.querySelector('.fechar-popup');
-
-  function mostrarPopup(mensagem) {
-    conteudoPopup.innerHTML = mensagem;
-    popup.style.display = 'block';
-  }
-
-  // fechar pop up
-  fecharPopup.addEventListener('click', () => {
-    popup.style.display = 'none';
-  });
-
+     
   const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');    
   botaoDoCadastro.addEventListener('click', () => {
     const name = main.querySelector('#nome-cadastro').value;
@@ -111,10 +96,20 @@ export const TemplateCadastro = () => {
     const erroEmail = main.querySelector('#imp-error-email');
     const erroSenha = main.querySelector('#imp-error-senha');
     const formatoEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+    //seletores função mostrar popup
+    const popup = main.querySelector('.popup-wrapper');
+    const conteudoPopup = main.querySelector('.conteudo-popup');
+    const fecharPopup = main.querySelector('.fechar-popup');
+  
+    // fechar pop up
+    fecharPopup.addEventListener('click', () => {
+      popup.style.display = 'none';
+    });
     
     if (email === '' || password === '' || sobreNome === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
-      <p> Preencha corretamente todos os campos </p>`);
+      <p> Preencha corretamente todos os campos </p>`, popup, conteudoPopup);
     } else if (name.length < 3) {
       erroNome.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> Escreva um nome válido</strong></p>';
     } else if (formatoEmail.test(email) === false) {
@@ -134,14 +129,14 @@ export const TemplateCadastro = () => {
       cadastro(email, password)
         .then(() => {
           mostrarPopup(`<h2>Cadastro finalizado com sucesso!</h2>
-          <a href='/login'><button class="loginPopup">Fazer Login</button></a>`);
+          <a href='/login'><button class="loginPopup">Fazer Login</button></a>`, popup, conteudoPopup);
 
         })
         .catch((error) => {
           const errorCode = error.code;
           switch (errorCode) {
             case 'auth/email-already-in-use':
-              mostrarPopup('<h2>Algo deu errado!</h2><p> E-mail já cadastrado </p>');
+              mostrarPopup('<h2>Algo deu errado!</h2><p> E-mail já cadastrado </p>',popup, conteudoPopup);
               break;
             default:
               console.error(error, error.message);
@@ -159,6 +154,7 @@ export const TemplateCadastro = () => {
   main.querySelector('.ocultar-confirma-senha').addEventListener('click', () => {
     ocultarSenha('.input-confirma-senha', '.ocultar-confirma-senha');
   });
+ 
 
   return main;
 };
