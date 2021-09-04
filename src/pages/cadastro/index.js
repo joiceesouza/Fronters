@@ -1,5 +1,5 @@
 import { cadastro } from '../../services/index.js';
-import { ocultarSenha, irParaRota} from '../../lib/index.js';
+import { ocultarSenha, irParaRota } from '../../lib/index.js';
 
 export const TemplateCadastro = () => {
   const main = document.createElement('div');
@@ -134,7 +134,8 @@ export const TemplateCadastro = () => {
       cadastro(email, password)
         .then(() => {
           mostrarPopup(`<h2>Cadastro finalizado com sucesso!</h2>
-          <button id="loginPopup" onclick="irParaRota()">Fazer Login</button>`);
+          <a href='/login'><button class="loginPopup">Fazer Login</button></a>`);
+
         })
         .catch((error) => {
           const errorCode = error.code;
