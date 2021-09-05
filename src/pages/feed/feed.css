@@ -211,6 +211,8 @@ a:hover {
 .template-comentario {
     background-color: rgb(235, 186, 95);
     border-radius: 5px;
+    margin: 0.5em 0;
+    padding: 0.5em 1em;
 }
 
 .foto-comentario {

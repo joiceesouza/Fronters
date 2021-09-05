@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { deletarPost, irParaRota, mostrarPopup } from '../../lib/index.js';
+import { deletarPost, irParaRota, mostrarPopup, efeitoRemover } from '../../lib/index.js';
 import { sair } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
@@ -130,7 +130,7 @@ export const TemplatePerfil = () => {
       const objetoUsuario = firebase.auth().currentUser;
       const nomeUsuario = objetoUsuario.displayName;
       const idDoUsuario = objetoUsuario.uid;
-      const horaPublicacao = new Date().toLocaleString();
+      const horaPublicacao = Date.now();
       const fotoUsuario = objetoUsuario.photoURL;
       // const refImg = main.querySelector('#foto').value;   
 
@@ -152,9 +152,11 @@ export const TemplatePerfil = () => {
       const colecaoPost = firebase.firestore().collection('posts');
       colecaoPost.add(post)
         .then(() => {
-          window.history.pushState({}, null, '/perfil');
-          const popStateEvent = new PopStateEvent('popstate', {});
-          dispatchEvent(popStateEvent);
+          // window.history.pushState({}, null, '/perfil');
+          // const popStateEvent = new PopStateEvent('popstate', {});
+          // dispatchEvent(popStateEvent);
+          
+          irParaRota('/perfil');
         });
     }
   });
@@ -175,7 +177,9 @@ export const TemplatePerfil = () => {
 
   function carregarPost() {
     const colecaoPost = firebase.firestore().collection('posts');
-    colecaoPost.where('id_usuario', '==', firebase.auth().currentUser.uid)
+    colecaoPost
+      .orderBy('data')
+      .where('id_usuario', '==', firebase.auth().currentUser.uid)
 
       .get().then((snap) => {
         snap.forEach((post) => {
@@ -193,36 +197,36 @@ export const TemplatePerfil = () => {
     postTemplate.innerHTML = `
                 
         <input type="hidden" class="id-post" value="${post.id}"/>
+        <div><p class="hora-post">${new Date(post.data().data).toLocaleString()}</p></div>
         <div class="nome-usuario">
-            <div class="foto-usuario-comentario">
-                <img class="foto-perfil-comentario" src="${firebase.auth().currentUser.photoURL || '/img/profile.png'}" />
+            <div class="foto-usuario-autor">
+                <img class="foto-perfil-autor" src="${firebase.auth().currentUser.photoURL || '/img/profile.png'}" />
             </div>
-            ${post.data().nome || post.data().nomeSalvoPerfil} 
-            <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
+            ${post.data().nome || post.data().nomeSalvoPerfil } 
+            <p class="fez-publicacao">publicou.</p>                        
         </div>
+        
         
         <div><p class="texto-publicado-usuario" contentEditable="false">${post.data().texto}</p></div>
         <img class="foto-feed" src="${post.data().imgPost}"" />
-        <!--<div class="conteudo-editar-texto">
-            <input class="campo-editar-texto" />
-        </div>-->
-        
+                
         <div class="div-link-github-publicado">
             <i class="fab fa-github icone-github"></i>
             <div class="div-conteudo-editar-github"><p class="link-github" contentEditable="false">${post.data().link_github}</p></div> 
         </div>
-        <!--<div class="conteudo-editar-github">
-            <input class="campo-editar-github" />
-        </div>-->
-
+        
         <div class="icones">
-            <span class="likes">
+            <span class="icone-likes">
                 <i class="far fa-heart icone-curtir"></i>
                 <span class="numero-curtidas"> ${post.data().curtidas.length || 0}</span>
+                <i class="far fa-comment-alt icone-comentar"></i>
+
             </span>
                     
-            <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
-            <span class="deletar"><i class="fas fa-trash-alt icone-deletar" title="Excluir"></i></span>
+            <span class="icone-acao">
+              <i class="fas fa-pen editar-publicacao" title="Editar"></i>
+              <i class="fas fa-trash-alt icone-deletar" title="Excluir"></i>
+            </span>
              
         </div>
 
@@ -308,11 +312,11 @@ export const TemplatePerfil = () => {
     });
 
     // Efeito remover post
-    function efeitoRemoverPost(postId) {
-      const target = document.querySelector(`[data-id="${postId}"]`);
-      target.addEventListener('transitionend', () => target.remove());
-      target.style.opacity = '0';
-    }
+    // function efeitoRemoverPost(postId) {
+    //   const target = document.querySelector(`[data-id="${postId}"]`);
+    //   target.addEventListener('transitionend', () => target.remove());
+    //   target.style.opacity = '0';
+    // }
 
     // Deletar post
     const deletar = postTemplate.querySelector('.icone-deletar');
@@ -323,7 +327,8 @@ export const TemplatePerfil = () => {
       const button = document.querySelector('.delete-class');
       button.addEventListener('click', () => {
         deletarPost(post.id).then(() => {
-          efeitoRemoverPost(post.id);
+          // efeitoRemover(post.id);
+          efeitoRemover(postTemplate);
         });
         popup.style.display = 'none';
       });
@@ -401,7 +406,8 @@ export const TemplatePerfil = () => {
                  main.style.display = 'block';
         })*/
 
-    main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate);
+    // main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate);
+    main.querySelector('#div-minhas-publicacoes').prepend(postTemplate);
   }
 
   // Menu Hamburguer
