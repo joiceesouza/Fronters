@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
-import { deletarPost } from '../../lib/index.js';
-import { addImagemFeed } from '../../services/index.js';
+import { deletarPost, irParaRota } from '../../lib/index.js';
+import { addImagem, sair } from '../../services/index.js';
+
 
 export const TemplatePerfil = () => {
+  let mainUrl=''
   const main = document.createElement('div');
   main.innerHTML = ` 
     <main class="pagina-perfil">
@@ -135,9 +137,9 @@ export const TemplatePerfil = () => {
       const idDoUsuario = objetoUsuario.uid;
       const horaPublicacao = new Date().toLocaleString();
       const fotoUsuario = objetoUsuario.photoURL;
-      // const refImg = main.querySelector('#foto').value;   
+ //     const fotofeed = objetoUsuario.photoURL.imagemPost
 
-      // const refImg = firebase.storage().ref('imagens/feed');
+      const refImg = main.querySelector('#foto').value
 
       const post = {
         fotoDoUsuario: fotoUsuario,
@@ -148,8 +150,7 @@ export const TemplatePerfil = () => {
         link_github: linkGithub.value,
         curtidas: [],
         comentarios: [],
-
-        // imgPost: refImg
+        imgPost: mainUrl
       };
 
       const colecaoPost = firebase.firestore().collection('posts');
@@ -162,20 +163,16 @@ export const TemplatePerfil = () => {
     }
   });
 
-  const logout = main.querySelector('#logout-id');
-  logout.addEventListener('click', () => {
-    firebase
-      .auth()
-      .signOut()
-      .then(() => {
-        localStorage.clear();
-        window.history.pushState({}, null, '/login');
-        const popStateEvent = new PopStateEvent('popstate', {});
-        dispatchEvent(popStateEvent);
-      }).catch(() => {
-        // An error happened.
-      });
-  });
+  // sair do site 
+  const btnSair = main.querySelector('#logout-id');
+  btnSair.addEventListener('click', (event) => {
+    event.preventDefault(); 
+    sair().then(() => { 
+    localStorage.clear(); irParaRota('/login'); })
+    .catch(() => { 
+    // An error happened. }); 
+    }) 
+  }) 
 
   function carregarPost() {
     const colecaoPost = firebase.firestore().collection('posts');
@@ -206,7 +203,7 @@ export const TemplatePerfil = () => {
         </div>
         
         <div class="texto-publicado-usuario">${post.data().texto}</div>
-        <img class="foto-feed" src="${post.data().imgPost}"" />
+        <img class="foto-feed" src="${post.data().imgPost || "../../img/foto-projeto.png"}" />
         <div class="conteudo-editar-texto">
             <input class="campo-editar-texto" />
         </div>
@@ -370,25 +367,9 @@ export const TemplatePerfil = () => {
  
 
 
-            //imagem feed
-            const imagensFeed = main.querySelector('#foto'); //input file
-            const imagemPost = main.querySelector('#imagem-feed');
-            const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
-            imagensFeed.addEventListener('change', () => {
-                imagemPost.src = '';
-                //const file = event.target.files[0];
-                const file = imagensFeed.files[0];
-                imagemPost.src = URL.createObjectURL(file);
-
-                const validarUrlFeed = (url) => {
-                    imagemPost.src = '';
-                    imagemPost.src = url;
-                    botaoSalvarFotoFeed.style.display = "block"
-                };
+            
+              
                 
-                addImagemFeed(imagensFeed, validarUrlFeed);
-                
-
           /*      imagemPost.src = '';
                 //const file = event.target.files[0];
                 const file = imagensFeed.files[0];
@@ -411,7 +392,7 @@ export const TemplatePerfil = () => {
                 };
 
                 addImagemFeed(imagensFeed, validarUrlFeed);*/
-            })
+            
 
 
   /*          const idImagemFeed = main.querySelector('#foto')
@@ -474,6 +455,22 @@ export const TemplatePerfil = () => {
   const carregarImagens = main.querySelector('#foto-id'); // input file
   const imagemPerfil = main.querySelector('#image');
   const botaoSalvarFoto = main.querySelector('#btn-salvar');
+  carregarImagens.addEventListener('change', () => {
+    imagemPerfil.src = '';
+    const file = carregarImagens.files[0];
+    imagemPerfil.src = URL.createObjectURL(file);
+    const validarUrl = (url) => {
+      imagemPerfil.src = '';
+      imagemPerfil.src = url;
+      botaoSalvarFoto.style.display = 'block';
+    };
+    addImagem(carregarImagens, validarUrl);
+  });
+  
+
+  /*const carregarImagens = main.querySelector('#foto-id'); // input file
+  const imagemPerfil = main.querySelector('#image');
+  const botaoSalvarFoto = main.querySelector('#btn-salvar');
   //   const inputPhoto = container.querySelector('#photo');
   carregarImagens.addEventListener('change', () => {
     imagemPerfil.src = '';
@@ -499,9 +496,9 @@ export const TemplatePerfil = () => {
     };
 
     addImagem(carregarImagens, validarUrl);
-  });
+  });*/
 
-  const inputName = main.querySelector('.nome');
+ /* const inputName = main.querySelector('.nome');
   const confirmMessage = main.querySelector('#conf-atualizaçao');
   const btnSaveProfile = main.querySelector('#btn-salvar');
   btnSaveProfile.addEventListener('click', (event) => {
@@ -519,8 +516,30 @@ export const TemplatePerfil = () => {
     atualizarPerfil(imagemPerfil.src);
     confirmMessage.hidden = false;
     // main.style.display = 'block';
-  });
+  });*/
 
+  //imagem feed
+  const imagensFeed = main.querySelector('#foto'); //input file
+  const imagemPost = main.querySelector('#imagem-feed');
+  const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
+  imagensFeed.addEventListener('change', () => {
+      imagemPost.src = '';
+      //const file = event.target.files[0];
+      const file = imagensFeed.files[0];
+      imagemPost.src = URL.createObjectURL(file);
+
+      const validarUrlFeed = (urlFeed) => {
+        imagemPost.src = '';
+        imagemPost.src = urlFeed;
+        botaoSalvarFotoFeed.style.display = "block"
+      //  console.log(urlFeed)
+        mainUrl =urlFeed
+      };
+      
+      addImagem(imagensFeed, validarUrlFeed);
+      console.log("Main/" +mainUrl)    
+  })  
+  
   return main;
 };
 

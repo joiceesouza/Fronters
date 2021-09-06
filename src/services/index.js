@@ -42,7 +42,8 @@ export const redefinirSenha = (email) => {
         .sendPasswordResetEmail(email);
 }
 
-export const addImagemFeed = (photo, callback) => {
+//carregar imagens
+export const addImagem = (photo, callback) => {
     const file = photo.files[0];
     const storageRef = firebase.storage().ref(`imagens/${file.name}`);
     storageRef.put(file).then(() => {
@@ -51,11 +52,6 @@ export const addImagemFeed = (photo, callback) => {
       });
     });
   };
-
- 
-
-
-
 // SAIR DO SITE
 export const sair = () => {
     return firebase
