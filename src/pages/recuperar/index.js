@@ -1,8 +1,9 @@
-import { redefinirSenha } from "../../services/index.js";
+/* eslint-disable no-console */
+import { redefinirSenha } from '../../services/index.js';
 
 export const TemplateRecuperar = () => {
-    const container = document.createElement('div');
-    const template = ` 
+  const container = document.createElement('div');
+  const template = ` 
     <main class="principal pagina-login">
       <div class="foto-principal"></div>
 
@@ -45,48 +46,40 @@ export const TemplateRecuperar = () => {
 
     `;
 
-container.innerHTML = template;
+  container.innerHTML = template;
 
-//Recuperar senha
-//const reset = document.getElementById('reset-id')
-const recuperarSenha = container.querySelector('#recuperar-email')
-const buttonReset = container.querySelector('#reset-id')
+  // Recuperar senha
+  const recuperarSenha = container.querySelector('#recuperar-email');
+  const buttonReset = container.querySelector('#reset-id');
 
-buttonReset.addEventListener("click", () => {
-
+  buttonReset.addEventListener('click', () => {
     const popup = container.querySelector('.popup-wrapper');
     const fecharPopup = container.querySelector('.fechar-popup');
     const conteudoPopup = container.querySelector('.conteudo-popup');
+    const email = recuperarSenha.value;
+    console.log(email);
 
-    //const auth = firebase.auth()
-    const email = recuperarSenha.value
-    console.log(email)
-
-    redefinirSenha(email)
+    redefinirSenha(email);
     firebase
-        .auth().sendPasswordResetEmail(email)
-        .then((result) => {
-          console.log(result)
-          popup.style.display = 'block';
-          conteudoPopup.innerHTML = `<h2>Você receberá um link para redefinir sua senha em seu email!</h2>
-          <button id="loginPopup"><a href="/#">Fazer Login</a></button>`
-          fecharPopup.style.display = 'none'
-        })
-        .catch((err) => {
-          console.log(err)
-          popup.style.display = 'block';
-          conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
+      .auth().sendPasswordResetEmail(email)
+      .then((result) => {
+        console.log(result);
+        popup.style.display = 'block';
+        conteudoPopup.innerHTML = `<h2>Você receberá um link para redefinir sua senha em seu email!</h2>
+          <button id="loginPopup"><a href="/#">Fazer Login</a></button>`;
+        fecharPopup.style.display = 'none';
+      })
+      .catch((err) => {
+        console.log(err);
+        popup.style.display = 'block';
+        conteudoPopup.innerHTML = ` <h2>Algo deu errado!</h2> 
           <p> Preencha corretamente os campos </p>`;
-          fecharPopup.style.display = 'block';
-          fecharPopup.addEventListener("click", () => {
+        fecharPopup.style.display = 'block';
+        fecharPopup.addEventListener('click', () => {
           popup.style.display = 'none';
-          })
-         
-        }) 
-        
-})
+        });
+      });
+  });
 
-
-return container;
-}
-
+  return container;
+};

@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { cadastro } from '../../services/index.js';
 import { ocultarSenha, irParaRota, mostrarPopup } from '../../lib/index.js';
 
@@ -9,7 +10,7 @@ export const TemplateCadastro = () => {
 
     <section class="conteudo-login" >
       <div id="banner-section">
-            <div id="texto-sobre">
+            <div class="texto-sobre">
             <h2 id="logo">Fronters</h2>
             <h3>De frente com o Front</h3>
             <h4>Está preparado para invadir 
@@ -27,24 +28,24 @@ export const TemplateCadastro = () => {
       <form >
        <div class="campo-form">
           <label for="nome-cadastro">Nome:</label>                 
-          <input type="text" id="nome-cadastro" placeholder="Digite o seu nome" required maxlength="25" minlength="2">
+          <input class="input-login" type="text" id="nome-cadastro" placeholder="Digite o seu nome" required maxlength="25" minlength="2">
           <div id="imp-error-name" class="erros"></div>
 
         </div>
         <div class="campo-form">
           <label for="sobrenome-cadastro">Sobrenome:</label>
-          <input type="text" id="sobrenome-cadastro" placeholder="Digite o seu sobrenonome">
+          <input class="input-login" type="text" id="sobrenome-cadastro" placeholder="Digite o seu sobrenonome">
         </div>
         <div class="campo-form">
           <label for="emailUsuario">Email:</label>
 
-          <input type="email" id="email-cadastro" placeholder="Digite o seu email" required>
+          <input type="email" class="input-login" id="email-cadastro" placeholder="Digite o seu email" required>
           <div id="imp-error-email" class="erros"></div>
         </div>
         <div class="campo-form">
           <label for="senhaUsuario">Senha:</label>
             <div class="campo-senha">
-              <input type="password" class="input-senha" id="senha-cadastro" placeholder="Digite a sua senha" required />
+              <input type="password" class="input-senha input-login" id="senha-cadastro" placeholder="Digite a sua senha" required />
               <i class="fas fa-eye-slash ocultar-senha"></i>
             </div>
         </div>
@@ -52,7 +53,7 @@ export const TemplateCadastro = () => {
 
             <label for="confirma-senha-cadastro">Senha:</label>
             <div class="campo-senha">
-              <input type="password" id="confirma-senha-cadastro"  class="input-confirma-senha" placeholder="Confirme a sua senha" required min="6">
+              <input type="password" id="confirma-senha-cadastro"  class="input-confirma-senha input-login" placeholder="Confirme a sua senha" required min="6">
                <i class="fas fa-eye-slash ocultar-confirma-senha"></i>
             </div>
           <div id="imp-error-senha" class="erros"></div>                 
@@ -74,18 +75,18 @@ export const TemplateCadastro = () => {
     `;
 
   main.querySelector('#nav-login').addEventListener('click', () => {
-    setTimeout(() => {        
+    setTimeout(() => {
       irParaRota('/login');
     }, 500);
-  })
+  });
 
   main.querySelector('#nav-cadastro').addEventListener('click', () => {
-    setTimeout(() => {        
+    setTimeout(() => {
       irParaRota('/cadastro');
     }, 500);
-  })
-     
-  const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');    
+  });
+
+  const botaoDoCadastro = main.querySelector('#botao-finalizar-cadastro');
   botaoDoCadastro.addEventListener('click', () => {
     const name = main.querySelector('#nome-cadastro').value;
     const email = main.querySelector('#email-cadastro').value;
@@ -97,16 +98,16 @@ export const TemplateCadastro = () => {
     const erroSenha = main.querySelector('#imp-error-senha');
     const formatoEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    //seletores função mostrar popup
+    // seletores função mostrar popup
     const popup = main.querySelector('.popup-wrapper');
     const conteudoPopup = main.querySelector('.conteudo-popup');
     const fecharPopup = main.querySelector('.fechar-popup');
-  
+
     // fechar pop up
     fecharPopup.addEventListener('click', () => {
       popup.style.display = 'none';
     });
-    
+
     if (email === '' || password === '' || sobreNome === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
       <p> Preencha corretamente todos os campos </p>`, popup, conteudoPopup);
@@ -124,19 +125,16 @@ export const TemplateCadastro = () => {
       erroEmail.innerHTML = '';
       erroSenha.innerHTML = '<p><i class="fas fa-exclamation-triangle"></i><strong> As senhas não conferem</strong></p>';
     } else {
-      console.log('cadastrou????');
-
       cadastro(email, password)
         .then(() => {
           mostrarPopup(`<h2>Cadastro finalizado com sucesso!</h2>
           <a href='/login'><button class="loginPopup">Fazer Login</button></a>`, popup, conteudoPopup);
-
         })
         .catch((error) => {
           const errorCode = error.code;
           switch (errorCode) {
             case 'auth/email-already-in-use':
-              mostrarPopup('<h2>Algo deu errado!</h2><p> E-mail já cadastrado </p>',popup, conteudoPopup);
+              mostrarPopup('<h2>Algo deu errado!</h2><p> E-mail já cadastrado </p>', popup, conteudoPopup);
               break;
             default:
               console.error(error, error.message);
@@ -154,7 +152,6 @@ export const TemplateCadastro = () => {
   main.querySelector('.ocultar-confirma-senha').addEventListener('click', () => {
     ocultarSenha('.input-confirma-senha', '.ocultar-confirma-senha');
   });
- 
 
   return main;
 };

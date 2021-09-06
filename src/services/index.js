@@ -1,68 +1,37 @@
-//serviços com firebase
+// serviços com firebase
 
-//LOGIN
-export const login = (email, password) => {
-    return firebase
-        .auth()
-        .signInWithEmailAndPassword(email, password);
-}
+// LOGIN
+export const login = (email, password) => firebase
+  .auth()
+  .signInWithEmailAndPassword(email, password);
 
-//GOOGLE
+// GOOGLE
 export const loginComGoogle = () => {
-    let provider = new firebase.auth.GoogleAuthProvider();
-    return firebase
-        .auth()
-        .signInWithPopup(provider)
-
-}
+  const provider = new firebase.auth.GoogleAuthProvider();
+  return firebase
+    .auth()
+    .signInWithPopup(provider);
+};
 
 // CADASTRO
-export const cadastro = (email, password) => {
-    return firebase
-        .auth()
-        .createUserWithEmailAndPassword(email, password)
-}
-
+export const cadastro = (email, password) => firebase
+  .auth()
+  .createUserWithEmailAndPassword(email, password);
 
 // GITHUB
 export const loginComGithub = () => {
-    let provider = new firebase.auth.GithubAuthProvider();
-    return firebase
-        .auth()
-        .signInWithPopup(provider)
-
-}
-
-
+  const provider = new firebase.auth.GithubAuthProvider();
+  return firebase
+    .auth()
+    .signInWithPopup(provider);
+};
 
 // REDEFINIÇÃO DE SENHA
-export const redefinirSenha = (email) => {
-    return firebase
-        .auth()
-        .sendPasswordResetEmail(email);
-}
+export const redefinirSenha = (email) => firebase
+  .auth()
+  .sendPasswordResetEmail(email);
 
 // SAIR DO SITE
-export const sair = () => {
-    return firebase
-    .auth()
-    .signOut()
-}
-
-// const logout = main.querySelector('#logout-id');
-// logout.addEventListener('click', () => {
-//   firebase
-//     .auth()
-//     .signOut()
-//     .then(() => {
-//       localStorage.clear();
-//       irParaRota('/login');
-//     }).catch(() => {
-//       // An error happened.
-//     });
-// });
-
-  
-  
-
-
+export const sair = () => firebase
+  .auth()
+  .signOut();

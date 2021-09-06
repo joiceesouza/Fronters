@@ -1,4 +1,4 @@
-import { addPostNaPagina } from '../../lib/index.js';
+import { addPostNaPagina, irParaRota } from '../../lib/index.js';
 import { sair } from '../../services/index.js';
 
 export const TemplateFeed = () => {
