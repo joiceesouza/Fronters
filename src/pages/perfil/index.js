@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-import {irParaRota, mostrarPopup, addPostNaPagina } from '../../lib/index.js';
+import { irParaRota, mostrarPopup, addPostNaPagina } from '../../lib/index.js';
 import { sair } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
   const main = document.createElement('div');
   main.innerHTML = ` 
-    <main class="pagina-perfil">
+    <main class="pagina-perfil pagina">
         <header class="container-header">
         <h1 class="logo">FRONTERS</h1>
         <nav id="nav-id">
@@ -45,10 +45,13 @@ export const TemplatePerfil = () => {
             </div>        
         
             <div class="upload-feed">
-                <input type="file" id="foto"></input>
-                <div class="msg-carregando"></div>  
-                <img id="imagem-feed"/>   
-                <button id="carregar-img"> Salvar </button>          
+                <input type="file" id="input-escolher-arquivo"></input>
+                <div class="msg-carregando"></div>
+                <div class="div-img-feed">  
+                  <img id="imagem-feed"/> 
+                </div> 
+              
+                         
             </div>
             <div class="div-link-do-github">
                 <i class="fab fa-github icone-github"></i>
@@ -114,7 +117,7 @@ export const TemplatePerfil = () => {
 
     if (text === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
-      <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup)
+      <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup);
     } else {
       if (linkGithub.checkValidity() === false) {
         alert('Por gentileza, colocar um link válido');
@@ -126,8 +129,7 @@ export const TemplatePerfil = () => {
       const idDoUsuario = objetoUsuario.uid;
       const horaPublicacao = Date.now();
       const fotoUsuario = objetoUsuario.photoURL;
-      // const refImg = main.querySelector('#foto').value;   
-      // const refImg = firebase.storage().ref('imagens/feed');
+      const refImg = document.querySelector('#imagem-feed').src;
 
       const post = {
         fotoDoUsuario: fotoUsuario,
@@ -138,12 +140,12 @@ export const TemplatePerfil = () => {
         link_github: linkGithub.value,
         curtidas: [],
         comentarios: [],
-        // imgPost: refImg
+        imgPost: refImg,
       };
 
       const colecaoPost = firebase.firestore().collection('posts');
       colecaoPost.add(post)
-        .then(() => {                 
+        .then(() => {
           irParaRota('/perfil');
         });
     }
@@ -160,8 +162,7 @@ export const TemplatePerfil = () => {
       }).catch(() => {
         // An error happened.
       });
-
-  })
+  });
 
   function carregarPost() {
     const colecaoPost = firebase.firestore().collection('posts');
@@ -177,63 +178,59 @@ export const TemplatePerfil = () => {
 
   carregarPost();
 
-    // EM ANDAMENTO ( FOTO PARA APARECER NO POST)   
+  // ---------------------------------FOTO POST --------------------------//
 
-    /*         main.querySelector('#btn-foto').addEventListener('click', (event) => {
-                 event.preventDefault();
-                 const btnfile = main.querySelector('#photoFeed');
-                 btnfile.style.visibility = 'visible';
-               });*/
+  // imagem feed
+  const escolherArquivo = main.querySelector('#input-escolher-arquivo'); // input file
+  const divImagemPost = main.querySelector('#imagem-feed');
 
+  escolherArquivo.addEventListener('change', (e) => {
+    e.preventDefault();
+    divImagemPost.style.display = 'block';
+    divImagemPost.src = '';
+    const file = escolherArquivo.files[0];
+    console.log('file', file);
+    divImagemPost.src = URL.createObjectURL(file);
 
-
-    //imagem feed
-    const imagensFeed = main.querySelector('#foto'); //input file
-    const imagemPost = main.querySelector('#imagem-feed');
-    const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
-    imagensFeed.addEventListener('change', () => {
-      imagemPost.src = '';
-      //const file = event.target.files[0];
-      const file = imagensFeed.files[0];
-      console.log('file', file)
-      imagemPost.src = URL.createObjectURL(file);
-
-      const addImagemFeed = (photo, callback) => {
-        const file = photo.files[0];
-        const storageRef = firebase.storage().ref(`imagens/${file.name}`);
-        storageRef.put(file).then(() => {
-          storageRef.getDownloadURL().then((url) => {
-            callback(url);
-          });
+    const addImagemFeed = (photo, callback) => {
+      const file = photo.files[0];
+      const storageRef = firebase.storage().ref(`imagens/${file.name}`);
+      storageRef.put(file).then(() => {
+        storageRef.getDownloadURL().then((url) => {
+          callback(url);
         });
-      };
+      });
+    };
 
-      const validarUrlFeed = (url) => {
-        imagemPost.src = '';
-        imagemPost.src = url;
-        botaoSalvarFotoFeed.style.display = "block"
-      };
+    const validarUrlFeed = (url) => {
+      divImagemPost.src = '';
+      divImagemPost.src = url;
+    };
 
-      addImagemFeed(imagensFeed, validarUrlFeed);
-    })
+    addImagemFeed(escolherArquivo, validarUrlFeed);
+  });
 
+  const btnPublicarPost = main.querySelector('#publicar');
+  btnPublicarPost.addEventListener('click', (event) => {
+    event.preventDefault();
+    const atualizarFotoPost = (url, idDoPost) => {
+      const documentoPost = firebase.firestore().collection('posts').doc(idDoPost);
+      documentoPost.update({
+        imgPost: url,
 
+      }).then(() => {
+        console.log('Perfil atualizado');
+      }).catch(() => {
+        //     getError(error);
+      });
+    };
 
-  // MENU HAMBURGUER
-  const btnMobile = main.querySelector('#btn-mobile');
-  function toggleMenu(event) {
-    if (event.type === 'touchstart') event.preventDefault();
-    const nav = main.querySelector('#nav-id');
-    nav.classList.toggle('active');
-    const active = nav.classList.contains('active');
-    event.currentTarget.setAttribute('aria-expanded', active);
-    if (active) {
-      event.currentTarget.setAttribute('aria-label', 'Fechar Menu');
-    } else { event.currentTarget.setAttribute('aria-label', 'Abrir Menu'); }
-  }
-  btnMobile.addEventListener('click', toggleMenu);
-  btnMobile.addEventListener('touchstart', toggleMenu);
+    atualizarFotoPost(divImagemPost.src);
+    // confirmMessage.hidden = false;
+    // main.style.display = 'block';
+  });
 
+  // --------------------FOTO PERFIL ---------------------------------------------//
   // aparecer o escolher foto
   const botaoFoto = main.querySelector('#button-foto');
   const esconderButton = main.querySelector('#foto-id');
@@ -245,10 +242,8 @@ export const TemplatePerfil = () => {
   const carregarImagens = main.querySelector('#foto-id'); // input file
   const imagemPerfil = main.querySelector('#image');
   const botaoSalvarFoto = main.querySelector('#btn-salvar');
-  //   const inputPhoto = container.querySelector('#photo');
   carregarImagens.addEventListener('change', () => {
     imagemPerfil.src = '';
-    // const file = event.target.files[0];
     const file = carregarImagens.files[0];
     console.log('file', file);
     imagemPerfil.src = URL.createObjectURL(file);
@@ -272,10 +267,11 @@ export const TemplatePerfil = () => {
     addImagem(carregarImagens, validarUrl);
   });
 
-  const inputName = main.querySelector('.nome');
   const confirmMessage = main.querySelector('#conf-atualizaçao');
   const btnSaveProfile = main.querySelector('#btn-salvar');
   btnSaveProfile.addEventListener('click', (event) => {
+    carregarImagens.style.display = 'none';
+    btnSaveProfile.style.display = 'none';
     event.preventDefault();
     const atualizarPerfil = (url) => {
       const user = firebase.auth().currentUser;
@@ -292,6 +288,20 @@ export const TemplatePerfil = () => {
     // main.style.display = 'block';
   });
 
+  // MENU HAMBURGUER
+  const btnMobile = main.querySelector('#btn-mobile');
+  function toggleMenu(event) {
+    if (event.type === 'touchstart') event.preventDefault();
+    const nav = main.querySelector('#nav-id');
+    nav.classList.toggle('active');
+    const active = nav.classList.contains('active');
+    event.currentTarget.setAttribute('aria-expanded', active);
+    if (active) {
+      event.currentTarget.setAttribute('aria-label', 'Fechar Menu');
+    } else { event.currentTarget.setAttribute('aria-label', 'Abrir Menu'); }
+  }
+  btnMobile.addEventListener('click', toggleMenu);
+  btnMobile.addEventListener('touchstart', toggleMenu);
+
   return main;
 };
-

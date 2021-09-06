@@ -3,6 +3,7 @@ import { sair } from '../../services/index.js';
 
 export const TemplateFeed = () => {
   const main = document.createElement('div');
+  main.setAttribute('class', 'pagina');
   main.innerHTML = `
     <header class="container-header">
         <h1 class="logo">FRONTERS</h1>
@@ -31,7 +32,7 @@ export const TemplateFeed = () => {
         <img class="gif" src="../img/48531-htmlcssjs.gif" alt="gif">
     </div>
      
-    <div id="feed"></div>
+    <div id="feed" class="container"></div>
     `;
 
   function carregarPost() {
@@ -62,7 +63,6 @@ export const TemplateFeed = () => {
   btnMobile.addEventListener('click', toggleMenu);
   btnMobile.addEventListener('touchstart', toggleMenu);
 
-
   // sair do site
   const btnSair = main.querySelector('#logout-id');
   btnSair.addEventListener('click', (event) => {
@@ -74,8 +74,7 @@ export const TemplateFeed = () => {
       }).catch(() => {
         // An error happened.
       });
-
-  })
+  });
 
   return main;
 };

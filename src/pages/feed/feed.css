@@ -11,12 +11,16 @@
     color: var(--azul-escuro);
 }
 
+
 #div-gif {
     text-align: center;
 }
 
 .gif {
     width: 50vw;
+    box-shadow: 2px 2px 2px 1px rgb(0 0 0 / 25%);
+    border-radius: 1em;
+    margin-bottom: 2em;
 }
 
 .titulo-principal {
@@ -24,6 +28,7 @@
     justify-content: space-around;
     align-items: center;
 }
+
 
 .foto p{
     margin: 1em;
@@ -36,73 +41,6 @@
     border-radius: 100%;
     margin: 0.5em;
 }
-
-/* #imagem-id {
-    width: 80px;
-    height: 80px;
-    border-radius: 100%;
-} */
-
-/* #publicacao {
-    width: 100vw;
-    font-size: 1.2em;
-    height: 20vh;
-    border: none;
-    padding: 1em;
-} */
-
-/* .texto-publicado-usuario {
-    text-align: center;
-} */
-
-/* .div-link-github-publicado {
-text-align: center;
-} */
-
-/* .link-github {
-    border: none;
-    width: 100%;
-} */
-
-/* .likes {
-    margin: 0.5em;
-} */
-
-
-
-
-/* .icone-curtido {
-    display: none;
-} */
-
-
-/* .div-post {
-    border: 3px solid var(--laranja);
-    margin: 2em;
-    border-radius: 5px;
-    padding: 0.5em;
-} */
-/* 
-.salvar-edicao {
-    display: none;
-} */
-
-/* a {
-    color: var(--laranja);
-    text-decoration: none;
-} */
-
-/* a:hover {
-    background: rgba(0, 0, 0, .05);
-    color: var(--azul-claro);
-} */
-
-/* .container-header {
-    box-sizing: border-box;
-    height: 70px;
-    display: flex;
-    align-items: center;
-} */
 
 .far.fa-list-alt, .fas.fa-user-alt, .fas.fa-sign-out-alt {
     display: none;
@@ -117,9 +55,9 @@ text-align: center;
 }
 
 #menu a {
-    /* display: block; */
     display: flex;
     padding: .5rem;
+    font-size: 1.2em;
 }
 
 #btn-mobile {
@@ -140,9 +78,7 @@ text-align: center;
 }
 
 .publicar-comentario:hover {
-    
     border: solid 2px var(--preto);
-
 }
 
 .foto-publicada {
@@ -162,7 +98,7 @@ text-align: center;
 }
 
 .template-comentario {
-    background-color: rgb(235, 186, 95);
+    background-color: var(--laranja-medio);
     border-radius: 5px;
     margin: 0.5em 0;
     padding: 0.5em 1em;
@@ -219,10 +155,7 @@ text-align: center;
 }
 
 @media (max-width: 600px){
-
-    /*#menu .ocultar {
-        display: block;
-    }*/
+ 
     .far.fa-list-alt, .fas.fa-user-alt, .fas.fa-sign-out-alt {
         display: block;
         margin-right: 2em;
@@ -242,7 +175,6 @@ text-align: center;
         visibility: hidden;
         overflow-y: hidden;
         text-align: center;
-        font-size: 1rem;        
     }
 
     #nav-id.active #menu {
@@ -255,6 +187,7 @@ text-align: center;
         padding: 1rem 0;
         margin: 0 1rem;
         border-bottom: 2px solid rgba(0, 0, 0, .2);
+        font-size: 1.2em;       
     }
 
 
@@ -286,12 +219,6 @@ text-align: center;
         position: relative;
     }
 
- /*   .li-class {
-        margin-top: 40px;
-        display: flex;
-
-    }*/
-
     #nav-id.active #hamburguer{
         border-top-color: transparent;
     }
@@ -305,37 +232,34 @@ text-align: center;
         top: -7px;
     }
 
-    /*.div-menu {
-        margin-top: 40px;
-        display: flex;
-        display: flex; flex-direction: column; 
-    }*/
-
-    }
-
-   @media (min-width: 601px) and (max-width: 800px){
-    /* #feed {
-        max-width: 60%;
-        margin: auto;
-    } */
-
-   }
-
-
+}
   
-   @media (min-width: 801px) {
+@media (min-width: 801px) {
+
     #div-gif {
-        max-width: 60%;
-        margin: auto;
+    max-width: 60%;
+    margin: auto;
     }
 
     .gif {
         width: 30%;
     }
 
+    #postForm {
+        width: 70%;
+    } 
+
     #feed {
-        max-width: 60%;
         margin: auto;
+        width: 70%;
     }
 
-   }
+    .img-publicada {
+        width: 70%;
+        text-align: center;
+        display: flex;
+        margin-left: auto;
+        
+    }
+
+}
