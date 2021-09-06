@@ -19,7 +19,7 @@
     width: 50vw;
 }
 
-.perfil {
+.titulo-principal {
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -30,123 +30,79 @@
     
 }
 
-#foto-perfil {
-    margin: 1em;
+.foto-perfil-comentario {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    margin: 0.5em;
 }
-#imagem-id {
+
+/* #imagem-id {
     width: 80px;
     height: 80px;
     border-radius: 100%;
-}
+} */
 
-.nome-usuario {
-    font-weight: bold;
-    display: flex;
-    justify-content: space-around;
-}
-
-#editar-post {
-    border: none;
-    padding: 10px;
-    margin-right: 2em;
-
-}
-
-#publicacao {
+/* #publicacao {
     width: 100vw;
     font-size: 1.2em;
     height: 20vh;
     border: none;
     padding: 1em;
-}
+} */
 
-.texto-publicado-usuario {
+/* .texto-publicado-usuario {
     text-align: center;
-}
+} */
 
-.div-link-github-publicado {
+/* .div-link-github-publicado {
 text-align: center;
-}
+} */
 
-.link-github {
+/* .link-github {
     border: none;
     width: 100%;
-}
+} */
 
-.icones {
-    margin: 1em;
-}
-.likes {
+/* .likes {
     margin: 0.5em;
-}
+} */
 
-.comentarios {
+
+
+
+/* .icone-curtido {
     display: none;
-}
+} */
 
-#input-comentario {
-    
-    border-bottom: 1px solid var(--preto);
-    outline: none;
-    margin: auto 10px;
-    
-}
 
-.comentario-publicado {
-    display: none;
-}
-
-.escrever-comentario {
-    color: var(--preto);
-    border-radius: 6px;
-    border: solid 2px var(--laranja);
-    padding: 0.5em;
-}
-
-.escrever-comentario:focus {
-    border: solid 2px var(--laranja);
-}
-
-.icone-curtido {
-    display: none;
-}
-
-.conteudo-editar-texto, .conteudo-editar-github {
-    display: none;
-}
-
-.div-post {
+/* .div-post {
     border: 3px solid var(--laranja);
     margin: 2em;
     border-radius: 5px;
     padding: 0.5em;
-}
-
+} */
+/* 
 .salvar-edicao {
     display: none;
-}
+} */
 
-.icone-deletar {
-    margin: 1em;
-}
-
-
-a {
+/* a {
     color: var(--laranja);
     text-decoration: none;
-}
+} */
 
-a:hover {
+/* a:hover {
     background: rgba(0, 0, 0, .05);
     color: var(--azul-claro);
-}
+} */
 
-.container-header {
+/* .container-header {
     box-sizing: border-box;
     height: 70px;
     display: flex;
     align-items: center;
-}
+} */
 
 .far.fa-list-alt, .fas.fa-user-alt, .fas.fa-sign-out-alt {
     display: none;
@@ -157,10 +113,7 @@ a:hover {
     gap: .5rem;
     align-items: center;
     height: 70px;
-    justify-content: space-between;
-    
-   
-
+    justify-content: space-between;   
 }
 
 #menu a {
@@ -213,6 +166,7 @@ a:hover {
     border-radius: 5px;
     margin: 0.5em 0;
     padding: 0.5em 1em;
+    transition: opacity 1s;
 }
 
 .foto-comentario {
@@ -225,9 +179,13 @@ a:hover {
     color: var(--preto);
 }
 
+.nome-usuario {
+    margin-top: 0.5em;
+}
+
 .header-comentario {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
 
 }
 
@@ -239,6 +197,21 @@ a:hover {
 .texto-comentario-template {
     margin: 0.75em;
     color: var(--preto);
+    
+}
+
+.texto-comentario-template[contentEditable="true"] {
+    border: 1px solid var(--preto);
+}
+
+.icones-template-comentario {
+    display: flex;
+    justify-content: space-around;
+}
+
+.far.fa-save {
+    display: none;
+    padding-right: 0.5em;
 }
 
 .fas.fa-heart {

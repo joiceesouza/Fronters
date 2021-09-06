@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { deletarPost, irParaRota, mostrarPopup, efeitoRemover } from '../../lib/index.js';
+import {irParaRota, mostrarPopup, addPostNaPagina } from '../../lib/index.js';
 import { sair } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
@@ -18,18 +18,15 @@ export const TemplatePerfil = () => {
                 <div class="line3"></div>
             </div>
             <ul id="menu" role="menu">
-                
                 <li><a href="/feed"> <i class="far fa-list-alt"></i> Feed</a></li>
                 <li><a href="/perfil"> <i class="fas fa-user-alt"></i> Perfil</a></li>
                 <li><a href="" id="logout-id"> <i class="fas fa-sign-out-alt"></i> Sair</a></li>
-               
             </ul>
         </nav>
         </header>
 
         <div class="perfil">
             <div class="foto">
-                
                 <img src="${firebase.auth().currentUser.photoURL || '/img/profile.png'}" class="foto-perfil" id="image" alt="Foto do perfil" />
                 <button id="button-foto" src="img/camera.png" alt="botao perfil"><i class="fas fa-camera" id="escolher-foto"></i></button>
                 <input type="file" id="foto-id"></input>
@@ -63,10 +60,7 @@ export const TemplatePerfil = () => {
         </form>
         
         <div class="minhas-publicacoes container"><h2>Minhas Publicações</h2></div>
-        <div id="div-minhas-publicacoes" class="container"></div>
-            
-
-
+       <div id="feed" class="container"></div>         
        
     </main>
 
@@ -103,7 +97,7 @@ export const TemplatePerfil = () => {
     });
   });
 
-  // pop up
+  // POPUP
   const popup = main.querySelector('.popup-wrapper');
   const fecharPopup = main.querySelector('.fechar-popup');
   const conteudoPopup = main.querySelector('.conteudo-popup');
@@ -133,7 +127,6 @@ export const TemplatePerfil = () => {
       const horaPublicacao = Date.now();
       const fotoUsuario = objetoUsuario.photoURL;
       // const refImg = main.querySelector('#foto').value;   
-
       // const refImg = firebase.storage().ref('imagens/feed');
 
       const post = {
@@ -145,23 +138,18 @@ export const TemplatePerfil = () => {
         link_github: linkGithub.value,
         curtidas: [],
         comentarios: [],
-
         // imgPost: refImg
       };
 
       const colecaoPost = firebase.firestore().collection('posts');
       colecaoPost.add(post)
-        .then(() => {
-          // window.history.pushState({}, null, '/perfil');
-          // const popStateEvent = new PopStateEvent('popstate', {});
-          // dispatchEvent(popStateEvent);
-          
+        .then(() => {                 
           irParaRota('/perfil');
         });
     }
   });
 
-  // sair do site
+  // SAIR DO SITE
   const btnSair = main.querySelector('#logout-id');
   btnSair.addEventListener('click', (event) => {
     event.preventDefault();
@@ -180,159 +168,14 @@ export const TemplatePerfil = () => {
     colecaoPost
       .orderBy('data')
       .where('id_usuario', '==', firebase.auth().currentUser.uid)
-
       .get().then((snap) => {
         snap.forEach((post) => {
-          addPostNaPagina(post);
+          addPostNaPagina(post, main);
         });
       });
   }
 
   carregarPost();
-
-  function addPostNaPagina(post) {
-    const postTemplate = document.createElement('div');
-    postTemplate.setAttribute('class', 'div-post container');
-    postTemplate.dataset.id = post.id;
-    postTemplate.innerHTML = `
-                
-        <input type="hidden" class="id-post" value="${post.id}"/>
-        <div><p class="hora-post">${new Date(post.data().data).toLocaleString()}</p></div>
-        <div class="nome-usuario">
-            <div class="foto-usuario-autor">
-                <img class="foto-perfil-autor" src="${firebase.auth().currentUser.photoURL || '/img/profile.png'}" />
-            </div>
-            ${post.data().nome || post.data().nomeSalvoPerfil } 
-            <p class="fez-publicacao">publicou.</p>                        
-        </div>
-        
-        
-        <div><p class="texto-publicado-usuario" contentEditable="false">${post.data().texto}</p></div>
-        <img class="foto-feed" src="${post.data().imgPost}"" />
-                
-        <div class="div-link-github-publicado">
-            <i class="fab fa-github icone-github"></i>
-            <div class="div-conteudo-editar-github"><p class="link-github" contentEditable="false">${post.data().link_github}</p></div> 
-        </div>
-        
-        <div class="icones">
-            <span class="icone-likes">
-                <i class="far fa-heart icone-curtir"></i>
-                <span class="numero-curtidas"> ${post.data().curtidas.length || 0}</span>
-                <i class="far fa-comment-alt icone-comentar"></i>
-
-            </span>
-                    
-            <span class="icone-acao">
-              <i class="fas fa-pen editar-publicacao" title="Editar"></i>
-              <i class="fas fa-trash-alt icone-deletar" title="Excluir"></i>
-            </span>
-             
-        </div>
-
-        <div class="comentarios">
-            <input class="escrever-comentario" type="textarea"></input>
-            <button class="publicar-comentario" type="button">Publicar</button>
-        </div>
-        
-        <button type="button" class="salvar-edicao" >Salvar</button>
-         <div class="comentario-publicado"></div>            
-
-        <div class="popup-wrapper">
-         <div class="popup">
-            <div class="fechar-popup">X</div>
-            <div class="conteudo-popup"></div>             
-          </div>
-        </div>
-    `;
-    const linkGithub = postTemplate.querySelector('.link-github');
-    const conteudoLinkGithub = linkGithub.innerHTML;
-    const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
-
-
-    if (conteudoLinkGithub === '') {
-      divlinkGithub.style.display = 'none';
-
-    }
-
-    postTemplate.querySelector('.icone-comentar').addEventListener('click', () => {
-      postTemplate.querySelector('.comentarios').style.display = 'block';
-      postTemplate.querySelector('.escrever-comentario').focus();
-    });
-
-    postTemplate.querySelector('.publicar-comentario').addEventListener('click', () => {
-      const comentarioEscrito = postTemplate.querySelector('.escrever-comentario');
-      const divComentarioPublicado = postTemplate.querySelector('.comentario-publicado');
-      const inputComentar = postTemplate.querySelector('.comentarios');
-
-      divComentarioPublicado.innerHTML = comentarioEscrito.value;
-      divComentarioPublicado.style.display = 'block';
-      inputComentar.style.display = 'none';
-      comentarioEscrito.value = '';
-    });
-
-    // EDITAR PUBLICAÇÃO
-    postTemplate.querySelector('.editar-publicacao').addEventListener('click', () => {
-      const salvarEdicao = postTemplate.querySelector('.salvar-edicao');
-      salvarEdicao.style.display = 'block';
-
-      // texto
-      const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
-      divTextoEscrito.contentEditable = true;
-      divTextoEscrito.focus()
-
-      // link github
-      const divGithubEscrito = postTemplate.querySelector('.link-github');
-      divGithubEscrito.contentEditable = true;
-
-    });
-
-    // SALVAR EDICAO
-    postTemplate.querySelector('.salvar-edicao').addEventListener('click', (event) => {
-      event.preventDefault();
-      const idPost = postTemplate.querySelector('.id-post').value;
-      const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
-      const divGithubEscrito = postTemplate.querySelector('.link-github');
-      const btnSalvarEdicao = postTemplate.querySelector('.salvar-edicao');
-      btnSalvarEdicao.style.display = 'none';
-      divTextoEscrito.contentEditable = false;
-      divGithubEscrito.contentEditable = false;
-      firebase.firestore().collection('posts').doc(idPost)
-        .update({
-          texto: divTextoEscrito.innerHTML,
-          link_github: divGithubEscrito.innerHTML,
-        })
-        .then(() => {
-          console.log('atualizado');
-        })
-        .catch((error) => {
-          console.log('não atualizado-', error);
-        });
-
-    });
-
-    // Efeito remover post
-    // function efeitoRemoverPost(postId) {
-    //   const target = document.querySelector(`[data-id="${postId}"]`);
-    //   target.addEventListener('transitionend', () => target.remove());
-    //   target.style.opacity = '0';
-    // }
-
-    // Deletar post
-    const deletar = postTemplate.querySelector('.icone-deletar');
-    deletar.addEventListener('click', () => {
-      mostrarPopup(` <h2>Tem certeza que deseja deletar sua postagem?</h2> 
-      <p> <button type="button" class="delete-class">Deletar</button> </p>`, popup, conteudoPopup)
-
-      const button = document.querySelector('.delete-class');
-      button.addEventListener('click', () => {
-        deletarPost(post.id).then(() => {
-          // efeitoRemover(post.id);
-          efeitoRemover(postTemplate);
-        });
-        popup.style.display = 'none';
-      });
-    });
 
     // EM ANDAMENTO ( FOTO PARA APARECER NO POST)   
 
@@ -375,42 +218,8 @@ export const TemplatePerfil = () => {
     })
 
 
-    /*          const idImagemFeed = main.querySelector('#foto')
-              idImagemFeed.addEventListener('click', () => {
-               /*   const username = firebase.auth().currentUser.displayName;
-                  const userImageUrl = firebase.auth().currentUser.photoURL;*/
-    /*         const ref = firebase.storage().ref('imagens/feed');
-             //ref caminho onde ira salvar a imagem
-             const file = main.querySelector('#carregar-img').files[0];
-             //file 
-             const name = `${new Date()}-${file.name}`;
-             const metadata = {
-                 contentType: file.type,
-             };
-             const task = ref.child(name).put(file, metadata);
-             //child nomeia a imagem
-             //put comando q faz o upload da imagem
-             task
-                 .then((snapshot) => snapshot.ref.getDownloadURL())
-                 .then((url) => {
-                     console.log('deu certo')
-                     const imagefeed = main.querySelector('#imagem-feed')
-                     imagefeed.src = url
-           //      photoMsgMobile.innerHTML = ''
-                 });
 
-             
-
-             updateUserProfile(inputName.value, idImagemFeed.src);
-                 confirmMessage.hidden = false;
-                 main.style.display = 'block';
-        })*/
-
-    // main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate);
-    main.querySelector('#div-minhas-publicacoes').prepend(postTemplate);
-  }
-
-  // Menu Hamburguer
+  // MENU HAMBURGUER
   const btnMobile = main.querySelector('#btn-mobile');
   function toggleMenu(event) {
     if (event.type === 'touchstart') event.preventDefault();
@@ -486,48 +295,3 @@ export const TemplatePerfil = () => {
   return main;
 };
 
-/*          const goBackToFeed = () => {
-                    getTheRoad('/feed');
-                  };
-
-                  const goBackToProfileFeed = () => {
-                    getTheRoad('/profile');
-                  };
-
-                    const iconFeed = main.querySelector('#feed-id');
-                    iconFeed.addEventListener('click', (event) => {
-                        event.preventDefault();
-                        goBackToFeed();
-                    }); */
-
-/*       const iconPerson = container.querySelector('#person-btn');
-                    iconPerson.addEventListener('click', (event) => {
-                        event.preventDefault();
-                        goBackToProfileFeed();
-                    }); */
-
-//          });
-/* const msgImg = main.querySelector('.msg-carregando');
-
-            msgImg.innerHTML = 'Carregando imagem...'; */
-
-/*   const ref = firebase.storage().ref('imagens/perfil');
-            //ref caminho onde ira salvar a imagem
-            const file = main.querySelector('#foto-id').files[0];
-            //file
-            const name = `${new Date()}-${file.name}`;
-            const metadata = {
-                contentType: file.type,
-            };
-            const task = ref.child(name).put(file, metadata);
-            //child nomeia a imagem
-            //put comando q faz o upload da imagem
-            task
-                .then((snapshot) => snapshot.ref.getDownloadURL())
-                .then((url) => {
-                    console.log('deu certo')
-                //    msgImg.innerHTML = ''
-                    const image = main.querySelector('#image');
-                    image.src = url;
-
-                }); */

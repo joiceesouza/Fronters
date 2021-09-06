@@ -33,6 +33,13 @@
     border-radius: 5px;
 }
 
+.nome-usuario {
+    font-weight: bold;
+    display: flex;
+    /* justify-content: space-around; */
+    align-items: center;
+}
+
 .editar-nome {
     display: flex;
     align-items: center;
@@ -135,10 +142,11 @@
     color:rgb(255, 255, 255);
 }
 
-.foto-perfil-comentario {
-    width: 70px;
-    height: 70px;
+.foto-perfil-autor {
+    width: 80px;
+    height: 80px;
     border-radius: 100%;
+    margin-right: 0.5em;
 }
 
 .campo-addFoto {
@@ -151,6 +159,11 @@
 
 .link-do-github {
     text-align: center;
+}
+
+.link-github {
+    border: none;
+    width: 100%;
 }
 
 .link-github[contentEditable="true"], .texto-publicado-usuario[contentEditable="true"] {
@@ -192,18 +205,14 @@
     height: 20px;
 } */
 
-.salvar-edicao {
-    background-color: var(--laranja);
-    color: var(--branco);
-    box-shadow: 5px 5px 12px rgb(0 0 0 / 50%);
-    border: none;
-    padding: 0.5em;
-    border-radius: 0.5em;
-}
-
 .fez-publicacao {
     color: black;
     font-weight: normal;
+    margin-left: 10px;
+}
+
+.publicou {
+    font-weight: 0;
 }
 
 .minhas-publicacoes {
@@ -214,7 +223,12 @@
 
 .texto-publicado-usuario {
     margin: 0.5em;
+    text-align: center;
 }
+
+.div-link-github-publicado {
+    text-align: center;
+    }
 
 .pagina-perfil {
     background-color: var(--azul-claro);
@@ -224,6 +238,16 @@
     background-color: var(--branco);
     box-shadow: 5px 5px 12px rgb(0 0 0 / 50%);
     transition: opacity 1s;
+
+    border: 3px solid var(--laranja);
+    margin: 2em;
+    border-radius: 5px;
+    padding: 0.5em;
+
+}
+
+.salvar-edicao {
+    display: none;
 }
 
 
@@ -269,10 +293,43 @@ a:hover {
 
 }
 
+.comentarios {
+    display: none;
+}
+
+
+.escrever-comentario {
+    color: var(--preto);
+    border-radius: 6px;
+    border: solid 2px var(--laranja);
+    padding: 0.5em;
+}
+
+.escrever-comentario:focus {
+    border: solid 2px var(--laranja);
+}
+
+.conteudo-editar-texto, .conteudo-editar-github {
+    display: none;
+}
+
+.icones {
+    display: flex;
+    justify-content: space-around;
+    margin: 1em;
+}
+
+.likes {
+    margin: 0.5em;
+}
+
 .icone-curtir {
     transition: all 1s;
 }
 
+/* .icone-deletar, .editar-publicacao {
+    margin: 1em;
+} */
 
 
 /* --------------------------ADAPTAÇÃO TELAS MAIORES-------------*/
