@@ -27,3 +27,15 @@ export function mostrarPopup(mensagem, popup, divConteudoPopup) {
   popup.style.display = 'block';
 
 }
+
+export function removerComentario(comentario, idDoPost) {
+   const documentoPost = firebase.firestore().collection('posts').doc(idDoPost);
+  return documentoPost.update({
+    comentarios: firebase.firestore.FieldValue.arrayRemove(comentario),
+  });
+}
+
+export function efeitoRemover(target) {
+  target.addEventListener('transitionend', () => target.remove());
+  target.style.opacity = '0';
+}

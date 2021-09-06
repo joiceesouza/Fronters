@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { deletarPost, irParaRota, mostrarPopup } from '../../lib/index.js';
+import { deletarPost, irParaRota, mostrarPopup, efeitoRemover } from '../../lib/index.js';
 import { sair } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
@@ -117,7 +117,6 @@ export const TemplatePerfil = () => {
     event.preventDefault();
     const text = main.querySelector('#post').value;
     const linkGithub = main.querySelector('#link-github');
-    
 
     if (text === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
@@ -131,7 +130,7 @@ export const TemplatePerfil = () => {
       const objetoUsuario = firebase.auth().currentUser;
       const nomeUsuario = objetoUsuario.displayName;
       const idDoUsuario = objetoUsuario.uid;
-      const horaPublicacao = new Date().toLocaleString();
+      const horaPublicacao = Date.now();
       const fotoUsuario = objetoUsuario.photoURL;
       // const refImg = main.querySelector('#foto').value;   
 
@@ -153,30 +152,34 @@ export const TemplatePerfil = () => {
       const colecaoPost = firebase.firestore().collection('posts');
       colecaoPost.add(post)
         .then(() => {
-          window.history.pushState({}, null, '/perfil');
-          const popStateEvent = new PopStateEvent('popstate', {});
-          dispatchEvent(popStateEvent);
+          // window.history.pushState({}, null, '/perfil');
+          // const popStateEvent = new PopStateEvent('popstate', {});
+          // dispatchEvent(popStateEvent);
+          
+          irParaRota('/perfil');
         });
     }
   });
 
- // sair do site
- const btnSair = main.querySelector('#logout-id');
- btnSair.addEventListener('click', (event) => {
-   event.preventDefault();
-   sair()
-   .then(() => {
-     localStorage.clear();
-     irParaRota('/login');
-   }).catch(() => {
-   // An error happened.
-   });
+  // sair do site
+  const btnSair = main.querySelector('#logout-id');
+  btnSair.addEventListener('click', (event) => {
+    event.preventDefault();
+    sair()
+      .then(() => {
+        localStorage.clear();
+        irParaRota('/login');
+      }).catch(() => {
+        // An error happened.
+      });
 
- })  
+  })
 
   function carregarPost() {
     const colecaoPost = firebase.firestore().collection('posts');
-    colecaoPost.where('id_usuario', '==', firebase.auth().currentUser.uid)
+    colecaoPost
+      .orderBy('data')
+      .where('id_usuario', '==', firebase.auth().currentUser.uid)
 
       .get().then((snap) => {
         snap.forEach((post) => {
@@ -194,36 +197,36 @@ export const TemplatePerfil = () => {
     postTemplate.innerHTML = `
                 
         <input type="hidden" class="id-post" value="${post.id}"/>
+        <div><p class="hora-post">${new Date(post.data().data).toLocaleString()}</p></div>
         <div class="nome-usuario">
-            <div class="foto-usuario-comentario">
-                <img class="foto-perfil-comentario" src="${firebase.auth().currentUser.photoURL || '/img/profile.png'}" />
+            <div class="foto-usuario-autor">
+                <img class="foto-perfil-autor" src="${firebase.auth().currentUser.photoURL || '/img/profile.png'}" />
             </div>
-            ${post.data().nome || post.data().nomeSalvoPerfil} 
-            <p class="fez-publicacao">publicou.</p>  <i class="fas fa-pen editar-publicacao" title="Editar"></i> 
+            ${post.data().nome || post.data().nomeSalvoPerfil } 
+            <p class="fez-publicacao">publicou.</p>                        
         </div>
         
-        <div class="texto-publicado-usuario">${post.data().texto}</div>
+        
+        <div><p class="texto-publicado-usuario" contentEditable="false">${post.data().texto}</p></div>
         <img class="foto-feed" src="${post.data().imgPost}"" />
-        <div class="conteudo-editar-texto">
-            <input class="campo-editar-texto" />
-        </div>
-        
+                
         <div class="div-link-github-publicado">
             <i class="fab fa-github icone-github"></i>
-            <div class="link-github">${post.data().link_github}</div> 
+            <div class="div-conteudo-editar-github"><p class="link-github" contentEditable="false">${post.data().link_github}</p></div> 
         </div>
-        <div class="conteudo-editar-github">
-            <input class="campo-editar-github" />
-        </div>
-
+        
         <div class="icones">
-            <span class="likes">
+            <span class="icone-likes">
                 <i class="far fa-heart icone-curtir"></i>
                 <span class="numero-curtidas"> ${post.data().curtidas.length || 0}</span>
+                <i class="far fa-comment-alt icone-comentar"></i>
+
             </span>
                     
-            <span class="likes"><i class="far fa-comment-alt icone-comentar"></i></span>
-            <span class="deletar"><i class="fas fa-trash-alt icone-deletar" title="Excluir"></i></span>
+            <span class="icone-acao">
+              <i class="fas fa-pen editar-publicacao" title="Editar"></i>
+              <i class="fas fa-trash-alt icone-deletar" title="Excluir"></i>
+            </span>
              
         </div>
 
@@ -232,27 +235,24 @@ export const TemplatePerfil = () => {
             <button class="publicar-comentario" type="button">Publicar</button>
         </div>
         
-        <button type="button" class="salvar-edicao id=""">Salvar</button>
+        <button type="button" class="salvar-edicao" >Salvar</button>
          <div class="comentario-publicado"></div>            
 
         <div class="popup-wrapper">
          <div class="popup">
-                 <div class="fechar-popup">X</div>
-             <div class="conteudo-popup">
-                <!--<h2>Tem certeza que deseja deletar sua postagem?</h2>
-                <p> <button type="button" class="delete-class">Deletar</button> </p>-->
-             </div>
-         </div>
+            <div class="fechar-popup">X</div>
+            <div class="conteudo-popup"></div>             
+          </div>
         </div>
     `;
     const linkGithub = postTemplate.querySelector('.link-github');
     const conteudoLinkGithub = linkGithub.innerHTML;
     const divlinkGithub = postTemplate.querySelector('.div-link-github-publicado');
-    const editarlinkGithub = postTemplate.querySelector('.conteudo-editar-github');
+
 
     if (conteudoLinkGithub === '') {
       divlinkGithub.style.display = 'none';
-      editarlinkGithub.style.display = 'none';
+
     }
 
     postTemplate.querySelector('.icone-comentar').addEventListener('click', () => {
@@ -277,48 +277,30 @@ export const TemplatePerfil = () => {
       salvarEdicao.style.display = 'block';
 
       // texto
-      const conteudoEditarTexto = postTemplate.querySelector('.conteudo-editar-texto');
-      conteudoEditarTexto.style.display = 'block';
-      const editarTexto = postTemplate.querySelector('.campo-editar-texto');
       const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
-      const textoEscrito = divTextoEscrito.innerHTML;
-      divTextoEscrito.style.display = 'none';
+      divTextoEscrito.contentEditable = true;
+      divTextoEscrito.focus()
 
       // link github
-      const conteudoEditarGithub = postTemplate.querySelector('.conteudo-editar-github');
-      conteudoEditarGithub.style.display = 'block';
-      const editarGithub = postTemplate.querySelector('.campo-editar-github');
       const divGithubEscrito = postTemplate.querySelector('.link-github');
-      const linkGithubEscrito = divGithubEscrito.innerHTML;
-      divGithubEscrito.style.display = 'none';
+      divGithubEscrito.contentEditable = true;
 
-      editarTexto.value = textoEscrito;
-      editarGithub.value = linkGithubEscrito;
     });
 
     // SALVAR EDICAO
-    postTemplate.querySelector('.salvar-edicao').addEventListener('click', () => {
-      const valorInputEditarTexto = postTemplate.querySelector('.campo-editar-texto').value;
-      const valorInputEditarGithub = postTemplate.querySelector('.campo-editar-github').value;
-
-      const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
-      const divLinkGithubEscrito = postTemplate.querySelector('.link-github');
-      const inputEdicaoTexto = postTemplate.querySelector('.conteudo-editar-texto');
-      const inputEdicaoLink = postTemplate.querySelector('.conteudo-editar-github');
+    postTemplate.querySelector('.salvar-edicao').addEventListener('click', (event) => {
+      event.preventDefault();
       const idPost = postTemplate.querySelector('.id-post').value;
-
-      inputEdicaoTexto.style.display = 'none';
-      inputEdicaoLink.style.display = 'none';
-      divTextoEscrito.style.display = 'block';
-      divLinkGithubEscrito.style.display = 'block';
-
-      divTextoEscrito.innerHTML = valorInputEditarTexto;
-      divLinkGithubEscrito.innerHTML = valorInputEditarGithub;
-
+      const divTextoEscrito = postTemplate.querySelector('.texto-publicado-usuario');
+      const divGithubEscrito = postTemplate.querySelector('.link-github');
+      const btnSalvarEdicao = postTemplate.querySelector('.salvar-edicao');
+      btnSalvarEdicao.style.display = 'none';
+      divTextoEscrito.contentEditable = false;
+      divGithubEscrito.contentEditable = false;
       firebase.firestore().collection('posts').doc(idPost)
         .update({
-          texto: valorInputEditarTexto,
-          link_github: valorInputEditarGithub,
+          texto: divTextoEscrito.innerHTML,
+          link_github: divGithubEscrito.innerHTML,
         })
         .then(() => {
           console.log('atualizado');
@@ -326,14 +308,15 @@ export const TemplatePerfil = () => {
         .catch((error) => {
           console.log('não atualizado-', error);
         });
+
     });
 
     // Efeito remover post
-    function efeitoRemoverPost(postId) {
-      const target = document.querySelector(`[data-id="${postId}"]`);
-      target.addEventListener('transitionend', () => target.remove());
-      target.style.opacity = '0';
-    }
+    // function efeitoRemoverPost(postId) {
+    //   const target = document.querySelector(`[data-id="${postId}"]`);
+    //   target.addEventListener('transitionend', () => target.remove());
+    //   target.style.opacity = '0';
+    // }
 
     // Deletar post
     const deletar = postTemplate.querySelector('.icone-deletar');
@@ -344,7 +327,8 @@ export const TemplatePerfil = () => {
       const button = document.querySelector('.delete-class');
       button.addEventListener('click', () => {
         deletarPost(post.id).then(() => {
-          efeitoRemoverPost(post.id);
+          // efeitoRemover(post.id);
+          efeitoRemover(postTemplate);
         });
         popup.style.display = 'none';
       });
@@ -352,77 +336,78 @@ export const TemplatePerfil = () => {
 
     // EM ANDAMENTO ( FOTO PARA APARECER NO POST)   
 
-   /*         main.querySelector('#btn-foto').addEventListener('click', (event) => {
-                event.preventDefault();
-                const btnfile = main.querySelector('#photoFeed');
-                btnfile.style.visibility = 'visible';
-              });*/
- 
+    /*         main.querySelector('#btn-foto').addEventListener('click', (event) => {
+                 event.preventDefault();
+                 const btnfile = main.querySelector('#photoFeed');
+                 btnfile.style.visibility = 'visible';
+               });*/
 
 
-            //imagem feed
-            const imagensFeed = main.querySelector('#foto'); //input file
-            const imagemPost = main.querySelector('#imagem-feed');
-            const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
-            imagensFeed.addEventListener('change', () => {
-                imagemPost.src = '';
-                //const file = event.target.files[0];
-                const file = imagensFeed.files[0];
-                console.log('file', file)
-                imagemPost.src = URL.createObjectURL(file);
-                
-                const addImagemFeed = (photo, callback) => {
-                    const file = photo.files[0];
-                    const storageRef = firebase.storage().ref(`imagens/${file.name}`);
-                    storageRef.put(file).then(() => {
-                      storageRef.getDownloadURL().then((url) => {
-                        callback(url);
-                      });
-                    });
-                  };
 
-                const validarUrlFeed = (url) => {
-                    imagemPost.src = '';
-                    imagemPost.src = url;
-                    botaoSalvarFotoFeed.style.display = "block"
-                };
+    //imagem feed
+    const imagensFeed = main.querySelector('#foto'); //input file
+    const imagemPost = main.querySelector('#imagem-feed');
+    const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
+    imagensFeed.addEventListener('change', () => {
+      imagemPost.src = '';
+      //const file = event.target.files[0];
+      const file = imagensFeed.files[0];
+      console.log('file', file)
+      imagemPost.src = URL.createObjectURL(file);
 
-                addImagemFeed(imagensFeed, validarUrlFeed);
-            })
+      const addImagemFeed = (photo, callback) => {
+        const file = photo.files[0];
+        const storageRef = firebase.storage().ref(`imagens/${file.name}`);
+        storageRef.put(file).then(() => {
+          storageRef.getDownloadURL().then((url) => {
+            callback(url);
+          });
+        });
+      };
+
+      const validarUrlFeed = (url) => {
+        imagemPost.src = '';
+        imagemPost.src = url;
+        botaoSalvarFotoFeed.style.display = "block"
+      };
+
+      addImagemFeed(imagensFeed, validarUrlFeed);
+    })
 
 
-  /*          const idImagemFeed = main.querySelector('#foto')
-            idImagemFeed.addEventListener('click', () => {
-             /*   const username = firebase.auth().currentUser.displayName;
-                const userImageUrl = firebase.auth().currentUser.photoURL;*/
-       /*         const ref = firebase.storage().ref('imagens/feed');
-                //ref caminho onde ira salvar a imagem
-                const file = main.querySelector('#carregar-img').files[0];
-                //file 
-                const name = `${new Date()}-${file.name}`;
-                const metadata = {
-                    contentType: file.type,
-                };
-                const task = ref.child(name).put(file, metadata);
-                //child nomeia a imagem
-                //put comando q faz o upload da imagem
-                task
-                    .then((snapshot) => snapshot.ref.getDownloadURL())
-                    .then((url) => {
-                        console.log('deu certo')
-                        const imagefeed = main.querySelector('#imagem-feed')
-                        imagefeed.src = url
-              //      photoMsgMobile.innerHTML = ''
-                    });
+    /*          const idImagemFeed = main.querySelector('#foto')
+              idImagemFeed.addEventListener('click', () => {
+               /*   const username = firebase.auth().currentUser.displayName;
+                  const userImageUrl = firebase.auth().currentUser.photoURL;*/
+    /*         const ref = firebase.storage().ref('imagens/feed');
+             //ref caminho onde ira salvar a imagem
+             const file = main.querySelector('#carregar-img').files[0];
+             //file 
+             const name = `${new Date()}-${file.name}`;
+             const metadata = {
+                 contentType: file.type,
+             };
+             const task = ref.child(name).put(file, metadata);
+             //child nomeia a imagem
+             //put comando q faz o upload da imagem
+             task
+                 .then((snapshot) => snapshot.ref.getDownloadURL())
+                 .then((url) => {
+                     console.log('deu certo')
+                     const imagefeed = main.querySelector('#imagem-feed')
+                     imagefeed.src = url
+           //      photoMsgMobile.innerHTML = ''
+                 });
 
-                
+             
 
-                updateUserProfile(inputName.value, idImagemFeed.src);
-                    confirmMessage.hidden = false;
-                    main.style.display = 'block';
-           })*/      
-   
-    main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate);
+             updateUserProfile(inputName.value, idImagemFeed.src);
+                 confirmMessage.hidden = false;
+                 main.style.display = 'block';
+        })*/
+
+    // main.querySelector('#div-minhas-publicacoes').appendChild(postTemplate);
+    main.querySelector('#div-minhas-publicacoes').prepend(postTemplate);
   }
 
   // Menu Hamburguer
