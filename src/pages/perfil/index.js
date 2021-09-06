@@ -2,7 +2,6 @@
 import { deletarPost, irParaRota } from '../../lib/index.js';
 import { addImagem, sair } from '../../services/index.js';
 
-
 export const TemplatePerfil = () => {
   let mainUrl=''
   const main = document.createElement('div');
@@ -46,14 +45,15 @@ export const TemplatePerfil = () => {
         
         <form action="" id="postForm" class="container">
             <div class="div-textarea">
-                <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?"required minlength="1"></textarea>
+                <textarea type="text" name="post" id="post" cols="30" rows="10" placeholder="O que você quer publicar hoje?" required minlength="1"></textarea>
             </div>        
         
             <div class="upload-feed">
+                <button type="submit" id="esconder-file"><i class="far fa-image image-class-feed"></i></button>
                 <input type="file" id="foto"></input>
                 <div class="msg-carregando"></div>  
                 <img id="imagem-feed"/>   
-                <button id="carregar-img"> Salvar </button>          
+                <button id="carregar-img" class="button-feed"> Salvar </button>          
             </div>
             <div class="div-link-do-github">
                 <i class="fab fa-github icone-github"></i>
@@ -139,7 +139,7 @@ export const TemplatePerfil = () => {
       const fotoUsuario = objetoUsuario.photoURL;
  //     const fotofeed = objetoUsuario.photoURL.imagemPost
 
-      const refImg = main.querySelector('#foto').value
+ //     const refImg = objetoUsuario.mainUrl
 
       const post = {
         fotoDoUsuario: fotoUsuario,
@@ -518,11 +518,18 @@ export const TemplatePerfil = () => {
     // main.style.display = 'block';
   });*/
 
+  const botaoFeed = main.querySelector('#esconder-file');
+  const esconderButtonFeed = main.querySelector('#foto');
+  botaoFeed.addEventListener('click', () => {
+    esconderButtonFeed.style.opacity = 1;
+  });
+
   //imagem feed
   const imagensFeed = main.querySelector('#foto'); //input file
   const imagemPost = main.querySelector('#imagem-feed');
   const botaoSalvarFotoFeed = main.querySelector('#carregar-img');
   imagensFeed.addEventListener('change', () => {
+      imagemPost.style.display = 'block'
       imagemPost.src = '';
       //const file = event.target.files[0];
       const file = imagensFeed.files[0];

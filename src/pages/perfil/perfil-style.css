@@ -63,6 +63,8 @@
 }
 
 #button-foto {
+    background: none;
+    border: none;
     height: 4.5vh;
     width: 4.5vh;
     margin: auto;
@@ -71,6 +73,10 @@
 #foto-id {
     opacity: 0;
     margin-top: 1em;
+}
+
+#foto {
+    opacity: 0;
 }
 
 #btn-salvar {
@@ -85,15 +91,27 @@
 }
 
 #imagem-feed {
+    display: none;
+    text-align: center;
     width: 120px;
     height: 120px;
     border-radius: 10%;
 }
 
 .foto-feed {
+    text-align: center;
     width: 150px;
     height: 150px;
     border-radius: 10%;
+}
+#esconder-file {
+    background: none;
+    border: none;
+}
+
+.image-class-feed {
+    width: 2rem;
+    height: 2rem;
 }
 
 #image {
@@ -173,6 +191,10 @@
     font-size: 1em;
     color:black;
     padding: 5px;
+}
+
+.button-feed {
+display: none;
 }
 
 #publicar {
