@@ -1,7 +1,6 @@
 @import url('./pages/feed/feed.css');
 @import url('./pages/login/login-cadastro-recuperar.css');
 @import url('./pages/perfil/perfil-style.css');
-
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto&display=swap');
 
 * {
@@ -12,12 +11,12 @@
     --azul-claro: #6ab1d1;
     --azul-escuro: #002855;
     --laranja: #fb8500;
+    --laranja-medio: rgb(235, 186, 95);
     --laranja-claro: #FFE8CD;
     --cinza-claro: #F1EDED;
     --branco: #fff;
     --preto: #000;
   }
-
 
 .container {
     width: 90%;

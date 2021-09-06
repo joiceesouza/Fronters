@@ -33,10 +33,14 @@
     border-radius: 5px;
 }
 
+.pagina {
+    background-color: #d3d3d3;
+    padding-bottom: 1em;
+}
+
 .nome-usuario {
     font-weight: bold;
     display: flex;
-    /* justify-content: space-around; */
     align-items: center;
 }
 
@@ -51,7 +55,6 @@
 }
 
 .btn-foto-class {
-    
     background:no-repeat;
     background-color: transparent;
     background-size: 100%;
@@ -131,12 +134,12 @@
     margin: 1em auto;
 }
 
-
 #post {
     margin-top: 1em;
     width: 100%;
     background-color: var(--azul-escuro);
-    color: var(--branco)
+    color: var(--branco);
+    padding: 0.5em 1em;
 }
 
 #post::placeholder {
@@ -201,11 +204,6 @@
     text-align: center;
 }
 
-/* #tete {
-    width: 200px;
-    height: 20px;
-} */
-
 .fez-publicacao {
     color: black;
     font-weight: normal;
@@ -231,26 +229,19 @@
     text-align: center;
     }
 
-.pagina-perfil {
-    background-color: var(--azul-claro);
-}
-
 .div-post {
     background-color: var(--branco);
     box-shadow: 5px 5px 12px rgb(0 0 0 / 50%);
     transition: opacity 1s;
-
     border: 3px solid var(--laranja);
-    margin: 2em;
+    margin-bottom: 2em;
     border-radius: 5px;
     padding: 0.5em;
-
 }
 
 .salvar-edicao {
     display: none;
 }
-
 
 a {
     color: var(--laranja);
@@ -278,10 +269,8 @@ a:hover {
     display: none;
 }
 
-
 .fas.fa-heart{
     color: var(--laranja);
-
 }
 
 .delete-class {
@@ -291,13 +280,11 @@ a:hover {
     font-weight: bold;
     border-radius: 5px;
     margin-top: 1.5em;
-
 }
 
 .comentarios {
     display: none;
 }
-
 
 .escrever-comentario {
     color: var(--preto);
@@ -332,22 +319,10 @@ a:hover {
     display: none;
 }
 
-/* .icone-deletar, .editar-publicacao {
-    margin: 1em;
-} */
-
-
 /* --------------------------ADAPTAÇÃO TELAS MAIORES-------------*/
 
 @media (max-width: 600px){
     
-
-    /*.class-li {
-        margin-top: 50px;
-        text-align: center;
-
-    }*/
-
     #menu {
         position: absolute;
         width: 100%;
@@ -377,10 +352,7 @@ a:hover {
         display: flex;
         flex-direction: row;
     }
-
-    
-
-
+  
     #btn-mobile {
         display: flex;
         padding: .5rem 1rem;
@@ -421,44 +393,18 @@ a:hover {
         transform: rotate(-135deg);
         top: -7px;
     }
-    /* .fas.fa-sign-out-alt, .fas.fa-user-alt, .far.fa-list-alt{
-        display: inline-flex;
-    } */
+    
 }
 
-@media (min-width: 601px) {
-    #post, .div-link-do-github {
-        width: 70%;
-    }
-
-    .div-post {
-        max-width: 70%;
-    }
-
-}
 
 @media (min-width: 801px) {
     #post, .div-link-do-github {
-        width: 70%;
+        width: 100%;
     }
 
     .div-post {
-        max-width: 70%;
+        max-width: 100%;
     }
 
 }
 
-@media (min-width: 1025px) {
-    #post, .div-link-do-github {
-        width: 70%;
-    }
-
-    .div-post {
-        max-width: 70%;
-    }
-
-    .popup {
-        width: 70%;
-    }
-
-}

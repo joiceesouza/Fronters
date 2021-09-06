@@ -1,11 +1,11 @@
 /* eslint-disable no-console */
-import {irParaRota, mostrarPopup, addPostNaPagina } from '../../lib/index.js';
+import { irParaRota, mostrarPopup, addPostNaPagina } from '../../lib/index.js';
 import { sair } from '../../services/index.js';
 
 export const TemplatePerfil = () => {
   const main = document.createElement('div');
   main.innerHTML = ` 
-    <main class="pagina-perfil">
+    <main class="pagina-perfil pagina">
         <header class="container-header">
         <h1 class="logo">FRONTERS</h1>
         <nav id="nav-id">
@@ -74,8 +74,8 @@ export const TemplatePerfil = () => {
         </div>
     </div>
 
-    `;          
- 
+    `;
+
   // EDITAR NOME USUÁRIO
   main.querySelector('.btn-editar-nome').addEventListener('click', () => {
     const nomeEditar = main.querySelector('.nome');
@@ -117,7 +117,7 @@ export const TemplatePerfil = () => {
 
     if (text === '') {
       mostrarPopup(` <h2>Algo deu errado!</h2> 
-      <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup)
+      <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup);
     } else {
       if (linkGithub.checkValidity() === false) {
         alert('Por gentileza, colocar um link válido');
@@ -128,9 +128,9 @@ export const TemplatePerfil = () => {
       const nomeUsuario = objetoUsuario.displayName;
       const idDoUsuario = objetoUsuario.uid;
       const horaPublicacao = Date.now();
-      const fotoUsuario = objetoUsuario.photoURL;      
+      const fotoUsuario = objetoUsuario.photoURL;
       const refImg = document.querySelector('#imagem-feed').src;
-     
+
       const post = {
         fotoDoUsuario: fotoUsuario,
         nome: nomeUsuario,
@@ -140,12 +140,12 @@ export const TemplatePerfil = () => {
         link_github: linkGithub.value,
         curtidas: [],
         comentarios: [],
-        imgPost: refImg
+        imgPost: refImg,
       };
 
       const colecaoPost = firebase.firestore().collection('posts');
       colecaoPost.add(post)
-        .then(() => {                 
+        .then(() => {
           irParaRota('/perfil');
         });
     }
@@ -162,8 +162,7 @@ export const TemplatePerfil = () => {
       }).catch(() => {
         // An error happened.
       });
-
-  })
+  });
 
   function carregarPost() {
     const colecaoPost = firebase.firestore().collection('posts');
@@ -178,62 +177,60 @@ export const TemplatePerfil = () => {
   }
 
   carregarPost();
-   
-              
-//---------------------------------FOTO POST --------------------------//
 
-    //imagem feed
-    const escolherArquivo = main.querySelector('#input-escolher-arquivo'); //input file
-    const divImagemPost = main.querySelector('#imagem-feed');
-    
-    escolherArquivo.addEventListener('change', (e) => {
-      e.preventDefault();
-      divImagemPost.style.display = 'block';
-         divImagemPost.src = '';
-      const file = escolherArquivo.files[0];
-      console.log('file', file)
-      divImagemPost.src = URL.createObjectURL(file);
+  // ---------------------------------FOTO POST --------------------------//
 
-      const addImagemFeed = (photo, callback) => {
-        const file = photo.files[0];
-        const storageRef = firebase.storage().ref(`imagens/${file.name}`);
-        storageRef.put(file).then(() => {
-          storageRef.getDownloadURL().then((url) => {
-            callback(url);
-          });
+  // imagem feed
+  const escolherArquivo = main.querySelector('#input-escolher-arquivo'); // input file
+  const divImagemPost = main.querySelector('#imagem-feed');
+
+  escolherArquivo.addEventListener('change', (e) => {
+    e.preventDefault();
+    divImagemPost.style.display = 'block';
+    divImagemPost.src = '';
+    const file = escolherArquivo.files[0];
+    console.log('file', file);
+    divImagemPost.src = URL.createObjectURL(file);
+
+    const addImagemFeed = (photo, callback) => {
+      const file = photo.files[0];
+      const storageRef = firebase.storage().ref(`imagens/${file.name}`);
+      storageRef.put(file).then(() => {
+        storageRef.getDownloadURL().then((url) => {
+          callback(url);
         });
-      };
+      });
+    };
 
-      const validarUrlFeed = (url) => {
-        divImagemPost.src = '';
-        divImagemPost.src = url;        
-      };
+    const validarUrlFeed = (url) => {
+      divImagemPost.src = '';
+      divImagemPost.src = url;
+    };
 
-      addImagemFeed(escolherArquivo, validarUrlFeed);
-    });
-    
-    const btnPublicarPost = main.querySelector('#publicar');
-    btnPublicarPost.addEventListener('click', (event) => {
-      event.preventDefault();
-      const atualizarFotoPost = (url, idDoPost) => {
-        const documentoPost = firebase.firestore().collection('posts').doc(idDoPost);
-        documentoPost.update({
-        imgPost: url,   
-        
-        }).then(() => {
-          console.log('Perfil atualizado');
-        }).catch(() => {
-          //     getError(error);
-        });
-      };
+    addImagemFeed(escolherArquivo, validarUrlFeed);
+  });
 
-      atualizarFotoPost(divImagemPost.src);
-      // confirmMessage.hidden = false;
-      // main.style.display = 'block';
-    });
+  const btnPublicarPost = main.querySelector('#publicar');
+  btnPublicarPost.addEventListener('click', (event) => {
+    event.preventDefault();
+    const atualizarFotoPost = (url, idDoPost) => {
+      const documentoPost = firebase.firestore().collection('posts').doc(idDoPost);
+      documentoPost.update({
+        imgPost: url,
 
+      }).then(() => {
+        console.log('Perfil atualizado');
+      }).catch(() => {
+        //     getError(error);
+      });
+    };
 
-  //--------------------FOTO PERFIL ---------------------------------------------//
+    atualizarFotoPost(divImagemPost.src);
+    // confirmMessage.hidden = false;
+    // main.style.display = 'block';
+  });
+
+  // --------------------FOTO PERFIL ---------------------------------------------//
   // aparecer o escolher foto
   const botaoFoto = main.querySelector('#button-foto');
   const esconderButton = main.querySelector('#foto-id');
@@ -245,7 +242,7 @@ export const TemplatePerfil = () => {
   const carregarImagens = main.querySelector('#foto-id'); // input file
   const imagemPerfil = main.querySelector('#image');
   const botaoSalvarFoto = main.querySelector('#btn-salvar');
-    carregarImagens.addEventListener('change', () => {
+  carregarImagens.addEventListener('change', () => {
     imagemPerfil.src = '';
     const file = carregarImagens.files[0];
     console.log('file', file);
@@ -268,7 +265,6 @@ export const TemplatePerfil = () => {
     };
 
     addImagem(carregarImagens, validarUrl);
-
   });
 
   const confirmMessage = main.querySelector('#conf-atualizaçao');
@@ -309,4 +305,3 @@ export const TemplatePerfil = () => {
 
   return main;
 };
-
