@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { login, loginComGoogle, loginComGithub } from '../../services/index.js';
 import { ocultarSenha, irParaRota, mostrarPopup } from '../../lib/index.js';
 
@@ -8,7 +9,7 @@ export const TemplateLogin = () => {
         <div class="foto-principal"></div>
         
     <section class="conteudo-login" >
-            <div id="texto-sobre">
+            <div class="texto-sobre">
                 <h2 id="logo">Fronters</h2>
                 <h3>De frente com o Front</h3>
                 <h4>Está preparado para invadir 
@@ -25,13 +26,13 @@ export const TemplateLogin = () => {
         <form>
             <div class="campo-form">
                 <label for="emailUsuario">Email:</label>
-                <input type="email" id="email-usuario" placeholder="Digite o seu email" />
+                <input type="email" class="input-login" id="email-usuario" placeholder="Digite o seu email" />
                 <p id="text"> </p>
             </div>
             <div class="campo-form">
                 <label for="senhaUsuario">Senha:</label>
                 <div class="campo-senha">
-                    <input type="password" class="input-senha" id="senha-usuario" placeholder="Digite a sua senha" />
+                    <input type="password" class="input-senha input-login" id="senha-usuario" placeholder="Digite a sua senha" />
                     <i class="fas fa-eye-slash ocultar-senha"></i>
                 </div>
             </div>
@@ -103,7 +104,7 @@ export const TemplateLogin = () => {
       return;
     }
 
-    //seletores função mostrar popup
+    // seletores função mostrar popup
     const popup = main.querySelector('.popup-wrapper');
     const conteudoPopup = main.querySelector('.conteudo-popup');
     const fecharPopup = main.querySelector('.fechar-popup');
@@ -144,7 +145,7 @@ export const TemplateLogin = () => {
               mostrarPopup('<h2>Algo deu errado!</h2> <p>Senha inválida</p>', popup, conteudoPopup);
               break;
             default:
-              error.innerHTML = `<span> ${errorMessage} </span>`;
+              console.log(error);
               break;
           }
         });
@@ -159,7 +160,7 @@ export const TemplateLogin = () => {
       .then(() => {
         irParaRota('/perfil');
         /** @type {firebase.auth.OAuthCredential} */
-      }).catch((error) => {
+      }).catch(() => {
       });
   });
 
@@ -174,9 +175,6 @@ export const TemplateLogin = () => {
         irParaRota('/perfil');
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        const email = error.email;
         console.log(error);
       });
   });

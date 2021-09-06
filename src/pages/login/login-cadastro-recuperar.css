@@ -15,12 +15,12 @@
     color: var(--laranja);
 }
 
-#texto-sobre {
+.texto-sobre {
     text-align: center;
     margin: 1em 0.8em 0.3em;
 }
 
-#texto-sobre h3, #texto-sobre h4 {
+.texto-sobre h3, .texto-sobre h4 {
     color: var(--branco);
     font-weight: bold;
     margin: 5px auto;
@@ -37,7 +37,7 @@
     background-position: center;
 }
 
-.campo-form.invalid input {
+.campo-form .invalid input {
     border: 1px red solid;
 }
 
@@ -99,10 +99,9 @@ ul li button:hover:before {
 }
 
 .pagina-login form {
-    margin-top: 0.3em;
     animation: up 1s;
     text-align: center;
-    margin: 2em;
+    margin: 0.3em 2em 2em 2em;
 }
 
 .pagina-login label {
@@ -113,7 +112,7 @@ ul li button:hover:before {
     
 }
 
-.pagina-login input {
+.input-login {
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #F1EDED;
@@ -310,12 +309,10 @@ ul li button:hover:before {
 @media screen and (min-width: 768px) {
 
     .conteudo-login {
+        flex: 1;
         background: linear-gradient(90deg, rgba(2,0,36,1) 0%, #002855 35%, #2063ae 100%);
       }
-    
-    .conteudo-login {
-        flex: 1;
-    }
+       
     .principal {
         display: flex;
         flex-flow: row-reverse;

@@ -34,7 +34,7 @@ export const TemplatePerfil = () => {
 
                 <div class="editar-nome"><p class="nome" contentEditable='false'>${firebase.auth().currentUser.displayName || 'Nome do Usuário'}</p><i class="fas fa-save btn-salvar-edicao-nome"></i><i class="fas fa-edit btn-editar-nome"></i></div>
 
-                <p class="conf-atualizaçao" id="conf-atualizaçao" hidden>Alterações salvas com sucesso!</p>
+                <p class="conf-atualizacao" hidden>Alterações salvas com sucesso!</p>
             </div>                   
 
         </div>
@@ -120,7 +120,7 @@ export const TemplatePerfil = () => {
       <p> Por gentileza, escreva algo antes de salvar </p>`, popup, conteudoPopup);
     } else {
       if (linkGithub.checkValidity() === false) {
-        alert('Por gentileza, colocar um link válido');
+        mostrarPopup('<p> Por gentileza, colocar um link válido</p>', popup, conteudoPopup);
         return;
       }
 
@@ -189,13 +189,12 @@ export const TemplatePerfil = () => {
     divImagemPost.style.display = 'block';
     divImagemPost.src = '';
     const file = escolherArquivo.files[0];
-    console.log('file', file);
     divImagemPost.src = URL.createObjectURL(file);
 
     const addImagemFeed = (photo, callback) => {
-      const file = photo.files[0];
-      const storageRef = firebase.storage().ref(`imagens/${file.name}`);
-      storageRef.put(file).then(() => {
+      const filePhoto = photo.files[0];
+      const storageRef = firebase.storage().ref(`imagens/${filePhoto.name}`);
+      storageRef.put(filePhoto).then(() => {
         storageRef.getDownloadURL().then((url) => {
           callback(url);
         });
@@ -226,8 +225,6 @@ export const TemplatePerfil = () => {
     };
 
     atualizarFotoPost(divImagemPost.src);
-    // confirmMessage.hidden = false;
-    // main.style.display = 'block';
   });
 
   // --------------------FOTO PERFIL ---------------------------------------------//
@@ -239,7 +236,7 @@ export const TemplatePerfil = () => {
   });
 
   // carregar imagens perfil do usuário
-  const carregarImagens = main.querySelector('#foto-id'); // input file
+  const carregarImagens = main.querySelector('#foto-id');
   const imagemPerfil = main.querySelector('#image');
   const botaoSalvarFoto = main.querySelector('#btn-salvar');
   carregarImagens.addEventListener('change', () => {
@@ -267,7 +264,7 @@ export const TemplatePerfil = () => {
     addImagem(carregarImagens, validarUrl);
   });
 
-  const confirmMessage = main.querySelector('#conf-atualizaçao');
+  const confirmMessage = main.querySelector('conf-atualizacao');
   const btnSaveProfile = main.querySelector('#btn-salvar');
   btnSaveProfile.addEventListener('click', (event) => {
     carregarImagens.style.display = 'none';
@@ -283,9 +280,9 @@ export const TemplatePerfil = () => {
         //     getError(error);
       });
     };
+
     atualizarPerfil(imagemPerfil.src);
     confirmMessage.hidden = false;
-    // main.style.display = 'block';
   });
 
   // MENU HAMBURGUER

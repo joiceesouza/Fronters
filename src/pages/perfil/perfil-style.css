@@ -11,8 +11,10 @@
     margin-bottom: 10px;
     display: flex;
     justify-content: space-around;
-
-}
+    box-sizing: border-box;
+    height: 70px;
+    align-items: center;
+    }
 
 .logo {
     font-size: 1.5em;
@@ -253,12 +255,7 @@ a:hover {
     color: var(--azul-claro);
 }
 
-.container-header {
-    box-sizing: border-box;
-    height: 70px;
-    display: flex;
-    align-items: center;
-}
+
 
 #menu a {
     display: block;
