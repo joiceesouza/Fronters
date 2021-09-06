@@ -67,7 +67,7 @@ const donoDoPost = (user === donoPost);
     <div><p class="hora-post">${new Date(post.data().data).toLocaleString()}</p></div>
     <div class="nome-usuario">
       <div class="foto-usuario-autor">
-        <img src="${post.data().fotoDoUsuario}" id="imagem-id" class="foto-perfil-autor" />
+        <img src="${post.data().fotoDoUsuario || '/img/profile.png'}" id="imagem-id" class="foto-perfil-autor" />
       </div>
         ${post.data().nome || post.data().nomeSalvoPerfil } 
         <p class="fez-publicacao">publicou.</p> 
@@ -75,7 +75,7 @@ const donoDoPost = (user === donoPost);
     
     <div class="texto-publicado-usuario">${post.data().texto}</div>
     <div class="img-publicada">
-        <img class="foto-publicada" src="../../img/foto-projeto.png">
+        <img class="foto-publicada" src="${post.data().imgPost || ''}">
     </div>
     <div class="conteudo-editar-texto">
         <input class="campo-editar-texto" />
@@ -120,6 +120,11 @@ const donoDoPost = (user === donoPost);
     </div>        
 
 `;
+
+const imgPost = postTemplate.querySelector('.foto-publicada');
+  if(!imgPost.getAttribute("src")) {      
+    imgPost.style.display = 'none';
+  }
 
   postTemplate.appendChild(divComentarioPost);
 

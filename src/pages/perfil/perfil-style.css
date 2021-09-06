@@ -87,6 +87,7 @@
     width: 120px;
     height: 120px;
     border-radius: 10%;
+    display: none;
 }
 
 .foto-feed {
@@ -325,6 +326,10 @@ a:hover {
 
 .icone-curtir {
     transition: all 1s;
+}
+
+#salvar-img-post{
+    display: none;
 }
 
 /* .icone-deletar, .editar-publicacao {
