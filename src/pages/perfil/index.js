@@ -264,9 +264,9 @@ export const TemplatePerfil = () => {
     addImagem(carregarImagens, validarUrl);
   });
 
-  const confirmMessage = main.querySelector('conf-atualizacao');
   const btnSaveProfile = main.querySelector('#btn-salvar');
   btnSaveProfile.addEventListener('click', (event) => {
+    const confirmMessage = main.querySelector('.conf-atualizacao');
     carregarImagens.style.display = 'none';
     btnSaveProfile.style.display = 'none';
     event.preventDefault();
