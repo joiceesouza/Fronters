@@ -6,6 +6,7 @@ Fronters é uma rede social voltada para desenvolvedores front-end. O usuário p
 
 ## 2. 👩🧑Histórias de Usuário
 
+![historias-de-usuario](https://user-images.githubusercontent.com/75817559/132271986-9aaa39e8-7f66-41cf-b25f-e527da7a7367.png)
 
 
 ## 3. Objetivos de aprendizagem
