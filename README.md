@@ -34,6 +34,8 @@ Application
 
 
 ### 5.4  🎨Desenho da Interface de Usuário (protótipo de baixa fidelidade)
+![prototipo-baixa-fidelidade](https://user-images.githubusercontent.com/75817559/132272089-81329366-ad9b-4f8e-bf4d-20fbe5d3f72d.png)
+
 
 
 
