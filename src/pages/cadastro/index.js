@@ -11,7 +11,7 @@ export const TemplateCadastro = () => {
     <section class="conteudo-login" >
       <div id="banner-section">
             <div class="texto-sobre">
-            <h2 id="logo">Fronters</h2>
+            <img class="logo-login" src="/img/logo-fronters.png" alt="Logo">
             <h3>De frente com o Front</h3>
             <h4>Está preparado para invadir 
             o mundo dos Devs?</h4>

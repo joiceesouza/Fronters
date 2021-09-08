@@ -6,7 +6,7 @@ export const TemplateFeed = () => {
   main.setAttribute('class', 'pagina');
   main.innerHTML = `
     <header class="container-header">
-        <h1 class="logo">FRONTERS</h1>
+      <img class="logo" src="/img/logo-fronters.png" alt="Logo">
         <nav id="nav-id">
             <button aria-label="Abrir Menu" id="btn-mobile" aria-haspopup="true" aria-controls="menu" aria-expanded="false">
                 <span id="hamburguer"></span>
