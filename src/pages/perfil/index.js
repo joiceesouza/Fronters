@@ -7,7 +7,7 @@ export const TemplatePerfil = () => {
   main.innerHTML = ` 
     <main class="pagina-perfil pagina">
         <header class="container-header">
-        <h1 class="logo">FRONTERS</h1>
+        <img class="logo" src="/img/logo-fronters.png" alt="Logo">
         <nav id="nav-id">
             <button aria-label="Abrir Menu" id="btn-mobile" aria-haspopup="true" aria-controls="menu" aria-expanded="false">
                 <span id="hamburguer"></span>
@@ -193,7 +193,9 @@ export const TemplatePerfil = () => {
 
     const addImagemFeed = (photo, callback) => {
       const filePhoto = photo.files[0];
-      const storageRef = firebase.storage().ref(`imagens/${filePhoto.name}`);
+      const posExtensao = filePhoto.name.lastIndexOf(".");
+      const novoNomeFoto = Date.now() + filePhoto.name.substr(posExtensao);
+      const storageRef = firebase.storage().ref(`imagens/feed/${novoNomeFoto}`);
       storageRef.put(filePhoto).then(() => {
         storageRef.getDownloadURL().then((url) => {
           callback(url);
@@ -247,7 +249,9 @@ export const TemplatePerfil = () => {
 
     const addImagem = (photo, callback) => {
       const filePhoto = photo.files[0];
-      const storageRef = firebase.storage().ref(`imagens/${filePhoto.name}`);
+      const posExtensao = filePhoto.name.lastIndexOf(".");
+      const novoNomeFoto = Date.now() + filePhoto.name.substr(posExtensao);
+      const storageRef = firebase.storage().ref(`imagens/perfil/${novoNomeFoto}`);
       storageRef.put(file).then(() => {
         storageRef.getDownloadURL().then((url) => {
           callback(url);
