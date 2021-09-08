@@ -12,23 +12,24 @@ Fronters é uma rede social voltada para desenvolvedores front-end. O usuário p
 
 ![historias-de-usuario](https://user-images.githubusercontent.com/75817559/132271986-9aaa39e8-7f66-41cf-b25f-e527da7a7367.png)
 
-
-
-
-
-https://user-images.githubusercontent.com/75817559/132434968-f3530395-fc34-4905-996a-57907fbc267f.mp4
-
 ## 3. 🎨Desenho da Interface de Usuário (protótipo de baixa fidelidade)
+![prototipo-baixa-fidelidade](https://user-images.githubusercontent.com/75817559/132437706-af5fda90-5089-474d-b5b7-c7a0eb7dd50a.png)
 
 
 ## 4. 📱Mobile First
 Atendendo a necessidade do usuário que diariamente faz uso constante do celular para entrar nas redes sociais, construímos de forma mobile-first.
 
+![prototipo-login](https://user-images.githubusercontent.com/75817559/132437866-8d4ccc35-b1dc-4cc3-8606-a8f5f723373a.png)
+
+
 ## 5. 💻Desktop
 O layout da tela de login/cadastro muda conforme o tamanho da tela.
 
+![desktop-redesocial](https://user-images.githubusercontent.com/75817559/132437300-59cc075e-5e06-40fe-a76a-9e8e71a59e29.png)
+
 ## 6. Como funciona?
 
+https://user-images.githubusercontent.com/75817559/132434968-f3530395-fc34-4905-996a-57907fbc267f.mp4
 
 ## 7. 👨‍💻Objetivos de aprendizagem
 
