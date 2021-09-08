@@ -3,6 +3,8 @@
 # Criando uma Rede Social
 
 ## 1. 🎯Produto
+![logo-fronters](https://user-images.githubusercontent.com/75817559/132435433-0ad0b870-4462-4b6d-8eb5-e574757bc248.png)
+
 
 Fronters é uma rede social voltada para desenvolvedores front-end. O usuário pode postar fotos de seus projetos, códigos para pedir feedback, solicitar ajuda, tirar dúvidas e aprender cada dia mais. Curtir e descurtir postagens, editar e excluir, além de realizar comentários. Terá a oportunidade de construir uma rede de amigos que têm o mesmo objetivo que o seu e ao mesmo tempo, aprender e ensinar.
 
