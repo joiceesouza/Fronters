@@ -30,8 +30,8 @@ O layout da tela de login/cadastro muda conforme o tamanho da tela.
 ## 6. Como funciona?
 
 Neste vídeo mostra um pouco as funcionalidades como: trocar foto, publicar post, comentar, editar e apagar comentários e posts. Na página Feed somente terão as publicações dos outros usuários. Quando interagem com os seus posts, como curtidas e comentários são atualizados nos seus posts na página perfil, facilitando o controle do usuário para ver suas próprias postagens.
-https://user-images.githubusercontent.com/75817559/132434968-f3530395-fc34-4905-996a-57907fbc267f.mp4
 
+https://user-images.githubusercontent.com/75817559/132440677-901fc2cd-1a21-4fd8-abb9-9d7dae468094.mp4
 
 ## 7. 👨‍💻Objetivos de aprendizagem
 
