@@ -70,7 +70,7 @@ export function addPostNaPagina(post, main) {
     <div><p class="hora-post">${new Date(post.data().data).toLocaleString()}</p></div>
     <div class="nome-usuario">
       <div class="foto-usuario-autor">
-        <img src="${post.data().fotoDoUsuario || '/img/profile.png'}" id="imagem-id" class="foto-perfil-autor" />
+        <img src="${post.data().fotoDoUsuario || '/img/profile.png'}" id="imagem-id" class="foto-perfil-autor" onerror="this.src='/img/profile.png';this.onerror=''" />
       </div>
         ${post.data().nome || post.data().nomeSalvoPerfil} 
         <p class="fez-publicacao">publicou.</p> 

@@ -66,6 +66,10 @@
     background-image: url(img/camera.png);
 }
 
+.btn button {
+    max-width: 300px;
+}
+
 #button-foto {
     height: 4.5vh;
     width: 4.5vh;
@@ -255,7 +259,9 @@ a:hover {
     color: var(--azul-claro);
 }
 
-
+.hora-post {
+    text-align: right;
+}
 
 #menu a {
     display: block;
