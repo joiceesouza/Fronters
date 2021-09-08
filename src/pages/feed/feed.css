@@ -32,7 +32,6 @@
 
 .foto p{
     margin: 1em;
-    
 }
 
 .foto-perfil-comentario {
@@ -82,8 +81,6 @@
 }
 
 .foto-publicada {
-    /* width: 70%;
-    height: 40vh; */
     max-width: 80%;
     max-height: 25em;
     border-radius: 15px;
@@ -258,11 +255,8 @@
     }
 
     .img-publicada {
-        /* width: 70%; */
         text-align: center;
-        /* display: flex; */
         margin-left: auto;
-        
     }
 
 }
