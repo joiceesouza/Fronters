@@ -184,5 +184,10 @@ export const TemplateLogin = () => {
     ocultarSenha('.input-senha', '.ocultar-senha');
   });
 
+  // ESQUECI SENHA
+  main.querySelector('#esqueci-senha').addEventListener('click', () => {
+    irParaRota('/recuperar');
+  });
+
   return main;
 };

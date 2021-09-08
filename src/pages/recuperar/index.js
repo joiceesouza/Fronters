@@ -8,25 +8,28 @@ export const TemplateRecuperar = () => {
       <div class="foto-principal"></div>
 
       <section class="conteudo-login" >
-  
-        <div id="banner-section">
-          <div id="texto-sobre">
-            <h1 class="logo">FRONTERS</h1>
-            <h3>De frente com o Front</h3>
-            <h4>Está preparado para invadir 
-            o mundo dos Devs?</h4><br>
-          </div>
+        <div class="texto-sobre">
+          <img class="logo-login" src="/img/logo-fronters.png" alt="Logo">
+          <h3>De frente com o Front</h3>
+          <h4>Está preparado para invadir 
+          o mundo dos Devs?</h4>
         </div>
+
         <div class="texto-reset">
           <h3 class="text-id">Esqueci minha senha</h3>
           <h4 class="text-h4">Uma nova senha será enviada 
           ao seu email de cadastro</h4><br>
         </div>
         <form >
-          <div class="campo-form">
+          <!--<div class="campo-form">
             <label for="emailUsuario">Email:</label>
             <input type="email" id="recuperar-email" placeholder="Digite o seu email">
-          </div>
+          </div>-->
+          <div class="campo-form">
+                <label for="emailUsuario">Email:</label>
+                <input type="email" class="input-login" id="email-usuario" placeholder="Digite o seu email" />
+                <p id="text"> </p>
+            </div>
           <div id="botao-recuperar">
             <button type="button" class="botoes" id="reset-id">Enviar</button>
           </div>
@@ -49,7 +52,7 @@ export const TemplateRecuperar = () => {
   container.innerHTML = template;
 
   // Recuperar senha
-  const recuperarSenha = container.querySelector('#recuperar-email');
+  const recuperarSenha = container.querySelector('#email-usuario');
   const buttonReset = container.querySelector('#reset-id');
 
   buttonReset.addEventListener('click', () => {
@@ -57,16 +60,13 @@ export const TemplateRecuperar = () => {
     const fecharPopup = container.querySelector('.fechar-popup');
     const conteudoPopup = container.querySelector('.conteudo-popup');
     const email = recuperarSenha.value;
-    console.log(email);
-
     redefinirSenha(email);
     firebase
       .auth().sendPasswordResetEmail(email)
-      .then((result) => {
-        console.log(result);
+      .then(() => {
         popup.style.display = 'block';
         conteudoPopup.innerHTML = `<h2>Você receberá um link para redefinir sua senha em seu email!</h2>
-          <button id="loginPopup"><a href="/#">Fazer Login</a></button>`;
+          <button id="loginPopup"><a class="login-recuperar" href="/#">Fazer Login</a></button>`;
         fecharPopup.style.display = 'none';
       })
       .catch((err) => {
