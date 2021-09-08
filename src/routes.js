@@ -16,7 +16,6 @@ export const routeRender = () => {
 
   const rotaAtual = window.location.pathname;
   const element = document.querySelector('#root');
-  
 
   switch (rotaAtual) {
     case '/':

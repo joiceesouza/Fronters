@@ -193,7 +193,7 @@ export const TemplatePerfil = () => {
 
     const addImagemFeed = (photo, callback) => {
       const filePhoto = photo.files[0];
-      const posExtensao = filePhoto.name.lastIndexOf(".");
+      const posExtensao = filePhoto.name.lastIndexOf('.');
       const novoNomeFoto = Date.now() + filePhoto.name.substr(posExtensao);
       const storageRef = firebase.storage().ref(`imagens/feed/${novoNomeFoto}`);
       storageRef.put(filePhoto).then(() => {
@@ -249,7 +249,7 @@ export const TemplatePerfil = () => {
 
     const addImagem = (photo, callback) => {
       const filePhoto = photo.files[0];
-      const posExtensao = filePhoto.name.lastIndexOf(".");
+      const posExtensao = filePhoto.name.lastIndexOf('.');
       const novoNomeFoto = Date.now() + filePhoto.name.substr(posExtensao);
       const storageRef = firebase.storage().ref(`imagens/perfil/${novoNomeFoto}`);
       storageRef.put(file).then(() => {
