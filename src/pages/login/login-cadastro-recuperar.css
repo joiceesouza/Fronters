@@ -184,7 +184,7 @@ ul li button:hover:before {
     font-size: 1em;
     font-weight: bold;
     border-radius: 5px;
-    margin-top: 0.6em;
+    /* margin-top: 0.6em; */
     cursor: pointer;
     padding: 5px;
 }
@@ -355,9 +355,9 @@ ul li button:hover:before {
         margin: 2em 0;
     }
 
-    .btn p {
+    /* .btn p {
         margin: 2em;
-    }
+    } */
 
     .pagina-login form {
         text-align: center;

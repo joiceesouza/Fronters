@@ -16,18 +16,20 @@ export const routeRender = () => {
 
   const rotaAtual = window.location.pathname;
   const element = document.querySelector('#root');
-  element.innerHTML = '';
+  
 
   switch (rotaAtual) {
     case '/':
     case '/login':
     case '/cadastro':
+      element.innerHTML = '';
       element.appendChild(routes[rotaAtual]());
       break;
 
     default:
       firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+          element.innerHTML = '';
           element.appendChild(routes[rotaAtual]());
         } else {
           window.history.pushState({}, null, '/login');
