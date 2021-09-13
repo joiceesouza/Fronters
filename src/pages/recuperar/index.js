@@ -40,10 +40,7 @@ export const TemplateRecuperar = () => {
     <div class="popup-wrapper">
       <div class="popup">
           <div class="fechar-popup">X</div>
-          <div class="conteudo-popup">
-            <h2>Cadastro finalizado com sucesso!</h2>
-            <button id="loginPopup"><a href="/#">Fazer Login</a></button>
-          </div>
+          <div class="conteudo-popup"></div>
       </div>
     </div>
 
