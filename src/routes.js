@@ -21,6 +21,7 @@ export const routeRender = () => {
     case '/':
     case '/login':
     case '/cadastro':
+    case '/recuperar':
       element.innerHTML = '';
       element.appendChild(routes[rotaAtual]());
       break;
