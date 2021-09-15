@@ -29,7 +29,7 @@ export const TemplateFeed = () => {
         <h1 class="titulo-feed"> FEED </h1>
     </div>
     <div id="div-gif">
-        <img class="gif" src="../img/48531-htmlcssjs.gif" alt="gif">
+        <img class="gif" src="../img/front.gif" alt="gif">
     </div>
      
     <div id="feed" class="container"></div>
