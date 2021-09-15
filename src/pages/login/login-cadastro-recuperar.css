@@ -196,7 +196,6 @@ ul li button:hover:before {
     font-size: 1em;
     font-weight: bold;
     border-radius: 5px;
-    /* margin-top: 0.6em; */
     cursor: pointer;
     padding: 5px;
 }
@@ -217,7 +216,6 @@ ul li button:hover:before {
 
 #botao-finalizar-cadastro{
     background-color: var(--laranja);
-    /* width: 80%; */
     height: 2.5em;
     color: #fff;
     font-size: 1em;
@@ -303,20 +301,6 @@ ul li button:hover:before {
     margin-top: 1.5em;
 }
 
-/* #reset-id {
-    background-color: var(--logo);
-    
-    height: 2.5em;
-    color: #fff;
-    font-size: 1em;
-    font-weight: bold;
-    border-radius: 5px;
-    margin-top: 0.6em;
-    cursor: pointer;
-   
-}  */
-
-
 /* -----------------------ADAPTAÇÃO PARA TELAS ---------------------- */
 
 @media screen and (min-width: 768px) {
@@ -372,17 +356,18 @@ ul li button:hover:before {
         text-align: center;
         margin: 2em auto;
         width: 70%;
+        font-size: 0.75em;
     }
     
     #esqueci-senha {
-        font-size: 1.25em;
+        font-size: 1em;
     }
-        
-
+    
     .botoes {
        width: 85%;
     }
 }
+
 
 
 
